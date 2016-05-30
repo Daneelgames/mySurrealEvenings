@@ -3,13 +3,16 @@ using System.Collections;
 
 public class InteractiveObject : MonoBehaviour {
 
+    public float speed = 1;
+
     [SerializeField]
     ActiveObjectCanvasController localCanvas;
 
+
     void Start()
     {
-        ToggleSelectedFeedback();
         GameManager.Instance.objectList.Add(this);
+        ToggleSelectedFeedback();
     }
 
     void OnMouseDown()

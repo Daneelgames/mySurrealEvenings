@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class ActiveObjectCanvasController : MonoBehaviour {
@@ -34,8 +35,14 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
     public void ShowSkills()
     {
-        foreach (GameObject go in skillIcons)
-            go.SetActive(true);
+        for(int i = 0; i < 3; i ++)
+        {
+            skillIcons[i].SetActive(true);
+            if (GameManager.Instance.skillsCurrent[i] != null)
+            {
+                skillIcons[i].GetComponent<Image>().sprite = GameManager.Instance.skillsCurrent[i].GetComponent<SkillController>().skillSprite;
+            }
+        }
 
         skillsVisible = true;
     }
