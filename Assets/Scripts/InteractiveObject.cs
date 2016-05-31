@@ -3,6 +3,8 @@ using System.Collections;
 
 public class InteractiveObject : MonoBehaviour {
 
+    public string _name = "Npc";
+
     public float speed = 1;
 
     public float health = 1;
@@ -12,6 +14,9 @@ public class InteractiveObject : MonoBehaviour {
 
     [SerializeField]
     private MeshRenderer turnFeedback;
+
+    [SerializeField]
+    NpcController npcControl;
 
     void Start()
     {
@@ -34,7 +39,11 @@ public class InteractiveObject : MonoBehaviour {
     public void ToggleTurnFeedback()
     {
         if (GameManager.Instance.objectsTurn == this)
+        {
             turnFeedback.enabled = true;
+            if (npcControl != null)
+                npcControl.ChooseAction();
+        }
         else
             turnFeedback.enabled = false;
     }
@@ -65,7 +74,7 @@ public class InteractiveObject : MonoBehaviour {
 
     public void UseSkill(int skill)
     {
-        print("skill used:" + skill);
+        print(GameManager.Instance.objectsTurn._name +  " uses " + GameManager.Instance.skillsCurrent[skill].name + " on " + _name);
 
         GameManager.Instance.SetTurn();
         localCanvas.HideSkills();

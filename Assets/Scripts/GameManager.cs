@@ -43,6 +43,9 @@ public class GameManager : MonoBehaviour {
 
         skillList = GetComponent<SkillList>();
 
+        party[0] = GameObject.FindGameObjectWithTag("Player").GetComponent<InteractiveObject>();
+        objectsTurn = party[0];
+
         GetRandomSkills(skills_1);
         skillsCurrent = skills_1;
     }
@@ -50,9 +53,7 @@ public class GameManager : MonoBehaviour {
     void Start()
     {
         SortObjects();
-
-        objectsTurn = party[0];
-        SetTurnObject();
+        //SetTurnObject();
     }
 
     void GetRandomSkills(List<GameObject> skills)
@@ -127,7 +128,7 @@ public class GameManager : MonoBehaviour {
         turnOver = true;
         mouseOverButton = false;
         ClearSelectedObject();
-        SetTurnObject();
+        //print(objectsTurn._name + " finished turn");
         StartCoroutine("NewTurn");
     }
 
@@ -135,8 +136,35 @@ public class GameManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(1f);
         turnOver = false;
+
+        foreach (InteractiveObject obj in objectList)
+        {
+            if (obj == objectsTurn)
+            {
+                int objInt = objectList.IndexOf(obj);
+
+                if (objInt < objectList.Count - 1)
+                {
+                    objectsTurn = objectList[objInt + 1];
+                    break;
+                }
+                else
+                {
+                    objectsTurn = objectList[0];
+                    break;
+                }
+            }
+        }
+
+        yield return new WaitForSeconds(0.1f);
+
+        foreach (InteractiveObject obj in objectList)
+        {
+            obj.ToggleTurnFeedback();
+        }
     }
 
+    /*
     void SetTurnObject()
     {
         foreach (InteractiveObject obj in objectList)
@@ -144,7 +172,6 @@ public class GameManager : MonoBehaviour {
             if (obj == objectsTurn)
             {
                 int objInt = objectList.IndexOf(obj);
-                print(obj.gameObject.name);
 
                 if (objInt < objectList.Count - 1)
                 {
@@ -163,5 +190,5 @@ public class GameManager : MonoBehaviour {
         {
             obj.ToggleTurnFeedback();
         }
-    }
+    } */
 }
