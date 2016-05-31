@@ -54,4 +54,14 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
         skillsVisible = false;
     }
+
+    public void PointerEnterButton()
+    {
+        GameManager.Instance.mouseOverButton = true;
+    }
+
+    public void PointerExitButton()
+    {
+        GameManager.Instance.mouseOverButton = false;
+    }
 }

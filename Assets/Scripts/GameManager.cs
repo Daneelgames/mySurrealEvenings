@@ -7,7 +7,11 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance { get; private set; }
 
+    public InteractiveObject objectsTurn;
+
     public InteractiveObject SelectedObject;
+    public bool mouseOverButton = false;
+
     public List<InteractiveObject> objectList = new List<InteractiveObject>();
 
     public List<InteractiveObject> party = new List<InteractiveObject>();
@@ -91,6 +95,7 @@ public class GameManager : MonoBehaviour {
     void SortObjects()
     {
         objectList = objectList.OrderByDescending(w => w.speed).ToList();
+        SetTurn();
     }
 
     public void SetSelectedObject(InteractiveObject curSelected)
@@ -101,5 +106,20 @@ public class GameManager : MonoBehaviour {
         {
             obj.ToggleSelectedFeedback();
         }
+    }
+
+    public void ClearSelectedObject()
+    {
+        SelectedObject = null;
+
+        foreach (InteractiveObject obj in objectList)
+        {
+            obj.ToggleSelectedFeedback();
+        }
+    }
+
+    void SetTurn()
+    {
+
     }
 }

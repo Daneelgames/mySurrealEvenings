@@ -17,7 +17,8 @@ public class InteractiveObject : MonoBehaviour {
 
     void OnMouseDown()
     {
-        GameManager.Instance.SetSelectedObject(this);
+        if (!GameManager.Instance.mouseOverButton)
+            GameManager.Instance.SetSelectedObject(this);
     }
 
     public void ToggleSelectedFeedback()
