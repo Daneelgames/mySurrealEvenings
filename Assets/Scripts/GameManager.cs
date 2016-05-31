@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour {
 
     public InteractiveObject SelectedObject;
     public bool mouseOverButton = false;
+    public bool turnOver = false;
 
     public List<InteractiveObject> objectList = new List<InteractiveObject>();
 
@@ -49,6 +50,9 @@ public class GameManager : MonoBehaviour {
     void Start()
     {
         SortObjects();
+
+        objectsTurn = party[0];
+        SetTurnObject();
     }
 
     void GetRandomSkills(List<GameObject> skills)
@@ -118,8 +122,46 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    void SetTurn()
+    public void SetTurn()
     {
+        turnOver = true;
+        mouseOverButton = false;
+        ClearSelectedObject();
+        SetTurnObject();
+        StartCoroutine("NewTurn");
+    }
 
+    IEnumerator NewTurn()
+    {
+        yield return new WaitForSeconds(1f);
+        turnOver = false;
+    }
+
+    void SetTurnObject()
+    {
+        foreach (InteractiveObject obj in objectList)
+        {
+            if (obj == objectsTurn)
+            {
+                int objInt = objectList.IndexOf(obj);
+                print(obj.gameObject.name);
+
+                if (objInt < objectList.Count - 1)
+                {
+                    objectsTurn = objectList[objInt + 1];
+                    break;
+                }
+                    else
+                {
+                    objectsTurn = objectList[0];
+                    break;
+                }
+            }
+        }
+
+        foreach (InteractiveObject obj in objectList)
+        {
+            obj.ToggleTurnFeedback();
+        }
     }
 }
