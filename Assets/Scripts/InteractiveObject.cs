@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class InteractiveObject : MonoBehaviour {
 
@@ -8,6 +9,9 @@ public class InteractiveObject : MonoBehaviour {
     public float speed = 1;
 
     public float health = 1;
+    public List<Effect> unitEffect = new List<Effect> {Effect.none};
+
+    public bool inParty = false;
 
     [SerializeField]
     ActiveObjectCanvasController localCanvas;
@@ -18,10 +22,14 @@ public class InteractiveObject : MonoBehaviour {
     [SerializeField]
     NpcController npcControl;
 
+    [HideInInspector]
+    public Animator _anim;
+
     void Start()
     {
         GameManager.Instance.objectList.Add(this);
         ToggleSelectedFeedback();
+        _anim = GetComponent<Animator>();
     }
 
     void OnMouseDown()
@@ -74,11 +82,10 @@ public class InteractiveObject : MonoBehaviour {
 
     public void UseSkill(int skill)
     {
-        print(GameManager.Instance.objectsTurn._name +  " uses " + GameManager.Instance.skillsCurrent[skill].name + " on " + _name);
-
-        GameManager.Instance.SetTurn();
+        GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
         localCanvas.HideSkills();
         localCanvas.HideIcons();
+        _anim.SetTrigger("Action");
     }
     
 
@@ -87,9 +94,34 @@ public class InteractiveObject : MonoBehaviour {
 
     }
 
-    void Damage(float dmg)
+    public void Damage(float dmg, InteractiveObject attacker)
     {
         health -= dmg;
+        if (dmg > 0)
+            _anim.SetTrigger("Damage");
+
+        if (npcControl != null)
+        {
+            if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
+                npcControl.agressiveTo = NpcController.Target.enemies;
+            else
+                npcControl.agressiveTo = NpcController.Target.everyone;
+        }
+
+        if (health <= 0)
+            Death();
+    }
+
+    public void Recover(float amount)
+    {
+        health += amount;
+        if (amount > 0)
+            _anim.SetTrigger("Recover");
+    }
+
+    void Death()
+    {
+        Destroy(gameObject, 1f);
     }
 
     void OnDestroy()

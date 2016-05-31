@@ -43,7 +43,8 @@ public class GameManager : MonoBehaviour {
 
         skillList = GetComponent<SkillList>();
 
-        party[0] = GameObject.FindGameObjectWithTag("Player").GetComponent<InteractiveObject>();
+        party[0] = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
+        party[0].inParty = true;
         objectsTurn = party[0];
 
         GetRandomSkills(skills_1);
@@ -123,6 +124,15 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void UseSkill(GameObject skill, InteractiveObject target)
+    {
+        //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);
+        GameObject skillInstance = Instantiate(skill, target.transform.position, target.transform.rotation) as GameObject;
+        skillInstance.transform.parent = target.transform;
+        skillInstance.GetComponent<SkillController>().SetTargets(objectsTurn, target);
+        SetTurn();
+    }
+
     public void SetTurn()
     {
         turnOver = true;
@@ -163,32 +173,4 @@ public class GameManager : MonoBehaviour {
             obj.ToggleTurnFeedback();
         }
     }
-
-    /*
-    void SetTurnObject()
-    {
-        foreach (InteractiveObject obj in objectList)
-        {
-            if (obj == objectsTurn)
-            {
-                int objInt = objectList.IndexOf(obj);
-
-                if (objInt < objectList.Count - 1)
-                {
-                    objectsTurn = objectList[objInt + 1];
-                    break;
-                }
-                    else
-                {
-                    objectsTurn = objectList[0];
-                    break;
-                }
-            }
-        }
-
-        foreach (InteractiveObject obj in objectList)
-        {
-            obj.ToggleTurnFeedback();
-        }
-    } */
 }
