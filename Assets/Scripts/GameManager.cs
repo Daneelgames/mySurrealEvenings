@@ -35,7 +35,9 @@ public class GameManager : MonoBehaviour {
     private RawImage clickToSkip;
 
     private bool canSkipTurn = false;
-    
+    public bool blockSkillIcons = false;
+
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -55,18 +57,24 @@ public class GameManager : MonoBehaviour {
 
         party[0] = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
         party[0].inParty = true;
-        objectsTurn = party[0];
 
         GetRandomSkills(skills_1);
         skillsCurrent = skills_1;
 
-        clickToSkip.raycastTarget = false;
+        StartStage();
+
     }
-    
-    void Start()
+
+    void StartStage()
     {
         SortObjects();
-        //SetTurnObject();
+        objectsTurn = party[0];
+        clickToSkip.raycastTarget = false;
+
+        foreach (InteractiveObject obj in objectList)
+        {
+            obj.ToggleTurnFeedback();
+        }
     }
 
     void GetRandomSkills(List<GameObject> skills)
@@ -113,7 +121,7 @@ public class GameManager : MonoBehaviour {
     void SortObjects()
     {
         objectList = objectList.OrderByDescending(w => w.speed).ToList();
-        SetTurn();
+        //SetTurn();
     }
 
     public void SetSelectedObject(InteractiveObject curSelected)
@@ -193,6 +201,7 @@ public class GameManager : MonoBehaviour {
 
     public void SetTurn()
     {
+        blockSkillIcons = true;
         turnOver = true;
         mouseOverButton = false;
         ClearSelectedObject();
@@ -214,11 +223,11 @@ public class GameManager : MonoBehaviour {
         actionTextFeedbackAnimator.SetTrigger("HideText");
         StartCoroutine("NewTurn");
         clickToSkip.raycastTarget = false;
+        canSkipTurn = false;
     }
 
     IEnumerator NewTurn()
     {
-        canSkipTurn = false;
         foreach (InteractiveObject obj in objectList)
         {
             if (obj == objectsTurn)
@@ -244,5 +253,7 @@ public class GameManager : MonoBehaviour {
         {
             obj.ToggleTurnFeedback();
         }
+
+        blockSkillIcons = false;
     }
 }

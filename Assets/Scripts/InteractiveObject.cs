@@ -34,7 +34,7 @@ public class InteractiveObject : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver)
+        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons)
         {
             foreach(InteractiveObject obj in GameManager.Instance.party)
             {
