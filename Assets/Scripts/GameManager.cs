@@ -60,19 +60,23 @@ public class GameManager : MonoBehaviour {
 
         GetRandomSkills(skills_1);
         skillsCurrent = skills_1;
+    }
 
+    void Start()
+    {
         StartStage();
-
     }
 
     void StartStage()
     {
         SortObjects();
+
         objectsTurn = party[0];
         clickToSkip.raycastTarget = false;
-
+        
         foreach (InteractiveObject obj in objectList)
         {
+            print(obj.name);
             obj.ToggleTurnFeedback();
         }
     }
@@ -157,46 +161,64 @@ public class GameManager : MonoBehaviour {
         if (skill.GetComponent<SkillController>().skillType == SkillController.Type.offensive)
             offensive = true;
 
-        PrintActionFeedback(objectsTurn._name, skill.name, target._name, hitself, offensive);
+        PrintActionFeedback(objectsTurn._name, skill.name, target._name, hitself, offensive, false);
         SetTurn();
     }
 
-    public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf, bool offensive)
+    public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf, bool offensive, bool iconDescription)
     {
         string generatedString;
 
-        if (skill != null)
+        if (!iconDescription)
         {
-            if (!hitSelf)
+            if (skill != null)
             {
-                if (offensive)
-                { // CASTER USES OFFENSIVE SKILL ON OTHER
-                    generatedString = caster + " uses " + skill + " against " + target + ". " + caster + " thinks it was clever. Is it?";
-                }
-                else
-                { // CASTER USES NON-OFFENSIVE SKILL ON OTHER
-                    generatedString = caster + " uses " + skill + " on " + target + ".";
-                }
+                if (!hitSelf)
+                {
+                    if (offensive)
+                    { // CASTER USES OFFENSIVE SKILL ON OTHER
+                        generatedString = caster + " uses " + skill + " against " + target + ". " + caster + " thinks it was clever. Is it?";
+                    }
+                    else
+                    { // CASTER USES NON-OFFENSIVE SKILL ON OTHER
+                        generatedString = caster + " uses " + skill + " on " + target + ".";
+                    }
 
-            }
-            else
-            {
-                if (offensive)
-                { // CASTER USES OFFENSIVE SKILL ON SELF
-                    generatedString = caster + " uses " + skill + " against self. Why " + caster + " doing this???";
                 }
                 else
-                { // CASTER USES NON-OFFENSIVE SKILL ON SELF
-                    generatedString = caster + " uses " + skill + " on self. Smart move, " + caster + "!";
+                {
+                    if (offensive)
+                    { // CASTER USES OFFENSIVE SKILL ON SELF
+                        generatedString = caster + " uses " + skill + " against self. Why " + caster + " doing this???";
+                    }
+                    else
+                    { // CASTER USES NON-OFFENSIVE SKILL ON SELF
+                        generatedString = caster + " uses " + skill + " on self. Smart move, " + caster + "!";
+                    }
                 }
             }
+            else // NPC IS LAZY, SKIP HIS MOVE
+            {
+                generatedString = caster + " is doing nothing!";
+            }
         }
-        else // NPC IS LAZY, SKIP HIS MOVE
-        {
-            generatedString = caster + " is doing nothing!";
-        }
+        else // THIS ONE PRINTS BUTTON DESCRIPTION
+            generatedString = skill;
+
         actionTextFeedback.text = generatedString;
         actionTextFeedbackAnimator.SetTrigger("UpdateText");
+    }
+
+    public void HideTextManually()
+    {
+        StartCoroutine("HideTextIfMouseExit");
+    }
+
+    IEnumerator HideTextIfMouseExit()
+    {
+        yield return new WaitForSeconds(0.1f);
+        if (!mouseOverButton)
+            actionTextFeedbackAnimator.SetTrigger("HideText");
     }
 
     public void SetTurn()

@@ -9,6 +9,7 @@ public class InteractiveObject : MonoBehaviour {
     public float speed = 1;
 
     public float health = 1;
+    private float maxHealth = 1;
     public List<Effect> unitEffect = new List<Effect> {Effect.none};
 
     public bool inParty = false;
@@ -24,9 +25,10 @@ public class InteractiveObject : MonoBehaviour {
 
     [HideInInspector]
     public Animator _anim;
-
-    void Start()
+    
+    void Awake()
     {
+        maxHealth = health;
         GameManager.Instance.objectList.Add(this);
         ToggleSelectedFeedback();
         _anim = GetComponent<Animator>();

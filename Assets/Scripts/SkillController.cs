@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Effect { none, poison, bleeding, curse, insanity }
+public enum Effect { none, poison, curse, insanity }
 
 public class SkillController : MonoBehaviour {
 
-    public enum Type {offensive, defensive, recover}
+    public enum Type {offensive, recover}
     public enum Range {one, all, allParty, allAgressive}
 
     public Type skillType = Type.offensive; 

@@ -55,13 +55,19 @@ public class ActiveObjectCanvasController : MonoBehaviour {
         skillsVisible = false;
     }
 
-    public void PointerEnterButton()
+    public void PointerEnterButton(int skill) // -2 speech; -1 actions; 0 skill_0; 1 skill_1; 2 skill_2
     {
+        if (skill >= 0)
+        {
+            string sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
+        }
         GameManager.Instance.mouseOverButton = true;
     }
 
     public void PointerExitButton()
     {
         GameManager.Instance.mouseOverButton = false;
+        GameManager.Instance.HideTextManually();
     }
 }
