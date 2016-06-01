@@ -69,8 +69,9 @@ public class NpcController : MonoBehaviour {
     {
         if (actionNumber < 0)
         {
-            //do nothing
-            print(objectController._name + " is lazy.");
+            // NPC IS LAZY
+            //print(objectController._name + " is lazy.");
+            GameManager.Instance.PrintActionFeedback(objectController._name, null, null, false, false);
             GameManager.Instance.SetTurn();
         }
         else

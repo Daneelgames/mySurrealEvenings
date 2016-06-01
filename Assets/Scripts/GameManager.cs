@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,15 @@ public class GameManager : MonoBehaviour {
 
     private SkillList skillList;
 
+    [SerializeField]
+    private Text actionTextFeedback;
+    [SerializeField]
+    private Animator actionTextFeedbackAnimator;
+    [SerializeField]
+    private RawImage clickToSkip;
+
+    private bool canSkipTurn = false;
+    
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -49,6 +59,8 @@ public class GameManager : MonoBehaviour {
 
         GetRandomSkills(skills_1);
         skillsCurrent = skills_1;
+
+        clickToSkip.raycastTarget = false;
     }
     
     void Start()
@@ -130,7 +142,53 @@ public class GameManager : MonoBehaviour {
         GameObject skillInstance = Instantiate(skill, target.transform.position, target.transform.rotation) as GameObject;
         skillInstance.transform.parent = target.transform;
         skillInstance.GetComponent<SkillController>().SetTargets(objectsTurn, target);
+        bool hitself = false;
+        bool offensive = false;
+        if (objectsTurn == target)
+            hitself = true;
+        if (skill.GetComponent<SkillController>().skillType == SkillController.Type.offensive)
+            offensive = true;
+
+        PrintActionFeedback(objectsTurn._name, skill.name, target._name, hitself, offensive);
         SetTurn();
+    }
+
+    public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf, bool offensive)
+    {
+        string generatedString;
+
+        if (skill != null)
+        {
+            if (!hitSelf)
+            {
+                if (offensive)
+                { // CASTER USES OFFENSIVE SKILL ON OTHER
+                    generatedString = caster + " uses " + skill + " against " + target + ". " + caster + " thinks it was clever. Is it?";
+                }
+                else
+                { // CASTER USES NON-OFFENSIVE SKILL ON OTHER
+                    generatedString = caster + " uses " + skill + " on " + target + ".";
+                }
+
+            }
+            else
+            {
+                if (offensive)
+                { // CASTER USES OFFENSIVE SKILL ON SELF
+                    generatedString = caster + " uses " + skill + " against self. Why " + caster + " doing this???";
+                }
+                else
+                { // CASTER USES NON-OFFENSIVE SKILL ON SELF
+                    generatedString = caster + " uses " + skill + " on self. Smart move, " + caster + "!";
+                }
+            }
+        }
+        else // NPC IS LAZY, SKIP HIS MOVE
+        {
+            generatedString = caster + " is doing nothing!";
+        }
+        actionTextFeedback.text = generatedString;
+        actionTextFeedbackAnimator.SetTrigger("UpdateText");
     }
 
     public void SetTurn()
@@ -139,14 +197,28 @@ public class GameManager : MonoBehaviour {
         mouseOverButton = false;
         ClearSelectedObject();
         //print(objectsTurn._name + " finished turn");
+        StartCoroutine("TurnCooldown");
+    }
+
+
+    IEnumerator TurnCooldown()
+    {
+        turnOver = false;
+        yield return new WaitForSeconds(0.5f);
+        canSkipTurn = true;
+        clickToSkip.raycastTarget = true;
+    }
+
+    public void SkipTurn()
+    {
+        actionTextFeedbackAnimator.SetTrigger("HideText");
         StartCoroutine("NewTurn");
+        clickToSkip.raycastTarget = false;
     }
 
     IEnumerator NewTurn()
     {
-        yield return new WaitForSeconds(1f);
-        turnOver = false;
-
+        canSkipTurn = false;
         foreach (InteractiveObject obj in objectList)
         {
             if (obj == objectsTurn)
