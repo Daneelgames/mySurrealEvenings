@@ -9,7 +9,7 @@ public class InteractiveObject : MonoBehaviour {
     public float speed = 1;
 
     public float health = 1;
-    private float maxHealth = 1;
+    public float maxHealth = 1;
     public List<Effect> unitEffect = new List<Effect> {Effect.none};
 
     public bool inParty = false;
@@ -36,6 +36,7 @@ public class InteractiveObject : MonoBehaviour {
 
     void OnMouseDown()
     {
+        // click on object
         if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons)
         {
             foreach(InteractiveObject obj in GameManager.Instance.party)
@@ -43,6 +44,7 @@ public class InteractiveObject : MonoBehaviour {
                 if (GameManager.Instance.objectsTurn == obj)
                     GameManager.Instance.SetSelectedObject(this);
             }
+
         }
     }
 

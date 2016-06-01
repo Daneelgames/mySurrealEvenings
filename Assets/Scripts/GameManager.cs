@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour {
     private bool canSkipTurn = false;
     public bool blockSkillIcons = false;
 
+    public ObjectsInfoController objInfoController;
+
 
     void Awake()
     {
@@ -130,12 +132,16 @@ public class GameManager : MonoBehaviour {
 
     public void SetSelectedObject(InteractiveObject curSelected)
     {
+        // SET TARGET
         SelectedObject = curSelected;
 
         foreach(InteractiveObject obj in objectList)
         {
             obj.ToggleSelectedFeedback();
         }
+
+        // UPDATE STATUS WINDOWS
+        objInfoController.ShowWindows(objectsTurn, curSelected);
     }
 
     public void ClearSelectedObject()
@@ -146,10 +152,19 @@ public class GameManager : MonoBehaviour {
         {
             obj.ToggleSelectedFeedback();
         }
+        if (!turnOver)
+            objInfoController.HideWindows();
     }
 
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
+        // update status windows if it's not the players turn
+        if (!objectsTurn.inParty)
+        {
+            objInfoController.ShowWindows(objectsTurn, target);
+        }
+
+        turnOver = true;
         //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);
         GameObject skillInstance = Instantiate(skill, target.transform.position, target.transform.rotation) as GameObject;
         skillInstance.transform.parent = target.transform;
@@ -224,7 +239,6 @@ public class GameManager : MonoBehaviour {
     public void SetTurn()
     {
         blockSkillIcons = true;
-        turnOver = true;
         mouseOverButton = false;
         ClearSelectedObject();
         //print(objectsTurn._name + " finished turn");
@@ -275,7 +289,7 @@ public class GameManager : MonoBehaviour {
         {
             obj.ToggleTurnFeedback();
         }
-
+        
         blockSkillIcons = false;
     }
 }
