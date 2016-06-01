@@ -50,10 +50,17 @@ public class ObjectsInfoController : MonoBehaviour {
         target = curTarget;
 
         _nameCaster.text = caster._name;
-        //casterMaxHealth = caster.maxHealth;
+        if (caster.npcControl != null && caster.npcControl.agressiveTo == NpcController.Target.everyone)
+            agressiveIconCaster.enabled = true;
+        else
+            agressiveIconCaster.enabled = false;
+
 
         _nameTarget.text = target._name;
-        //targetMaxHealth = target.maxHealth;
+        if (target.npcControl != null && target.npcControl.agressiveTo == NpcController.Target.everyone)
+            agressiveIconTarget.enabled = true;
+        else
+            agressiveIconTarget.enabled = false;
 
         windowsVisible = true;
     }

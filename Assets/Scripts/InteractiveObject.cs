@@ -20,8 +20,7 @@ public class InteractiveObject : MonoBehaviour {
     [SerializeField]
     private MeshRenderer turnFeedback;
 
-    [SerializeField]
-    NpcController npcControl;
+    public NpcController npcControl;
 
     [HideInInspector]
     public Animator _anim;
@@ -118,7 +117,11 @@ public class InteractiveObject : MonoBehaviour {
 
     public void Recover(float amount)
     {
-        health += amount;
+        if (health + amount <= maxHealth)
+            health += amount;
+        else
+            health = maxHealth;
+
         if (amount > 0)
             _anim.SetTrigger("Recover");
     }

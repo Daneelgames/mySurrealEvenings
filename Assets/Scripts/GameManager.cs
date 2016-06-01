@@ -159,10 +159,10 @@ public class GameManager : MonoBehaviour {
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
         // update status windows if it's not the players turn
-        if (!objectsTurn.inParty)
-        {
+        //if (!objectsTurn.inParty)
+        //{
             objInfoController.ShowWindows(objectsTurn, target);
-        }
+        //}
 
         turnOver = true;
         //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);
@@ -221,7 +221,15 @@ public class GameManager : MonoBehaviour {
             generatedString = skill;
 
         actionTextFeedback.text = generatedString;
-        actionTextFeedbackAnimator.SetTrigger("UpdateText");
+        actionTextFeedbackAnimator.SetBool("Active", true);
+        actionTextFeedbackAnimator.SetBool("Update", true);
+        StartCoroutine("AnimatorSetUpdateFalse");
+    }
+
+    IEnumerator AnimatorSetUpdateFalse()
+    {
+        yield return new WaitForSeconds(0.1F);
+        actionTextFeedbackAnimator.SetBool("Update", false);
     }
 
     public void HideTextManually()
@@ -233,7 +241,7 @@ public class GameManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.1f);
         if (!mouseOverButton)
-            actionTextFeedbackAnimator.SetTrigger("HideText");
+            actionTextFeedbackAnimator.SetBool("Active", false);
     }
 
     public void SetTurn()
@@ -256,7 +264,7 @@ public class GameManager : MonoBehaviour {
 
     public void SkipTurn()
     {
-        actionTextFeedbackAnimator.SetTrigger("HideText");
+        actionTextFeedbackAnimator.SetBool("Active", false);
         StartCoroutine("NewTurn");
         clickToSkip.raycastTarget = false;
         canSkipTurn = false;
