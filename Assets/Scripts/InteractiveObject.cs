@@ -149,7 +149,10 @@ public class InteractiveObject : MonoBehaviour {
             if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
                 npcControl.agressiveTo = NpcController.Target.enemies;
             else
+            {
                 npcControl.agressiveTo = NpcController.Target.everyone;
+                //actionOnDialog = DialogAction.none;
+            }
         }
 
         if (health <= 0)

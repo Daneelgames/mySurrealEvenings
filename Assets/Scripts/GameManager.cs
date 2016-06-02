@@ -41,6 +41,9 @@ public class GameManager : MonoBehaviour {
     public ObjectsInfoController objInfoController;
 
     public Animator tradeWindow;
+    public Animator inventory;
+
+    public bool inventoryActive = false;
 
 
     void Awake()
@@ -57,6 +60,8 @@ public class GameManager : MonoBehaviour {
 
         // Furthermore we make sure that we don't destroy between scenes (this is optional)
         DontDestroyOnLoad(gameObject);
+
+        transform.FindChild("Canvas").gameObject.SetActive(true);
 
         skillList = GetComponent<SkillList>();
 
@@ -145,6 +150,7 @@ public class GameManager : MonoBehaviour {
 
         // UPDATE STATUS WINDOWS
         objInfoController.ShowWindows(objectsTurn, curSelected, false);
+        InventoryClosed();
     }
 
     public void ClearSelectedObject()
@@ -157,6 +163,9 @@ public class GameManager : MonoBehaviour {
         }
         if (!turnOver)
             objInfoController.HideWindows();
+
+        if (!mouseOverButton)
+            InventoryClosed();
     }
 
     public void UseSkill(GameObject skill, InteractiveObject target)
@@ -249,6 +258,7 @@ public class GameManager : MonoBehaviour {
         mouseOverButton = false;
         ClearSelectedObject();
         //print(objectsTurn._name + " finished turn");
+        InventoryInactive();
         StartCoroutine("TurnCooldown");
     }
 
@@ -304,7 +314,10 @@ public class GameManager : MonoBehaviour {
         {
             obj.ToggleTurnFeedback();
         }
-        
+
+        if (objectsTurn.inParty)
+            InventoryActive();
+
         blockSkillIcons = false;
     }
 
@@ -312,6 +325,7 @@ public class GameManager : MonoBehaviour {
     {
         selectedObject = speaker;
         DialogSetText();
+        InventoryInactive();
         clickToSkip.raycastTarget = true;
         StartCoroutine("DialogCooldown");
     }
@@ -345,12 +359,13 @@ public class GameManager : MonoBehaviour {
     {
         clickToSkip.raycastTarget = false;
         
-        if (selectedObject.actionOnDialog == InteractiveObject.DialogAction.trade)
+        if (selectedObject.actionOnDialog == InteractiveObject.DialogAction.trade && selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo != NpcController.Target.everyone)
             TradeActive(); // OPEN SHOP
         else
         {
             mouseOverButton = false; // BACK TO GAME
             objInfoController.HideWindows();
+            InventoryActive();
         }
     }
 
@@ -363,6 +378,7 @@ public class GameManager : MonoBehaviour {
     public void TradeOver()
     {
         StartCoroutine("SetTradeInactive");
+        InventoryActive();
     }
 
     IEnumerator SetTradeInactive()
@@ -371,5 +387,50 @@ public class GameManager : MonoBehaviour {
         yield return new WaitForSeconds(0.2f);
         mouseOverButton = false;
         objInfoController.HideWindows();
+    }
+
+    public void InventoryToggle()
+    {
+        if (objectsTurn.inParty)
+        {
+            if (!inventoryActive)
+            {
+                ClearSelectedObject();
+                inventory.SetBool("Active", true);
+                inventoryActive = true;
+            }
+            else if (inventoryActive)
+            {
+                inventory.SetBool("Active", false);
+                inventoryActive = false;
+            }
+        }
+    }
+
+    void InventoryClosed()
+    {
+        inventory.SetBool("Active", false);
+        inventoryActive = false;
+    }
+    
+    void InventoryInactive()
+    {
+        inventory.SetBool("Inactive", true);
+        inventoryActive = false;
+    }
+
+    void InventoryActive()
+    {
+        inventory.SetBool("Inactive", false);
+    }
+
+    public void MouseEnterButton()
+    {
+        mouseOverButton = true;
+    }
+
+    public void MouseExitButton()
+    {
+        mouseOverButton = false;
     }
 }
