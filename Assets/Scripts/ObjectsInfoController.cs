@@ -30,6 +30,9 @@ public class ObjectsInfoController : MonoBehaviour {
 
     private bool windowsVisible = false;
 
+    public Animator dialogBackgroundAnimator;
+    public Text dialogText;
+
     //private float casterMaxHealth = 1;
     //private float targetMaxHealth = 1;
 
@@ -42,19 +45,27 @@ public class ObjectsInfoController : MonoBehaviour {
         }
     }
 
-    public void ShowWindows(InteractiveObject curCaster, InteractiveObject curTarget)
+    public void ShowWindows(InteractiveObject curCaster, InteractiveObject curTarget, bool isDialog)
     {
-        StartCoroutine("SetAnimatorBools");
+        if (!isDialog)
+            StartCoroutine("SetAnimatorBools");
+        else
+        {
+            StartCoroutine("DialogStartAnimatorBools");
+            SetDialogText(curTarget);
+        }
 
         caster = curCaster;
         target = curTarget;
 
-        _nameCaster.text = caster._name;
-        if (caster.npcControl != null && caster.npcControl.agressiveTo == NpcController.Target.everyone)
-            agressiveIconCaster.enabled = true;
-        else
-            agressiveIconCaster.enabled = false;
-
+        if (curCaster != null)
+        {
+            _nameCaster.text = caster._name;
+            if (caster.npcControl != null && caster.npcControl.agressiveTo == NpcController.Target.everyone)
+                agressiveIconCaster.enabled = true;
+            else
+                agressiveIconCaster.enabled = false;
+        }
 
         _nameTarget.text = target._name;
         if (target.npcControl != null && target.npcControl.agressiveTo == NpcController.Target.everyone)
@@ -63,6 +74,11 @@ public class ObjectsInfoController : MonoBehaviour {
             agressiveIconTarget.enabled = false;
 
         windowsVisible = true;
+    }
+
+    public void DialogOver()
+    {
+        HideWindows();
     }
 
     IEnumerator SetAnimatorBools()
@@ -78,11 +94,37 @@ public class ObjectsInfoController : MonoBehaviour {
         targetGO.SetBool("Update", false);
     }
 
+    IEnumerator DialogStartAnimatorBools()
+    {
+        casterGO.SetBool("Active", false);
+        targetGO.SetBool("Update", true);
+        targetGO.SetBool("Active", true);
+        dialogBackgroundAnimator.SetBool("Update", true);
+        dialogBackgroundAnimator.SetBool("Active", true);
+
+        yield return new WaitForSeconds(0.1F);
+
+        casterGO.SetBool("Update", false);
+        targetGO.SetBool("Update", false);
+        dialogBackgroundAnimator.SetBool("Update", false);
+    }
+
     public void HideWindows()
     {
         windowsVisible = false;
 
         casterGO.SetBool("Active", false);
         targetGO.SetBool("Active", false);
+        dialogBackgroundAnimator.SetBool("Active", false);
+    }
+
+    public void HideDialogBackground()
+    {
+        dialogBackgroundAnimator.SetBool("Active", false);
+    }
+
+    void SetDialogText(InteractiveObject speaker)
+    {
+        dialogText.text = speaker.dialogues[speaker.activeDialog].stringList[speaker.activePhrase];
     }
 }

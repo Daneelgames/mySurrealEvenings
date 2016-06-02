@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour {
 
     public InteractiveObject objectsTurn;
 
-    public InteractiveObject SelectedObject;
+    public InteractiveObject selectedObject;
     public bool mouseOverButton = false;
     public bool turnOver = false;
 
@@ -34,10 +34,13 @@ public class GameManager : MonoBehaviour {
     [SerializeField]
     private RawImage clickToSkip;
 
-    private bool canSkipTurn = false;
+    public bool canSkipTurn = false;
     public bool blockSkillIcons = false;
+    public bool canSkipDialog = false;
 
     public ObjectsInfoController objInfoController;
+
+    public Animator tradeWindow;
 
 
     void Awake()
@@ -133,7 +136,7 @@ public class GameManager : MonoBehaviour {
     public void SetSelectedObject(InteractiveObject curSelected)
     {
         // SET TARGET
-        SelectedObject = curSelected;
+        selectedObject = curSelected;
 
         foreach(InteractiveObject obj in objectList)
         {
@@ -141,12 +144,12 @@ public class GameManager : MonoBehaviour {
         }
 
         // UPDATE STATUS WINDOWS
-        objInfoController.ShowWindows(objectsTurn, curSelected);
+        objInfoController.ShowWindows(objectsTurn, curSelected, false);
     }
 
     public void ClearSelectedObject()
     {
-        SelectedObject = null;
+        selectedObject = null;
 
         foreach (InteractiveObject obj in objectList)
         {
@@ -158,11 +161,7 @@ public class GameManager : MonoBehaviour {
 
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
-        // update status windows if it's not the players turn
-        //if (!objectsTurn.inParty)
-        //{
-            objInfoController.ShowWindows(objectsTurn, target);
-        //}
+        objInfoController.ShowWindows(objectsTurn, target, false);
 
         turnOver = true;
         //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);
@@ -264,10 +263,18 @@ public class GameManager : MonoBehaviour {
 
     public void SkipTurn()
     {
-        actionTextFeedbackAnimator.SetBool("Active", false);
-        StartCoroutine("NewTurn");
-        clickToSkip.raycastTarget = false;
-        canSkipTurn = false;
+        if (canSkipTurn)
+        {
+            actionTextFeedbackAnimator.SetBool("Active", false);
+            StartCoroutine("NewTurn");
+            clickToSkip.raycastTarget = false;
+            canSkipTurn = false;
+        }
+        else if (canSkipDialog)
+        {
+            DialogUpdate();
+            canSkipDialog = false;
+        }
     }
 
     IEnumerator NewTurn()
@@ -299,5 +306,70 @@ public class GameManager : MonoBehaviour {
         }
         
         blockSkillIcons = false;
+    }
+
+    public void DialogStart(InteractiveObject speaker)
+    {
+        selectedObject = speaker;
+        DialogSetText();
+        clickToSkip.raycastTarget = true;
+        StartCoroutine("DialogCooldown");
+    }
+
+    void DialogUpdate()
+    {
+        if (selectedObject.activePhrase < selectedObject.dialogues[selectedObject.activeDialog].stringList.Count - 1)
+        {
+            selectedObject.activePhrase += 1;
+            DialogSetText();
+            StartCoroutine("DialogCooldown");
+        }
+        else
+        {
+            DialogOver();
+        }
+    }
+
+    IEnumerator DialogCooldown()
+    {
+        yield return new WaitForSeconds(0.5F);
+        canSkipDialog = true;
+    }
+
+    void DialogSetText()
+    {
+        objInfoController.ShowWindows(objectsTurn, selectedObject, true);
+    }
+
+    public void DialogOver()
+    {
+        clickToSkip.raycastTarget = false;
+        
+        if (selectedObject.actionOnDialog == InteractiveObject.DialogAction.trade)
+            TradeActive(); // OPEN SHOP
+        else
+        {
+            mouseOverButton = false; // BACK TO GAME
+            objInfoController.HideWindows();
+        }
+    }
+
+    void TradeActive()
+    {
+        tradeWindow.SetBool("Active", true);
+        objInfoController.HideDialogBackground();
+    }
+
+    public void TradeOver()
+    {
+        StartCoroutine("SetTradeInactive");
+    }
+
+    IEnumerator SetTradeInactive()
+    {
+        tradeWindow.SetBool("Active", false);
+        yield return new WaitForSeconds(0.2f);
+        mouseOverButton = false;
+        objInfoController.HideWindows();
     }
 }

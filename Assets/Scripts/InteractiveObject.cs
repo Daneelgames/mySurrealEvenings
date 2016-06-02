@@ -24,7 +24,27 @@ public class InteractiveObject : MonoBehaviour {
 
     [HideInInspector]
     public Animator _anim;
-    
+
+    public GameObject teamUpItem;
+    public int teamUpItemValue = 1;
+
+    public GameObject calmItem;
+    public int calmItemValue = 1;
+
+    public enum DialogAction {none, setAgressive, trade }
+    public DialogAction actionOnDialog = DialogAction.none;
+
+    public List<ListWrapper> dialogues = new List<ListWrapper>();
+
+    public int activeDialog = 0;
+    public int activePhrase = 0;
+
+    [System.Serializable]
+    public class ListWrapper
+    {
+        public List<string> stringList;
+    }
+
     void Awake()
     {
         maxHealth = health;
@@ -61,7 +81,7 @@ public class InteractiveObject : MonoBehaviour {
 
     public void ToggleSelectedFeedback()
     {
-        if (GameManager.Instance.SelectedObject == this)
+        if (GameManager.Instance.selectedObject == this)
         {
             localCanvas.ShowIcons();
         }
@@ -94,7 +114,28 @@ public class InteractiveObject : MonoBehaviour {
 
     public void StartDialog()
     {
-
+        if (npcControl != null)
+        {
+            if (npcControl.agressiveTo != NpcController.Target.everyone)
+            {
+                if (actionOnDialog == DialogAction.setAgressive)
+                {
+                    activeDialog = 3; // SETAGRESSIVE
+                    npcControl.agressiveTo = NpcController.Target.everyone;
+                }
+                else if (actionOnDialog == DialogAction.trade)
+                    activeDialog = 2; // SET TRADE DIALOG
+                // NEED TO SET ITEMS CHECK
+            }
+            else if (npcControl.agressiveTo == NpcController.Target.everyone)
+            {
+                activeDialog = 4; // SET BASIC AGGRESSIVE DIALOG
+                // NEED TO SET ITEMS CHECK
+            }
+        }
+        activePhrase = 0;
+        GameManager.Instance.DialogStart(this);
+        localCanvas.HideIcons();
     }
 
     public void Damage(float dmg, InteractiveObject attacker)
