@@ -16,6 +16,7 @@ ModelImporter:
     100016: sideblock1_1_2
     100018: streetlight
     100020: wires_2
+    100022: Plane
     400000: bench_1_2
     400002: block1
     400004: block3
@@ -27,6 +28,7 @@ ModelImporter:
     400016: sideblock1_1_2
     400018: streetlight
     400020: wires_2
+    400022: Plane
     2300000: bench_1_2
     2300002: block3
     2300004: building1_2
@@ -35,6 +37,7 @@ ModelImporter:
     2300010: building5_1
     2300012: sideblock1_1_2
     2300014: streetlight
+    2300016: Plane
     3300000: bench_1_2
     3300002: block3
     3300004: building1_2
@@ -43,6 +46,7 @@ ModelImporter:
     3300010: building5_1
     3300012: sideblock1_1_2
     3300014: streetlight
+    3300016: Plane
     4300000: block3
     4300002: building1_2
     4300004: building4_2_2
@@ -51,6 +55,7 @@ ModelImporter:
     4300010: building5_1
     4300012: building2_2
     4300014: streetlight
+    4300016: Plane
   materials:
     importMaterials: 1
     materialName: 0
