@@ -12,6 +12,9 @@ public class ActiveObjectCanvasController : MonoBehaviour {
     [SerializeField]
     Canvas _canvas;
 
+    [SerializeField]
+    Sprite emptySkill;
+
     public bool skillsVisible = false;
 
     void Awake()
@@ -38,9 +41,15 @@ public class ActiveObjectCanvasController : MonoBehaviour {
         for(int i = 0; i < 3; i ++)
         {
             skillIcons[i].SetActive(true);
-            if (GameManager.Instance.skillsCurrent[i] != null)
+            //if (GameManager.Instance.skillsCurrent[i] != null)
+            if (GameManager.Instance.skillsCurrent.Count > i)
             {
+                skillIcons[i].GetComponent<Image>().enabled = true;
                 skillIcons[i].GetComponent<Image>().sprite = GameManager.Instance.skillsCurrent[i].GetComponent<SkillController>().skillSprite;
+            }
+            else
+            {
+                skillIcons[i].GetComponent<Image>().enabled = false;
             }
         }
 

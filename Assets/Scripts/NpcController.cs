@@ -25,41 +25,46 @@ public class NpcController : MonoBehaviour {
         {
             int chosenSkill = -1;
 
-            int randomSkill = Random.Range(0, 3);
+            int randomSkill = Random.Range(0, skills.Count);
 
             float randomChance = Random.Range(0f, 1f);
 
-            switch (Mathf.Abs(skills[randomSkill].GetComponent<SkillController>().skillLevel - levelPreffered))
+            if (skills.Count > 0)
             {
-                case 0:
-                    chosenSkill = randomSkill;
-                    break;
-
-                case 1:
-                    if (randomChance > 0.25)
+                switch (Mathf.Abs(skills[randomSkill].GetComponent<SkillController>().skillLevel - levelPreffered))
+                {
+                    case 0:
                         chosenSkill = randomSkill;
-                    break;
+                        break;
 
-                case 2:
-                    if (randomChance > 0.5)
-                        chosenSkill = randomSkill;
-                    break;
+                    case 1:
+                        if (randomChance > 0.25)
+                            chosenSkill = randomSkill;
+                        break;
 
-                case 3:
-                    if (randomChance > 0.75)
-                        chosenSkill = randomSkill;
+                    case 2:
+                        if (randomChance > 0.5)
+                            chosenSkill = randomSkill;
+                        break;
 
-                    break;
+                    case 3:
+                        if (randomChance > 0.75)
+                            chosenSkill = randomSkill;
 
-                case 4:
-                    if (randomChance > 0.9)
-                        chosenSkill = randomSkill;
-                    break;
+                        break;
 
-                default:
-                    chosenSkill = -1;
-                    break;
+                    case 4:
+                        if (randomChance > 0.9)
+                            chosenSkill = randomSkill;
+                        break;
+
+                    default:
+                        chosenSkill = -1;
+                        break;
+                }
             }
+            else
+                chosenSkill = -1;
 
             Action(chosenSkill);
         }
