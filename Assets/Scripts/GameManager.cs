@@ -280,6 +280,7 @@ public class GameManager : MonoBehaviour {
     {
         if (canSkipTurn)
         {
+            SortObjects(); ////////////////////////////////////////////////////////////
             actionTextFeedbackAnimator.SetBool("Active", false);
             StartCoroutine("NewTurn");
             clickToSkip.raycastTarget = false;

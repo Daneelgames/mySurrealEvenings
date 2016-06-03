@@ -99,10 +99,16 @@ public class InteractiveObject : MonoBehaviour {
         {
             turnFeedback.enabled = true;
             if (npcControl != null)
-                npcControl.ChooseAction();
+                StartCoroutine("NpcSetAction");
         }
         else
             turnFeedback.enabled = false;
+    }
+
+    IEnumerator NpcSetAction()
+    {
+        yield return new WaitForSeconds(0.2F);
+        npcControl.ChooseAction();
     }
 
     public void ToggleSelectedFeedback()
@@ -198,11 +204,16 @@ public class InteractiveObject : MonoBehaviour {
 
     void Death()
     {
+        GameManager.Instance.objectList.Remove(this);
+
+        if (npcControl != null)
+            npcControl.DropMoney();
+
         Destroy(gameObject, 1f);
     }
 
     void OnDestroy()
     {
-        GameManager.Instance.objectList.Remove(this);
+     //   GameManager.Instance.objectList.Remove(this);
     }
 }

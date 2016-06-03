@@ -14,6 +14,8 @@ public class NpcController : MonoBehaviour {
     public List<GameObject> skills = new List<GameObject>();
 
     public int levelPreffered = 1;
+
+    public int moneyDrop = 5;
     
     public void ChooseAction()
     {
@@ -65,6 +67,25 @@ public class NpcController : MonoBehaviour {
             }
             else
                 chosenSkill = -1;
+
+            //check other enemies
+            if (agressiveTo == Target.enemies)
+            {
+                bool alone = true;
+                foreach (InteractiveObject obj in GameManager.Instance.objectList)
+                {
+                    if (!obj.inParty && obj != objectController)
+                    {
+                        alone = false;
+                        break;
+                    }
+                }
+                if (alone)
+                {
+                    agressiveTo = Target.none;
+                    chosenSkill = -1;
+                }
+            }
 
             Action(chosenSkill);
         }
@@ -176,5 +197,11 @@ public class NpcController : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void DropMoney()
+    {
+        moneyDrop += Mathf.RoundToInt(Random.Range(-moneyDrop / 2, moneyDrop / 2));
+        GameManager.Instance.inventoryController.MoneyGet(moneyDrop);
     }
 }
