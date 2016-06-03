@@ -88,7 +88,7 @@ public class GameManager : MonoBehaviour {
         
         foreach (InteractiveObject obj in objectList)
         {
-            print(obj.name);
+            //print(obj.name);
             obj.ToggleTurnFeedback();
         }
     }
@@ -179,9 +179,9 @@ public class GameManager : MonoBehaviour {
 
         turnOver = true;
         //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);
-        GameObject skillInstance = Instantiate(skill, target.transform.position, target.transform.rotation) as GameObject;
+        GameObject skillInstance = Instantiate(skill.GetComponent<SkillController>().AttackParticle, target.transform.position, target.transform.rotation) as GameObject;
         skillInstance.transform.parent = target.transform;
-        skillInstance.GetComponent<SkillController>().SetTargets(objectsTurn, target);
+        skill.GetComponent<SkillController>().SetTargets(objectsTurn, target);
         bool hitself = false;
         bool offensive = false;
         if (objectsTurn == target)
@@ -280,6 +280,7 @@ public class GameManager : MonoBehaviour {
     {
         if (canSkipTurn)
         {
+            objInfoController.HideWindows();
             SortObjects(); ////////////////////////////////////////////////////////////
             actionTextFeedbackAnimator.SetBool("Active", false);
             StartCoroutine("NewTurn");
@@ -416,6 +417,7 @@ public class GameManager : MonoBehaviour {
                 ClearSelectedObject();
                 inventory.SetBool("Active", true);
                 inventoryActive = true;
+                inventoryController.SortSlots();
             }
             else if (inventoryActive)
             {

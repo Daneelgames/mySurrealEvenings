@@ -199,9 +199,17 @@ public class NpcController : MonoBehaviour {
         }
     }
 
-    public void DropMoney()
+    public void DropOnDead()
     {
         moneyDrop += Mathf.RoundToInt(Random.Range(-moneyDrop / 2, moneyDrop / 2));
+
+        float randomChance = Random.Range(0f, 1f);
+        if (skills.Count > 0 && randomChance > 0.25f) // DROP RANDOM
+        {
+            GameObject skillDrop = skills[Random.Range(0, skills.Count)];
+            Instantiate(skillDrop, transform.position, transform.rotation);
+        }
+            
         GameManager.Instance.inventoryController.MoneyGet(moneyDrop);
     }
 }

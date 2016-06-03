@@ -206,14 +206,16 @@ public class InteractiveObject : MonoBehaviour {
     {
         GameManager.Instance.objectList.Remove(this);
 
-        if (npcControl != null)
-            npcControl.DropMoney();
-
-        Destroy(gameObject, 1f);
+        StartCoroutine("DeathCoroutine");
     }
 
-    void OnDestroy()
+    IEnumerator DeathCoroutine()
     {
-     //   GameManager.Instance.objectList.Remove(this);
+        yield return new WaitForSeconds(1f);
+
+        if (npcControl != null)
+            npcControl.DropOnDead();
+
+        Destroy(gameObject);
     }
 }

@@ -64,7 +64,7 @@ public class ActiveObjectCanvasController : MonoBehaviour {
         skillsVisible = false;
     }
 
-    public void PointerEnterButton(int skill) // -2 speech; -1 actions; 0 skill_0; 1 skill_1; 2 skill_2
+    public void PointerEnterButton(int skill)
     {
         if (skill >= 0)
         {

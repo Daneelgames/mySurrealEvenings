@@ -71,10 +71,12 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ActiveObjectCanvasController.cs" />
     <Compile Include="Assets\Scripts\BackgroundColliderController.cs" />
+    <Compile Include="Assets\Scripts\DestroyOnStart.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InteractiveObject.cs" />
     <Compile Include="Assets\Scripts\InventoryController.cs" />
     <Compile Include="Assets\Scripts\InventorySlotController.cs" />
+    <Compile Include="Assets\Scripts\LookAtCamera.cs" />
     <Compile Include="Assets\Scripts\NpcController.cs" />
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
     <Compile Include="Assets\Scripts\SkillController.cs" />

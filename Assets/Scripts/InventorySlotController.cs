@@ -3,9 +3,9 @@ using System.Collections;
 
 public class InventorySlotController : MonoBehaviour {
 
-    public GameObject itemInSlot;
+    public SkillController itemInSlot;
 
-    public void SetItem(GameObject item)
+    public void SetItem(SkillController item)
     {
         itemInSlot = item;
     }

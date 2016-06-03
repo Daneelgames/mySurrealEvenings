@@ -29,9 +29,11 @@ public class SkillController : MonoBehaviour {
 
     public Range skillRange = Range.one;
 
+    public GameObject AttackParticle;
+    
     public void SetTargets(InteractiveObject caster, InteractiveObject target)
     {
-        print(caster.name);
+        //print(caster.name);
         if (skillRange == Range.one)
         {
             float targetRandom = Random.Range(0f, 1f);
@@ -76,6 +78,6 @@ public class SkillController : MonoBehaviour {
 
     void Start()
     {
-        Destroy(gameObject, 1f);
+        GetComponent<Rigidbody>().AddRelativeForce(Vector3.up * 500);
     }
 }
