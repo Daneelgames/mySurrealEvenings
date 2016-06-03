@@ -39,6 +39,9 @@ public class InteractiveObject : MonoBehaviour {
     public int activeDialog = 0;
     public int activePhrase = 0;
 
+    [SerializeField]
+    private SpriteRenderer _spriteRenderer;
+
     [System.Serializable]
     public class ListWrapper
     {
@@ -58,10 +61,33 @@ public class InteractiveObject : MonoBehaviour {
         // click on object
         if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.tradeActive && !GameManager.Instance.inDialog)
         {
-            foreach(InteractiveObject obj in GameManager.Instance.party)
+
+            foreach (InteractiveObject obj in GameManager.Instance.party)
             {
                 if (GameManager.Instance.objectsTurn == obj)
+                {
+                    _spriteRenderer.color = Color.gray;
+                }
+            }
+        }
+    }
+
+    void OnMouseUp()
+    {
+        _spriteRenderer.color = Color.white;
+    }
+
+    void OnMouseUpAsButton()
+    {
+        // click on object
+        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.tradeActive && !GameManager.Instance.inDialog)
+        {
+            foreach (InteractiveObject obj in GameManager.Instance.party)
+            {
+                if (GameManager.Instance.objectsTurn == obj)
+                {
                     GameManager.Instance.SetSelectedObject(this);
+                }
             }
 
         }
