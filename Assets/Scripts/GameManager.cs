@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour {
     public List<GameObject> skills_2 = new List<GameObject>();
     public List<GameObject> skills_3 = new List<GameObject>();
 
-    private SkillList skillList;
+    public SkillList skillList;
 
     [SerializeField]
     private Text actionTextFeedback;
@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour {
     public bool inventoryActive = false;
     public InventoryController inventoryController;
 
+    int objectsTurnIndex = 0;
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -67,6 +69,7 @@ public class GameManager : MonoBehaviour {
 
         skillList = GetComponent<SkillList>();
 
+        GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>().inParty = true;
         party[0] = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
         party[0].inParty = true;
 
@@ -97,7 +100,6 @@ public class GameManager : MonoBehaviour {
     {
         List<GameObject> tempList = skillList.allSkills;
         
-        //for (int i = 0; i < 3; i ++)
         while (skills.Count < 3)
         {
             float random = Random.Range(0f, 1f);
@@ -175,6 +177,16 @@ public class GameManager : MonoBehaviour {
 
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
+
+        foreach (InteractiveObject npc in objectList)
+        {
+            if (npc == objectsTurn)
+            {
+                objectsTurnIndex = objectList.IndexOf(npc);
+                break;
+            }
+        }
+
         objInfoController.ShowWindows(objectsTurn, target, false);
 
         turnOver = true;
@@ -271,7 +283,7 @@ public class GameManager : MonoBehaviour {
     IEnumerator TurnCooldown()
     {
         turnOver = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         canSkipTurn = true;
         clickToSkip.raycastTarget = true;
     }
@@ -296,24 +308,29 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator NewTurn()
     {
-        foreach (InteractiveObject obj in objectList)
+        if (objectsTurn != null)
         {
-            if (obj == objectsTurn)
+            foreach (InteractiveObject obj in objectList)
             {
-                int objInt = objectList.IndexOf(obj);
+                if (obj == objectsTurn)
+                {
+                    int objInt = objectList.IndexOf(obj);
 
-                if (objInt < objectList.Count - 1)
-                {
-                    objectsTurn = objectList[objInt + 1];
-                    break;
-                }
-                else
-                {
-                    objectsTurn = objectList[0];
-                    break;
+                    if (objInt < objectList.Count - 1)
+                    {
+                        objectsTurn = objectList[objInt + 1];
+                        break;
+                    }
+                    else
+                    {
+                        objectsTurn = objectList[0];
+                        break;
+                    }
                 }
             }
         }
+        else
+            objectsTurn = objectList[objectsTurnIndex];
 
         yield return new WaitForSeconds(0.1f);
 

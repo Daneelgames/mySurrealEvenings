@@ -5,6 +5,8 @@ public enum Effect { none, poison, curse, insanity }
 
 public class SkillController : MonoBehaviour {
 
+    public string skillName;
+
     public enum Type {offensive, recover}
     public enum Range {one, all, allParty, allAgressive}
 
@@ -30,7 +32,9 @@ public class SkillController : MonoBehaviour {
     public Range skillRange = Range.one;
 
     public GameObject AttackParticle;
-    
+
+    private bool gathered = false;
+
     public void SetTargets(InteractiveObject caster, InteractiveObject target)
     {
         //print(caster.name);
@@ -79,5 +83,54 @@ public class SkillController : MonoBehaviour {
     void Start()
     {
         GetComponent<Rigidbody>().AddRelativeForce(Vector3.up * 500);
+    }
+
+    void OnMouseDown()
+    {
+        if (!gathered && GameManager.Instance.objectsTurn.inParty)
+        {
+            bool emptySlot = false;
+            foreach (InventorySlotController slot in GameManager.Instance.inventoryController.slots)
+            {
+                if (slot.itemInSlot == null)
+                {
+                    emptySlot = true;
+                    break;
+                }
+            }
+
+            if (emptySlot)
+            {
+                gathered = true;
+                GameObject newSkill = null;
+                foreach (GameObject go in GameManager.Instance.skillList.allSkills)
+                {
+                    if (go.name == skillName)
+                    {
+                        newSkill = go;
+                        print("gor name");
+                        break;
+                    }
+                }
+                GameManager.Instance.inventoryController.ItemGet(newSkill.GetComponent<SkillController>());
+                GameManager.Instance.skills_1.Add(newSkill);
+            }
+            else
+                print("no empty space");
+        }
+    }
+
+    void Update()
+    {
+        if (gathered)
+            FlyToInventory();
+    }
+
+    void FlyToInventory()
+    {
+        if (Vector3.Distance(transform.position, GameManager.Instance.party[0].transform.position) > 3f)
+            transform.position = Vector3.Lerp(transform.position, GameManager.Instance.party[0].transform.position, 3f * Time.deltaTime);
+        else
+            Destroy(gameObject);
     }
 }

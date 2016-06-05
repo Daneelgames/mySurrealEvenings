@@ -39,8 +39,8 @@ public class InteractiveObject : MonoBehaviour {
     public int activeDialog = 0;
     public int activePhrase = 0;
 
-    [SerializeField]
-    private SpriteRenderer _spriteRenderer;
+    //[SerializeField]
+    //private SpriteRenderer _spriteRenderer;
 
     [System.Serializable]
     public class ListWrapper
@@ -66,7 +66,7 @@ public class InteractiveObject : MonoBehaviour {
             {
                 if (GameManager.Instance.objectsTurn == obj)
                 {
-                    _spriteRenderer.color = Color.gray;
+                    //_spriteRenderer.color = Color.gray;
                 }
             }
         }
@@ -74,7 +74,7 @@ public class InteractiveObject : MonoBehaviour {
 
     void OnMouseUp()
     {
-        _spriteRenderer.color = Color.white;
+        //_spriteRenderer.color = Color.white;
     }
 
     void OnMouseUpAsButton()

@@ -38,7 +38,7 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
     public void ShowSkills()
     {
-        for(int i = 0; i < 3; i ++)
+        for(int i = 0; i < GameManager.Instance.skillsCurrent.Count; i ++)
         {
             skillIcons[i].SetActive(true);
             //if (GameManager.Instance.skillsCurrent[i] != null)

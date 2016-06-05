@@ -53,7 +53,6 @@ public class InventoryController : MonoBehaviour {
         foreach (InventorySlotController slot in slots)
         {
             if (slot.itemInSlot == item)
-
             {
                 slot.RemoveItem();
                 items.Remove(item);
@@ -79,9 +78,8 @@ public class InventoryController : MonoBehaviour {
 
     public void PointerEnterButton(int skill)
     {
-        if (skill >= 0)
+        if (skill >= 0 && slots[skill].itemInSlot != null)
         {
-            print("feedback");
             string sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
         }
