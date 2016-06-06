@@ -86,7 +86,6 @@ public class NpcController : MonoBehaviour {
                     chosenSkill = -1;
                 }
             }
-
             Action(chosenSkill);
         }
     }
@@ -204,12 +203,14 @@ public class NpcController : MonoBehaviour {
         moneyDrop += Mathf.RoundToInt(Random.Range(-moneyDrop / 2, moneyDrop / 2));
 
         float randomChance = Random.Range(0f, 1f);
-        if (skills.Count > 0 && randomChance > 0.25f) // DROP RANDOM
+        if (randomChance > 0.25f) // DROP RANDOM
         {
-            GameObject skillDrop = skills[Random.Range(0, skills.Count)];
-            Instantiate(skillDrop, transform.position, transform.rotation);
-        }
-            
-        GameManager.Instance.inventoryController.MoneyGet(moneyDrop);
+            GameManager.Instance.inventoryController.MoneyGet(moneyDrop);
+            if (skills.Count > 0)
+            {
+                GameObject skillDrop = skills[Random.Range(0, skills.Count)];
+                Instantiate(skillDrop, transform.position, transform.rotation);
+            }
+        }  
     }
 }

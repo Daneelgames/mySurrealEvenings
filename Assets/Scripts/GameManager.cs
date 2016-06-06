@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
     public InventoryController inventoryController;
 
     public TradeWindowController tradeController;
+    public StageRandomController stageRandomController;
 
     private NpcController curTrader = null;
 
@@ -88,6 +89,8 @@ public class GameManager : MonoBehaviour {
 
     void StartStage()
     {
+        stageRandomController.BuildStage();
+
         SortObjects();
 
         objectsTurn = party[0];

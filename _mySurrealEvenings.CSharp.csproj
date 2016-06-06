@@ -81,7 +81,8 @@
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
     <Compile Include="Assets\Scripts\SkillController.cs" />
     <Compile Include="Assets\Scripts\SkillList.cs" />
-    <Compile Include="Assets\TradeWindowController.cs" />
+    <Compile Include="Assets\Scripts\StageRandomController.cs" />
+    <Compile Include="Assets\Scripts\TradeWindowController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

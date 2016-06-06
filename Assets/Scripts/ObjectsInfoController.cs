@@ -61,6 +61,8 @@ public class ObjectsInfoController : MonoBehaviour {
         if (curCaster != null)
         {
             _nameCaster.text = caster._name;
+            unitSpriteCaster.sprite = curCaster.facepic;
+
             if (caster.npcControl != null && caster.npcControl.agressiveTo == NpcController.Target.everyone)
                 agressiveIconCaster.enabled = true;
             else
@@ -68,10 +70,13 @@ public class ObjectsInfoController : MonoBehaviour {
         }
 
         _nameTarget.text = target._name;
+        unitSpriteTarget.sprite = curTarget.facepic;
+
         if (target.npcControl != null && target.npcControl.agressiveTo == NpcController.Target.everyone)
             agressiveIconTarget.enabled = true;
         else
             agressiveIconTarget.enabled = false;
+
 
         windowsVisible = true;
     }

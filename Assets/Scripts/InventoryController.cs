@@ -103,7 +103,7 @@ public class InventoryController : MonoBehaviour {
                 if (moneyGet < 1)
                     moneyGet = 1;
 
-                print("sell for " + moneyGet);
+                //print("sell for " + moneyGet);
 
                 MoneyGet(moneyGet);
             }
@@ -144,18 +144,16 @@ public class InventoryController : MonoBehaviour {
                 if (GameManager.Instance.tradeController.emptySlots > 0)
                 {
                     slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = sellIcon;
+                    if (items.Count > 1)
+                        slotAnimators[skill].SetBool("ShowTrash", true);
+                }
 
-                    SkillController skillToSell = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>();
+                SkillController skillToSell = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>();
                     int price = Mathf.RoundToInt(skillToSell.price / 5);
                     if (price < 1)
                         price = 1;
-
-                    sendDescription = skillToSell.description + " Sell for " + price + " moneye.";
-
-                    if (items.Count > 1)
-                        slotAnimators[skill].SetBool("ShowTrash", true);
-
-                }
+                    
+                sendDescription = skillToSell.description + " Sell for " + price + " moneye.";
             }
             else
             {

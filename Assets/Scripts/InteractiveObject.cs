@@ -6,6 +6,8 @@ public class InteractiveObject : MonoBehaviour {
 
     public string _name = "Npc";
 
+    public Sprite facepic;
+
     public float speed = 1;
 
     public float health = 1;
