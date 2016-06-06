@@ -48,6 +48,10 @@ public class GameManager : MonoBehaviour {
     public bool inventoryActive = false;
     public InventoryController inventoryController;
 
+    public TradeWindowController tradeController;
+
+    private NpcController curTrader = null;
+
     int objectsTurnIndex = 0;
 
     void Awake()
@@ -347,6 +351,9 @@ public class GameManager : MonoBehaviour {
 
     public void DialogStart(InteractiveObject speaker)
     {
+        if (selectedObject.npcControl != null)
+            curTrader = selectedObject.npcControl;
+
         inDialog = true;
         mouseOverButton = false;
         HideTextManually();
@@ -389,7 +396,9 @@ public class GameManager : MonoBehaviour {
         inDialog = false;
 
         if (selectedObject.actionOnDialog == InteractiveObject.DialogAction.trade && selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo != NpcController.Target.everyone)
+        {
             TradeActive(); // OPEN SHOP
+        }
         else
         {
             mouseOverButton = false; // BACK TO GAME
@@ -406,6 +415,8 @@ public class GameManager : MonoBehaviour {
         tradeWindow.SetBool("Active", true);
         objInfoController.HideDialogBackground();
         tradeActive = true;
+        tradeController.npc = curTrader;
+        tradeController.OpenTradeWindow();
     }
 
     public void TradeOver()
@@ -432,6 +443,7 @@ public class GameManager : MonoBehaviour {
             if (!inventoryActive)
             {
                 ClearSelectedObject();
+                inventoryController.SetMoneyFeedback();
                 inventory.SetBool("Active", true);
                 inventoryActive = true;
                 inventoryController.SortSlots();

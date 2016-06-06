@@ -8,10 +8,31 @@ public class InventoryController : MonoBehaviour {
     public List<SkillController> items = new List<SkillController>();
 
     public List<InventorySlotController> slots;
+    public List<Animator> slotAnimators;
 
     public List<GameObject> uniqueItemsDropped = new List<GameObject>();
 
     public int money = 0;
+
+    public Text moneyCounter;
+
+    [SerializeField]
+    private Sprite sellIcon;
+    [SerializeField]
+    private Sprite trashIcon;
+
+    public int emptySlots = 5;
+
+    void GetEmptySlots()
+    {
+        emptySlots = 5;
+
+        foreach (InventorySlotController slot in slots)
+        {
+            if (slot.itemInSlot != null)
+                emptySlots -= 1;
+        }
+    }
 
     void Start()
     {
@@ -25,11 +46,18 @@ public class InventoryController : MonoBehaviour {
     public void MoneyGet(int amount)
     {
         money += amount;
+        SetMoneyFeedback();
     }
 
     public void MoneyLose(int amount)
     {
         money -= amount;
+        SetMoneyFeedback();
+    }
+
+    public void SetMoneyFeedback()
+    {
+        moneyCounter.text = "" + money;
     }
 
     public void ItemGet(SkillController skill)
@@ -63,10 +91,23 @@ public class InventoryController : MonoBehaviour {
         }
     }
 
-    public void DeleteItem(int slotNumber)
+    public void DeleteItem(int slotNumber) // USED FOR SELLING AND THROW ITEMS AWAY
     {
         if (items.Count > slotNumber)
         {
+            if (GameManager.Instance.tradeActive)
+            {
+                GameManager.Instance.tradeController.SellItem(slots[slotNumber].itemInSlot);
+
+                int moneyGet = Mathf.RoundToInt(slots[slotNumber].itemInSlot.price / 5);
+                if (moneyGet < 1)
+                    moneyGet = 1;
+
+                print("sell for " + moneyGet);
+
+                MoneyGet(moneyGet);
+            }
+
             GameManager.Instance.inventory.SetTrigger("Update");
             slots[slotNumber].RemoveItem();
             slots[slotNumber].GetComponent<Image>().color = Color.clear;
@@ -97,8 +138,38 @@ public class InventoryController : MonoBehaviour {
     {
         if (skill >= 0 && slots[skill].itemInSlot != null)
         {
-            string sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
+            string sendDescription = "";
+            if (GameManager.Instance.tradeActive)
+            {
+                if (GameManager.Instance.tradeController.emptySlots > 0)
+                {
+                    slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = sellIcon;
+
+                    SkillController skillToSell = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>();
+                    int price = Mathf.RoundToInt(skillToSell.price / 5);
+                    if (price < 1)
+                        price = 1;
+
+                    sendDescription = skillToSell.description + " Sell for " + price + " moneye.";
+
+                    if (items.Count > 1)
+                        slotAnimators[skill].SetBool("ShowTrash", true);
+
+                }
+            }
+            else
+            {
+                if (items.Count > 1)
+                    slotAnimators[skill].SetBool("ShowTrash", true);
+
+                slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = trashIcon;
+
+                sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
+            }
+
+
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
+
         }
         GameManager.Instance.mouseOverButton = true;
     }
@@ -107,5 +178,10 @@ public class InventoryController : MonoBehaviour {
     {
         GameManager.Instance.mouseOverButton = false;
         GameManager.Instance.HideTextManually();
+
+        foreach(Animator anim in slotAnimators)
+        {
+            anim.SetBool("ShowTrash", false);
+        }
     }
 }

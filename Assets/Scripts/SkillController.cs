@@ -7,6 +7,8 @@ public class SkillController : MonoBehaviour {
 
     public string skillName;
 
+    public int price = 1;
+
     public enum Type {offensive, recover}
     public enum Range {one, all, allParty, allAgressive}
 
@@ -115,6 +117,7 @@ public class SkillController : MonoBehaviour {
                 GameManager.Instance.skills_1.Add(newSkill);
 
                 GameManager.Instance.HideTextManually();
+                GameManager.Instance.mouseOverButton = false;
             }
             else
                 PrintNoSpace();
