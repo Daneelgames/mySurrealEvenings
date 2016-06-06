@@ -174,18 +174,21 @@ public class InteractiveObject : MonoBehaviour {
 
     public void Damage(float dmg, InteractiveObject attacker)
     {
-        health -= dmg;
         if (dmg > 0)
+        {
+            health -= dmg;
+
             _anim.SetTrigger("Damage");
 
-        if (npcControl != null)
-        {
-            if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
-                npcControl.agressiveTo = NpcController.Target.enemies;
-            else
+            if (npcControl != null)
             {
-                npcControl.agressiveTo = NpcController.Target.everyone;
-                //actionOnDialog = DialogAction.none;
+                if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
+                    npcControl.agressiveTo = NpcController.Target.enemies;
+                else
+                {
+                    npcControl.agressiveTo = NpcController.Target.everyone;
+                    //actionOnDialog = DialogAction.none;
+                }
             }
         }
 
