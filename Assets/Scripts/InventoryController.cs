@@ -54,6 +54,7 @@ public class InventoryController : MonoBehaviour {
         {
             if (slot.itemInSlot == item)
             {
+                GameManager.Instance.inventory.SetTrigger("Update");
                 slot.RemoveItem();
                 items.Remove(item);
                 SortSlots();
@@ -62,16 +63,32 @@ public class InventoryController : MonoBehaviour {
         }
     }
 
+    public void DeleteItem(int slotNumber)
+    {
+        if (items.Count > slotNumber)
+        {
+            GameManager.Instance.inventory.SetTrigger("Update");
+            slots[slotNumber].RemoveItem();
+            slots[slotNumber].GetComponent<Image>().color = Color.clear;
+            items.RemoveAt(slotNumber);
+            GameManager.Instance.skills_1.RemoveAt(slotNumber);
+        }
+            SortSlots();
+    }
+
     public void SortSlots()
     {
-        for (int i = 4; i > 0; i--)
+        for (int i = 0; i < 4; i++)
         {
-            if (slots[i].itemInSlot != null && slots[i - 1].itemInSlot == null)
+            if (slots[i].itemInSlot == null && slots[i + 1].itemInSlot != null)
             {
-                slots[i - 1].SetItem(slots[i].itemInSlot);
-                slots[i].RemoveItem();
-                slots[i].GetComponent<Image>().color = Color.clear;
-                slots[i - 1].itemInSlot.transform.position = slots[i - 1].transform.position;
+                slots[i].SetItem(slots[i + 1].itemInSlot);
+                slots[i].GetComponent<Image>().color = Color.white;
+                slots[i].GetComponent<Image>().sprite = slots[i].itemInSlot.skillSprite;
+                slots[i].itemInSlot.transform.position = slots[i].transform.position;
+
+                slots[i + 1].RemoveItem();
+                slots[i + 1].GetComponent<Image>().color = Color.clear;
             }
         }
     }

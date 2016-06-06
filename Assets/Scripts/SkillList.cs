@@ -6,9 +6,4 @@ public class SkillList : MonoBehaviour {
     
     public List<GameObject> allSkills;
 
-    void Start()
-    {
-        foreach (GameObject go in allSkills)
-            print(go.name);
-    }
 }

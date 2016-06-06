@@ -108,15 +108,16 @@ public class SkillController : MonoBehaviour {
                     if (go.name == skillName)
                     {
                         newSkill = go;
-                        print("gor name");
                         break;
                     }
                 }
                 GameManager.Instance.inventoryController.ItemGet(newSkill.GetComponent<SkillController>());
                 GameManager.Instance.skills_1.Add(newSkill);
+
+                GameManager.Instance.HideTextManually();
             }
             else
-                print("no empty space");
+                PrintNoSpace();
         }
     }
 
@@ -129,8 +130,25 @@ public class SkillController : MonoBehaviour {
     void FlyToInventory()
     {
         if (Vector3.Distance(transform.position, GameManager.Instance.party[0].transform.position) > 3f)
-            transform.position = Vector3.Lerp(transform.position, GameManager.Instance.party[0].transform.position, 3f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, GameManager.Instance.party[0].transform.position, 5f * Time.deltaTime);
         else
             Destroy(gameObject);
+    }
+
+    public void OnMouseEnter()
+    {
+        GameManager.Instance.PrintActionFeedback(null, description, null, false, false, true);
+        GameManager.Instance.mouseOverButton = true;
+    }
+
+    public void OnMouseExit()
+    {
+        GameManager.Instance.HideTextManually();
+        GameManager.Instance.mouseOverButton = false;
+    }
+
+    void PrintNoSpace()
+    {
+        GameManager.Instance.PrintActionFeedback(null, "Inventory is full!", null, false, false, true);
     }
 }
