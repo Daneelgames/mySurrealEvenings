@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour {
 
     void GetRandomSkills(List<GameObject> skills)
     {
-        List<GameObject> tempList = skillList.allSkills;
+        List<GameObject> tempList = new List<GameObject>(skillList.allSkills);
         
         while (skills.Count < 3)
         {
