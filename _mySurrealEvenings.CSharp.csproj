@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\ActiveObjectCanvasController.cs" />
     <Compile Include="Assets\Scripts\BackgroundColliderController.cs" />
+    <Compile Include="Assets\Scripts\ChoiceController.cs" />
     <Compile Include="Assets\Scripts\DestroyOnStart.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InteractiveObject.cs" />

@@ -84,7 +84,9 @@ public class InventoryController : MonoBehaviour {
             {
                 GameManager.Instance.inventory.SetTrigger("Update");
                 slot.RemoveItem();
+                slot.GetComponent<Image>().color = Color.clear;
                 items.Remove(item);
+                GameManager.Instance.skills_1.Remove(item.gameObject);
                 SortSlots();
                 break;
             }
@@ -136,7 +138,7 @@ public class InventoryController : MonoBehaviour {
 
     public void PointerEnterButton(int skill)
     {
-        if (skill >= 0 && slots[skill].itemInSlot != null)
+        if (skill >= 0 && slots[skill].itemInSlot != null && !GameManager.Instance.choiceActive)
         {
             string sendDescription = "";
             if (GameManager.Instance.tradeActive)

@@ -16,6 +16,9 @@ public class GameManager : MonoBehaviour {
 
     public List<InteractiveObject> objectList = new List<InteractiveObject>();
 
+    public List<Transform> npcCells;
+    public List<Transform> partyCells;
+
     public List<InteractiveObject> party = new List<InteractiveObject>();
     public List<int> partyHealth = new List<int>();
 
@@ -52,6 +55,9 @@ public class GameManager : MonoBehaviour {
     public StageRandomController stageRandomController;
 
     private NpcController curTrader = null;
+
+    public bool choiceActive = false;
+    public ChoiceController choiceController;
 
     int objectsTurnIndex = 0;
 
@@ -139,8 +145,22 @@ public class GameManager : MonoBehaviour {
                 skills.Add(tempList[randomSkill]);
                 tempList.RemoveAt(randomSkill);
             }
-
         }
+    }
+
+    void SetPartySkills()
+    {
+        if (party.Count > 1)
+            skills_2 = new List<GameObject>(party[1].npcControl.skills);
+        if (party.Count > 2)
+            skills_3 = new List<GameObject>(party[2].npcControl.skills);
+
+        if (objectsTurn == party[0])
+            skillsCurrent = skills_1;
+        else if (party.Count > 1 && objectsTurn == party[1])
+            skillsCurrent = skills_2;
+        else if (party.Count > 2 && objectsTurn == party[2])
+            skillsCurrent = skills_3;
     }
 
     void SortObjects()
@@ -349,6 +369,8 @@ public class GameManager : MonoBehaviour {
         if (objectsTurn.inParty)
             InventoryActive();
 
+        SetPartySkills();
+
         blockSkillIcons = false;
     }
 
@@ -398,25 +420,62 @@ public class GameManager : MonoBehaviour {
 
         inDialog = false;
 
-        if (selectedObject.actionOnDialog == InteractiveObject.DialogAction.trade && selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo != NpcController.Target.everyone)
+        bool specialDialog = false;
+
+        if (selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo != NpcController.Target.everyone)
         {
-            TradeActive(); // OPEN SHOP
+            if (selectedObject.actionOnDialog == InteractiveObject.DialogAction.trade)
+            {
+                TradeActive(); // OPEN SHOP
+                specialDialog = true;
+            }
+            else if (selectedObject.activeDialog == 1) // CHECK FOR TEAM UP
+            {
+                ChoiceActive(selectedObject);
+                specialDialog = true;
+            }
         }
-        else
+
+        else if (selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo == NpcController.Target.everyone)
         {
-            mouseOverButton = false; // BACK TO GAME
-            objInfoController.HideWindows();
+            if (selectedObject.activeDialog == 5 && selectedObject.npcControl.skills.Count < 5) // CHECK FOR CALM
+            {
+                ChoiceActive(selectedObject);
+                specialDialog = true;
+            }
         }
+
+        if (!specialDialog) //Clear selection if no choise or trade
+            ClearSelectedObject();
+
         InventoryActive();
+
+        objInfoController.HideWindows();
+
+        mouseOverButton = false;
+        HideTextManually();
+        objInfoController.HideDialogBackground();
+    }
+
+    void ChoiceActive(InteractiveObject npc)
+    {
+        InventoryToggle();
+        choiceController.ShowWindow(npc);
+        choiceActive = true;
+    }
+
+    public void ChoiceInactive()
+    {
+        choiceActive = false;
+        InventoryToggle();
+
+        ClearSelectedObject();
     }
 
     void TradeActive()
     {
-        mouseOverButton = false;
-        HideTextManually();
         InventoryToggle();
         tradeWindow.SetBool("Active", true);
-        objInfoController.HideDialogBackground();
         tradeActive = true;
         tradeController.npc = curTrader;
         tradeController.OpenTradeWindow();
@@ -441,11 +500,10 @@ public class GameManager : MonoBehaviour {
 
     public void InventoryToggle()
     {
-        if (objectsTurn.inParty && !tradeActive)
+        if (objectsTurn.inParty && !tradeActive && !choiceActive)
         {
             if (!inventoryActive)
             {
-                ClearSelectedObject();
                 inventoryController.SetMoneyFeedback();
                 inventory.SetBool("Active", true);
                 inventoryActive = true;
@@ -473,7 +531,10 @@ public class GameManager : MonoBehaviour {
 
     void InventoryActive()
     {
-        inventory.SetBool("Inactive", false);
+        if (objectsTurn == party[0])
+        {
+            inventory.SetBool("Inactive", false);
+        }
     }
 
     public void MouseEnterButton()

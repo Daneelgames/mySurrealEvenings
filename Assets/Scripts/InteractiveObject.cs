@@ -28,10 +28,10 @@ public class InteractiveObject : MonoBehaviour {
     public Animator _anim;
 
     public GameObject teamUpItem;
-    public int teamUpItemValue = 1;
+    public int teamUpMoney = 5;
 
     public GameObject calmItem;
-    public int calmItemValue = 1;
+    public int calmMoney = 5;
 
     public enum DialogAction {none, setAgressive, trade }
     public DialogAction actionOnDialog = DialogAction.none;
@@ -41,8 +41,8 @@ public class InteractiveObject : MonoBehaviour {
     public int activeDialog = 0;
     public int activePhrase = 0;
 
-    //[SerializeField]
-    //private SpriteRenderer _spriteRenderer;
+    [SerializeField]
+    private GameObject teleportParticles;
 
     [System.Serializable]
     public class ListWrapper
@@ -82,7 +82,7 @@ public class InteractiveObject : MonoBehaviour {
     void OnMouseUpAsButton()
     {
         // click on object
-        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.tradeActive && !GameManager.Instance.inDialog)
+        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.tradeActive && !GameManager.Instance.inDialog && !GameManager.Instance.choiceActive)
         {
             foreach (InteractiveObject obj in GameManager.Instance.party)
             {
@@ -91,7 +91,6 @@ public class InteractiveObject : MonoBehaviour {
                     GameManager.Instance.SetSelectedObject(this);
                 }
             }
-
         }
     }
 
@@ -100,7 +99,7 @@ public class InteractiveObject : MonoBehaviour {
         if (GameManager.Instance.objectsTurn == this)
         {
             turnFeedback.enabled = true;
-            if (npcControl != null)
+            if (!inParty && npcControl != null)
                 StartCoroutine("NpcSetAction");
         }
         else
@@ -148,28 +147,82 @@ public class InteractiveObject : MonoBehaviour {
 
     public void StartDialog()
     {
-        if (npcControl != null)
+        if (npcControl != null && !inParty)
         {
             if (npcControl.agressiveTo != NpcController.Target.everyone)
             {
+                activeDialog = 0; //default dialog
+
                 if (actionOnDialog == DialogAction.setAgressive)
                 {
                     activeDialog = 3; // SETAGRESSIVE
                     npcControl.agressiveTo = NpcController.Target.everyone;
                 }
                 else if (actionOnDialog == DialogAction.trade)
-                    activeDialog = 2; // SET TRADE DIALOG
-                // NEED TO SET ITEMS CHECK
+                    activeDialog = 2; // TRADE DIALOG
+
+                // CHECK TEAMUP ITEM
+                if (GameManager.Instance.inventoryController.money >= teamUpMoney && teamUpItem != null && GameManager.Instance.party.Count < 3)
+                {
+                    foreach (GameObject item in GameManager.Instance.skillsCurrent)
+                    {
+                        if (item == teamUpItem)
+                        {
+                            activeDialog = 1; // teamUp
+                            break;
+                        }
+                    }
+                }
             }
             else if (npcControl.agressiveTo == NpcController.Target.everyone)
             {
-                activeDialog = 4; // SET BASIC AGGRESSIVE DIALOG
-                // NEED TO SET ITEMS CHECK
+                activeDialog = 4; // BASIC AGGRESSIVE DIALOG
+
+                // CHECK CALM ITEM
+                if (GameManager.Instance.inventoryController.money >= calmMoney && calmItem != null)
+                {
+                    foreach (GameObject item in GameManager.Instance.skillsCurrent)
+                    {
+                        if (item == calmItem)
+                        {
+                            activeDialog = 5; // CALM
+                            break;
+                        }
+                    }
+                }
+
             }
+        }
+        else if (inParty)
+        {
+            activeDialog = 6;
         }
         activePhrase = 0;
         GameManager.Instance.DialogStart(this);
         localCanvas.HideIcons();
+    }
+
+    public void TeamUp()
+    {
+        Transform newPlace = transform;
+
+        if (GameManager.Instance.party.Count == 2)
+            newPlace = GameManager.Instance.partyCells[1];
+        if (GameManager.Instance.party.Count == 3)
+            newPlace = GameManager.Instance.partyCells[2];
+
+        Instantiate(teleportParticles, transform.position, teleportParticles.transform.rotation);
+        Instantiate(teleportParticles, newPlace.position, teleportParticles.transform.rotation);
+
+        StartCoroutine("TakeNewPlace", newPlace);
+        
+    }
+
+    IEnumerator TakeNewPlace (Transform newPlace)
+    {
+        yield return new WaitForSeconds(0.5f);
+        transform.position = newPlace.position;
+        transform.Find("sprite").transform.Rotate(0, 180, 0);
     }
 
     public void Damage(float dmg, InteractiveObject attacker)

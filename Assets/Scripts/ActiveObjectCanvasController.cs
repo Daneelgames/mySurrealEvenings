@@ -29,8 +29,16 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
     public void ShowIcons()
     {
-        foreach (GameObject go in buttonIcons)
-            go.SetActive(true);
+        if (GameManager.Instance.objectsTurn == GameManager.Instance.party[0]) // if player moves - show both icons
+        {
+            foreach (GameObject go in buttonIcons)
+                go.SetActive(true);
+        }
+        else // hide talk icon if not player
+        {
+            buttonIcons[1].SetActive(true);
+        }
+
 
         _animator.SetTrigger("Show");
     }

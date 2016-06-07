@@ -38,11 +38,8 @@ public class TradeWindowController : MonoBehaviour {
 
     void GetEmptySlots()
     {
-        emptySlots = 5;
-        foreach(SkillController item in items)
-        {
-            emptySlots -= 1;
-        }
+        emptySlots = 5 - items.Count;
+
     }
 
     public void ItemGet(SkillController skill)
