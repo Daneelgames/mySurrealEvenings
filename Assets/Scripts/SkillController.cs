@@ -140,14 +140,20 @@ public class SkillController : MonoBehaviour {
 
     public void OnMouseEnter()
     {
-        GameManager.Instance.PrintActionFeedback(null, description, null, false, false, true);
-        GameManager.Instance.mouseOverButton = true;
+        if (GameManager.Instance.objectsTurn.inParty)
+        {
+            GameManager.Instance.PrintActionFeedback(null, description, null, false, false, true);
+            GameManager.Instance.mouseOverButton = true;
+        }
     }
 
     public void OnMouseExit()
     {
-        GameManager.Instance.HideTextManually();
-        GameManager.Instance.mouseOverButton = false;
+        if (GameManager.Instance.objectsTurn.inParty)
+        {
+            GameManager.Instance.HideTextManually();
+            GameManager.Instance.mouseOverButton = false;
+        }
     }
 
     void PrintNoSpace()
