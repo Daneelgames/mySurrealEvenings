@@ -1,0 +1,324 @@
+fileFormatVersion: 2
+guid: 48af258a9a0cd3040864b2846b94733b
+timeCreated: 1465332485
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: Trunkle_00001_0
+    21300002: Trunkle_00001_1
+    21300004: Trunkle_00001_2
+    21300006: Trunkle_00001_3
+    21300008: Trunkle_00001_4
+    21300010: Trunkle_00001_5
+    21300012: Trunkle_00001_6
+    21300014: Trunkle_00001_7
+    21300016: Trunkle_00001_8
+    21300018: Trunkle_00001_9
+    21300020: Trunkle_00001_10
+    21300022: Trunkle_00001_11
+    21300024: Trunkle_00001_12
+    21300026: Trunkle_00001_13
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: 0
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: Trunkle_00001_0
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 99
+        width: 178
+        height: 398
+      alignment: 9
+      pivot: {x: 0.5273495, y: 0.029950663}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -93.86821, y: 386.07965}
+        - {x: -93.86821, y: 321.07965}
+        - {x: -1.8682098, y: 276.07965}
+        - {x: -9.86821, y: 261.07965}
+        - {x: -33.86821, y: 285.07965}
+        - {x: -70.86821, y: 281.07965}
+        - {x: -46.86821, y: -11.920364}
+        - {x: 77.13179, y: -11.920364}
+        - {x: 84.13179, y: 71.079636}
+        - {x: 84.13179, y: 200.07964}
+        - {x: 5.13179, y: 386.07965}
+    - name: Trunkle_00001_1
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 343
+        width: 34
+        height: 139
+      alignment: 9
+      pivot: {x: 0.39772663, y: 0.029686578}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -7.522705, y: 134.87357}
+        - {x: -13.522705, y: 132.87357}
+        - {x: -13.522705, y: -4.1264343}
+        - {x: 12.477295, y: -4.1264343}
+        - {x: 20.477295, y: 35.873566}
+        - {x: 20.477295, y: 134.87357}
+    - name: Trunkle_00001_2
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 339
+        width: 48
+        height: 156
+      alignment: 9
+      pivot: {x: 0.5144882, y: 0.031899672}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -22.695435, y: 151.02365}
+        - {x: -24.695435, y: 146.02365}
+        - {x: -24.695435, y: 4.023651}
+        - {x: -19.695435, y: -4.976349}
+        - {x: 20.304565, y: -4.976349}
+        - {x: 23.304565, y: 17.023651}
+        - {x: 23.304565, y: 138.02365}
+        - {x: 12.304565, y: 151.02365}
+    - name: Trunkle_00001_3
+      rect:
+        serializedVersion: 2
+        x: 392
+        y: 402
+        width: 95
+        height: 88
+      alignment: 9
+      pivot: {x: 0.41215178, y: 0.19178356}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -39.15442, y: 71.12305}
+        - {x: -39.15442, y: 12.123047}
+        - {x: -15.154419, y: -6.876953}
+        - {x: 30.845581, y: -16.876953}
+        - {x: 55.84558, y: -16.876953}
+        - {x: 55.84558, y: 60.123047}
+        - {x: 51.84558, y: 71.12305}
+    - name: Trunkle_00001_4
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 281
+        width: 81
+        height: 35
+      alignment: 9
+      pivot: {x: 0.7661649, y: 0.1423331}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 18.940643, y: 24.018341}
+        - {x: 6.9406433, y: 30.018341}
+        - {x: -10.059357, y: 30.018341}
+        - {x: -57.059357, y: 6.018341}
+        - {x: -62.059357, y: 3.018341}
+        - {x: -62.059357, y: -2.981659}
+        - {x: -59.059357, y: -4.981659}
+        - {x: 17.940643, y: -4.981659}
+        - {x: 18.940643, y: 2.018341}
+    - name: Trunkle_00001_5
+      rect:
+        serializedVersion: 2
+        x: 379
+        y: 152
+        width: 45
+        height: 132
+      alignment: 9
+      pivot: {x: 0.48454523, y: 0.9478362}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12.804535, y: 6.88562}
+        - {x: -21.804535, y: 2.88562}
+        - {x: -21.804535, y: -121.11438}
+        - {x: -18.804535, y: -125.11438}
+        - {x: 16.195465, y: -125.11438}
+        - {x: 23.195465, y: -121.11438}
+        - {x: 23.195465, y: -0.11437988}
+        - {x: 17.195465, y: 6.88562}
+    - name: Trunkle_00001_6
+      rect:
+        serializedVersion: 2
+        x: 461
+        y: 143
+        width: 45
+        height: 144
+      alignment: 9
+      pivot: {x: 0.46909043, y: 0.9636421}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21.10907, y: 5.2355347}
+        - {x: -21.10907, y: -121.764465}
+        - {x: -15.10907, y: -135.76447}
+        - {x: -13.10907, y: -138.76447}
+        - {x: 14.89093, y: -138.76447}
+        - {x: 23.89093, y: -134.76447}
+        - {x: 23.89093, y: -7.7644653}
+        - {x: 15.89093, y: 5.2355347}
+    - name: Trunkle_00001_7
+      rect:
+        serializedVersion: 2
+        x: 218
+        y: 82
+        width: 34
+        height: 138
+      alignment: 9
+      pivot: {x: 0.39772618, y: 0.026278675}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13.52269, y: 134.37354}
+        - {x: -13.52269, y: -3.6264572}
+        - {x: 13.47731, y: -3.6264572}
+        - {x: 20.47731, y: 15.373543}
+        - {x: 20.47731, y: 134.37354}
+    - name: Trunkle_00001_8
+      rect:
+        serializedVersion: 2
+        x: 276
+        y: 67
+        width: 48
+        height: 156
+      alignment: 9
+      pivot: {x: 0.5, y: 0.031899817}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24, y: 151.02362}
+        - {x: -24, y: 10.023628}
+        - {x: -17, y: 4.023628}
+        - {x: -4, y: -4.976372}
+        - {x: 13, y: -4.976372}
+        - {x: 24, y: 6.023628}
+        - {x: 24, y: 132.02362}
+        - {x: 14, y: 151.02362}
+    - name: Trunkle_00001_9
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 43
+        width: 31
+        height: 123
+      alignment: 9
+      pivot: {x: 0.54486775, y: 0.96929646}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: Trunkle_00001_10
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 41
+        width: 32
+        height: 126
+      alignment: 9
+      pivot: {x: 0.56519985, y: 0.98020077}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -11.086395, y: 2.4947052}
+        - {x: -18.086395, y: -0.5052948}
+        - {x: -18.086395, y: -95.505295}
+        - {x: -17.086395, y: -110.505295}
+        - {x: -12.086395, y: -123.505295}
+        - {x: 13.913605, y: -123.505295}
+        - {x: 13.913605, y: 2.4947052}
+    - name: Trunkle_00001_11
+      rect:
+        serializedVersion: 2
+        x: 204
+        y: 19
+        width: 80
+        height: 35
+      alignment: 9
+      pivot: {x: 0.7347187, y: 0.1224635}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13.777496, y: 30.713778}
+        - {x: -58.777496, y: 5.7137775}
+        - {x: -58.777496, y: -4.2862225}
+        - {x: 21.222504, y: -4.2862225}
+        - {x: 21.222504, y: 27.713778}
+        - {x: 12.222504, y: 30.713778}
+    - name: Trunkle_00001_12
+      rect:
+        serializedVersion: 2
+        x: 382
+        y: 11
+        width: 34
+        height: 37
+      alignment: 9
+      pivot: {x: 0.4590903, y: 0.8947228}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -12.60907, y: 3.895256}
+        - {x: -15.60907, y: -6.104744}
+        - {x: -15.60907, y: -31.104744}
+        - {x: -14.60907, y: -33.104744}
+        - {x: 16.39093, y: -33.104744}
+        - {x: 18.39093, y: -32.104744}
+        - {x: 18.39093, y: -10.104744}
+        - {x: 16.39093, y: 3.895256}
+    - name: Trunkle_00001_13
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 14
+        width: 37
+        height: 39
+      alignment: 9
+      pivot: {x: 0.34962836, y: 0.89231235}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9.936249, y: 4.1998177}
+        - {x: -12.936249, y: -4.8001823}
+        - {x: -12.936249, y: -33.800182}
+        - {x: -9.936249, y: -34.800182}
+        - {x: 19.063751, y: -34.800182}
+        - {x: 24.063751, y: -30.800182}
+        - {x: 24.063751, y: -12.800182}
+        - {x: 15.063751, y: 4.1998177}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
