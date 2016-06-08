@@ -132,4 +132,29 @@ public class ObjectsInfoController : MonoBehaviour {
     {
         dialogText.text = speaker.dialogues[speaker.activeDialog].stringList[speaker.activePhrase];
     }
+
+    public void AggressiveFeedback(int unit) // 0 - caster; 1 - target
+    {
+        if (GameManager.Instance.objectsTurn.inParty && !GameManager.Instance.blockSkillIcons)
+        {
+            string name = "";
+            if (unit == 0)
+                name = caster._name;
+            else
+                name = target._name;
+
+            GameManager.Instance.PrintActionFeedback(null, name + " is aggressive to your crew.", null, false, false, true);
+            GameManager.Instance.mouseOverButton = true;
+        }
+    }
+
+    public void AgressiveFeedbackOff()
+    {
+
+        if (GameManager.Instance.objectsTurn.inParty && !GameManager.Instance.blockSkillIcons)
+        {
+            GameManager.Instance.HideTextManually();
+            GameManager.Instance.mouseOverButton = false;
+        }
+    }
 }

@@ -16,8 +16,8 @@ public class InteractiveObject : MonoBehaviour {
 
     public bool inParty = false;
 
-    [SerializeField]
-    ActiveObjectCanvasController localCanvas;
+    //[SerializeField]
+    public ActiveObjectCanvasController localCanvas;
 
     [SerializeField]
     private MeshRenderer turnFeedback;
@@ -153,14 +153,6 @@ public class InteractiveObject : MonoBehaviour {
             {
                 activeDialog = 0; //default dialog
 
-                if (actionOnDialog == DialogAction.setAgressive)
-                {
-                    activeDialog = 3; // SETAGRESSIVE
-                    npcControl.agressiveTo = NpcController.Target.everyone;
-                }
-                else if (actionOnDialog == DialogAction.trade)
-                    activeDialog = 2; // TRADE DIALOG
-
                 // CHECK TEAMUP ITEM
                 if (GameManager.Instance.inventoryController.money >= teamUpMoney && teamUpItem != null && GameManager.Instance.party.Count < 3)
                 {
@@ -173,6 +165,17 @@ public class InteractiveObject : MonoBehaviour {
                         }
                     }
                 }
+
+                if (actionOnDialog == DialogAction.trade)
+                    activeDialog = 2; // TRADE DIALOG
+
+                else if (actionOnDialog == DialogAction.setAgressive)
+                {
+                    activeDialog = 3; // SETAGRESSIVE
+                    npcControl.agressiveTo = NpcController.Target.everyone;
+                    npcControl.SetAgressiveFeedback();
+                }
+
             }
             else if (npcControl.agressiveTo == NpcController.Target.everyone)
             {
@@ -215,7 +218,6 @@ public class InteractiveObject : MonoBehaviour {
         Instantiate(teleportParticles, newPlace.position, teleportParticles.transform.rotation);
 
         StartCoroutine("TakeNewPlace", newPlace);
-        
     }
 
     IEnumerator TakeNewPlace (Transform newPlace)
@@ -225,28 +227,27 @@ public class InteractiveObject : MonoBehaviour {
         transform.Find("sprite").transform.Rotate(0, 180, 0);
     }
 
-    public void Damage(float dmg, InteractiveObject attacker)
+    public void Damage(float baseDmg, InteractiveObject attacker)
     {
-        if (dmg > 0)
+        if (baseDmg > 0)
         {
-            health -= dmg;
+            float DMG = baseDmg * (100 / GameManager.Instance.curSanity);
+            health -= DMG;
 
             _anim.SetTrigger("Damage");
 
-            if (npcControl != null)
+            if (!inParty && attacker != this)
             {
                 if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
                     npcControl.agressiveTo = NpcController.Target.enemies;
                 else
                 {
                     npcControl.agressiveTo = NpcController.Target.everyone;
+                    npcControl.SetAgressiveFeedback();
                     //actionOnDialog = DialogAction.none;
                 }
             }
         }
-
-        if (health <= 0)
-            Death();
     }
 
     public void Recover(float amount)
@@ -260,16 +261,15 @@ public class InteractiveObject : MonoBehaviour {
             _anim.SetTrigger("Recover");
     }
 
-    void Death()
+    public void Death()
     {
         GameManager.Instance.objectList.Remove(this);
 
-        StartCoroutine("DeathCoroutine");
-    }
+        if (GameManager.Instance.objectsTurn == this)
+        {
+            GameManager.Instance.objectsTurn = null;
 
-    IEnumerator DeathCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
+        }
 
         if (npcControl != null)
             npcControl.DropOnDead();

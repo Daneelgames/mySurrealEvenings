@@ -44,12 +44,15 @@ public class ChoiceController : MonoBehaviour {
 
             npc.TeamUp();
             npc.npcControl.agressiveTo = NpcController.Target.none;
+            npc.npcControl.RemoveAggressiveFeedback();
         }
         else if (npc.activeDialog == 5) // calm down
         {
             GameManager.Instance.inventoryController.MoneyLose(npc.calmMoney);
             GameManager.Instance.inventoryController.ItemLost(npc.calmItem.GetComponent<SkillController>());
             npc.npcControl.agressiveTo = NpcController.Target.none;
+            npc.actionOnDialog = InteractiveObject.DialogAction.none;
+            npc.npcControl.RemoveAggressiveFeedback();
         }
 
         GameManager.Instance.ChoiceInactive();
