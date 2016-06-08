@@ -227,11 +227,12 @@ public class InteractiveObject : MonoBehaviour {
         transform.Find("sprite").transform.Rotate(0, 180, 0);
     }
 
-    public void Damage(float dmg, InteractiveObject attacker)
+    public void Damage(float baseDmg, InteractiveObject attacker)
     {
-        if (dmg > 0)
+        if (baseDmg > 0)
         {
-            health -= dmg;
+            float DMG = baseDmg * (100 / GameManager.Instance.curSanity);
+            health -= DMG;
 
             _anim.SetTrigger("Damage");
 
@@ -267,7 +268,7 @@ public class InteractiveObject : MonoBehaviour {
         if (GameManager.Instance.objectsTurn == this)
         {
             GameManager.Instance.objectsTurn = null;
-            print("npc dead");
+
         }
 
         if (npcControl != null)

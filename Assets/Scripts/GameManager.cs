@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance { get; private set; }
 
+    public float curSanity = 100f;
+
     public InteractiveObject objectsTurn;
 
     public InteractiveObject selectedObject;
@@ -212,7 +214,10 @@ public class GameManager : MonoBehaviour {
         SetTurn();
     }
 
-
+    public void FrenzyDamage(float baseFrenzyDmg)
+    {
+        curSanity -= baseFrenzyDmg;
+    }
 
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
@@ -358,7 +363,6 @@ public class GameManager : MonoBehaviour {
 
         if (objectsTurn != null)
         {
-            print("objects turn");
             foreach (InteractiveObject obj in objectList)
             {
 
@@ -381,7 +385,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            print("no objects turn");
+
             if (objectList.Count > 1)
                 objectsTurn = objectList[objectsTurnIndex];
             else
