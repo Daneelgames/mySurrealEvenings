@@ -244,19 +244,18 @@ public class GameManager : MonoBehaviour {
                 {
                     if (offensive)
                     { // CASTER USES OFFENSIVE SKILL ON OTHER
-                        generatedString = caster + " uses " + skill + " against " + target + ". " + caster + " thinks it was clever. Is it?";
+                        generatedString = caster + " uses " + skill + " against " + target + ". " + caster + " thinks it was clever.";
                     }
                     else
                     { // CASTER USES NON-OFFENSIVE SKILL ON OTHER
                         generatedString = caster + " uses " + skill + " on " + target + ".";
                     }
-
                 }
                 else
                 {
                     if (offensive)
                     { // CASTER USES OFFENSIVE SKILL ON SELF
-                        generatedString = caster + " uses " + skill + " against self. Why " + caster + " doing this???";
+                        generatedString = caster + " uses " + skill + " against self for some reason.";
                     }
                     else
                     { // CASTER USES NON-OFFENSIVE SKILL ON SELF

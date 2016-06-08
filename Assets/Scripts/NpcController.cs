@@ -7,7 +7,7 @@ public class NpcController : MonoBehaviour {
     public enum Target {none, everyone, enemies}
 
     public Target agressiveTo = Target.none;
-
+    
     [SerializeField]
     InteractiveObject objectController;
 
@@ -17,6 +17,12 @@ public class NpcController : MonoBehaviour {
 
     public int moneyDrop = 5;
     
+    void Start()
+    {
+        if (agressiveTo == Target.everyone)
+            SetAgressiveFeedback();
+    }
+
     public void ChooseAction()
     {
         if (agressiveTo == Target.none)
@@ -110,7 +116,7 @@ public class NpcController : MonoBehaviour {
                 if (agressiveTo == Target.everyone)
                 {
                     // target offensive to all
-                    if (randomChance > 0.2f)
+                    if (randomChance > 0.1f)
                     {
                         int randomParty = Random.Range(0, GameManager.Instance.party.Count);
 
@@ -153,12 +159,12 @@ public class NpcController : MonoBehaviour {
                     GameManager.Instance.UseSkill(skills[actionNumber], obj);
                 }
             }
-            else // DEFFENSIVE SKILL
+            else // DEFFENSIVE/RECOVER SKILL
             {
                 if (agressiveTo == Target.everyone)
                 {
                     //target recover more to NPCs
-                    if (randomChance < 0.2f)
+                    if (randomChance < 0.1f)
                     {
                         int randomParty = Random.Range(0, GameManager.Instance.party.Count);
 
@@ -196,6 +202,17 @@ public class NpcController : MonoBehaviour {
                 }
             }
         }
+    }
+
+    public void SetAgressiveFeedback()
+    {
+        objectController.localCanvas.AggressiveStart();
+    }
+
+    public void RemoveAggressiveFeedback()
+    {
+
+        objectController.localCanvas.AggressiveOver();
     }
 
     public void DropOnDead()

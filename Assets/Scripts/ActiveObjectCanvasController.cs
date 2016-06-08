@@ -18,6 +18,11 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
     [SerializeField]
     Animator _animator;
+    [SerializeField]
+    Animator aggressiveAnimator;
+
+    [SerializeField]
+    Image aggressiveIcon;
 
     public bool skillsVisible = false;
 
@@ -113,7 +118,27 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
     public void PointerExitButton()
     {
-        GameManager.Instance.mouseOverButton = false;
-        GameManager.Instance.HideTextManually();
+		GameManager.Instance.mouseOverButton = false;
+		
+		if (!GameManager.Instance.blockSkillIcons)
+			GameManager.Instance.HideTextManually();
+    }
+
+    public void AggressiveStart()
+    {
+        aggressiveIcon.enabled = true;
+        aggressiveAnimator.SetBool("Active", true);
+    }
+
+    public void AggressiveOver()
+    {
+        StartCoroutine("DisableAggressiveIcon");
+        aggressiveAnimator.SetBool("Active", false);
+    }
+
+    IEnumerator DisableAggressiveIcon()
+    {
+        yield return new WaitForSeconds(0.5f);
+        aggressiveIcon.enabled = false;
     }
 }

@@ -16,8 +16,8 @@ public class InteractiveObject : MonoBehaviour {
 
     public bool inParty = false;
 
-    [SerializeField]
-    ActiveObjectCanvasController localCanvas;
+    //[SerializeField]
+    public ActiveObjectCanvasController localCanvas;
 
     [SerializeField]
     private MeshRenderer turnFeedback;
@@ -153,14 +153,6 @@ public class InteractiveObject : MonoBehaviour {
             {
                 activeDialog = 0; //default dialog
 
-                if (actionOnDialog == DialogAction.setAgressive)
-                {
-                    activeDialog = 3; // SETAGRESSIVE
-                    npcControl.agressiveTo = NpcController.Target.everyone;
-                }
-                else if (actionOnDialog == DialogAction.trade)
-                    activeDialog = 2; // TRADE DIALOG
-
                 // CHECK TEAMUP ITEM
                 if (GameManager.Instance.inventoryController.money >= teamUpMoney && teamUpItem != null && GameManager.Instance.party.Count < 3)
                 {
@@ -173,6 +165,17 @@ public class InteractiveObject : MonoBehaviour {
                         }
                     }
                 }
+
+                if (actionOnDialog == DialogAction.trade)
+                    activeDialog = 2; // TRADE DIALOG
+
+                else if (actionOnDialog == DialogAction.setAgressive)
+                {
+                    activeDialog = 3; // SETAGRESSIVE
+                    npcControl.agressiveTo = NpcController.Target.everyone;
+                    npcControl.SetAgressiveFeedback();
+                }
+
             }
             else if (npcControl.agressiveTo == NpcController.Target.everyone)
             {
@@ -215,7 +218,6 @@ public class InteractiveObject : MonoBehaviour {
         Instantiate(teleportParticles, newPlace.position, teleportParticles.transform.rotation);
 
         StartCoroutine("TakeNewPlace", newPlace);
-        
     }
 
     IEnumerator TakeNewPlace (Transform newPlace)
@@ -233,18 +235,18 @@ public class InteractiveObject : MonoBehaviour {
 
             _anim.SetTrigger("Damage");
 
-            if (npcControl != null)
+            if (!inParty)
             {
                 if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
                     npcControl.agressiveTo = NpcController.Target.enemies;
                 else
                 {
                     npcControl.agressiveTo = NpcController.Target.everyone;
+                    npcControl.SetAgressiveFeedback();
                     //actionOnDialog = DialogAction.none;
                 }
             }
         }
-
         if (health <= 0)
             Death();
     }
