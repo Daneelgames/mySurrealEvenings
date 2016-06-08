@@ -61,6 +61,9 @@ public class GameManager : MonoBehaviour {
 
     int objectsTurnIndex = 0;
 
+    public Animator skipTurnAnim;
+    public Animator goFurtherAnim;
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -107,6 +110,7 @@ public class GameManager : MonoBehaviour {
             //print(obj.name);
             obj.ToggleTurnFeedback();
         }
+        CheckSkipAndGo();
     }
 
     void GetRandomSkills(List<GameObject> skills)
@@ -202,8 +206,19 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void UnitSkipsTurn()
+    {
+        PrintActionFeedback(objectsTurn._name, null, null, false, false, false);
+        SetTurn();
+    }
+
+
+
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
+
+        skipTurnAnim.SetBool("Active", false);
+        goFurtherAnim.SetBool("Active", false);
 
         foreach (InteractiveObject npc in objectList)
         {
@@ -334,10 +349,19 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator NewTurn()
     {
+
+        for (int i = objectList.Count - 1; i >= 0; i--)
+        {
+            if (objectList[i].health <= 0)
+                objectList[i].Death();
+        }
+
         if (objectsTurn != null)
         {
+            print("objects turn");
             foreach (InteractiveObject obj in objectList)
             {
+
                 if (obj == objectsTurn)
                 {
                     int objInt = objectList.IndexOf(obj);
@@ -356,7 +380,13 @@ public class GameManager : MonoBehaviour {
             }
         }
         else
-            objectsTurn = objectList[objectsTurnIndex];
+        {
+            print("no objects turn");
+            if (objectList.Count > 1)
+                objectsTurn = objectList[objectsTurnIndex];
+            else
+                objectsTurn = objectList[0];
+        }
 
         yield return new WaitForSeconds(0.1f);
 
@@ -371,6 +401,37 @@ public class GameManager : MonoBehaviour {
         SetPartySkills();
 
         blockSkillIcons = false;
+
+
+        CheckSkipAndGo();
+
+    }
+
+    void CheckSkipAndGo()
+    {
+        bool haveAggressiveNpcs = false;
+
+        foreach (InteractiveObject obj in objectList)
+        {
+            if (obj.npcControl != null && obj.npcControl.agressiveTo == NpcController.Target.everyone)
+            {
+                haveAggressiveNpcs = true;
+                break;
+            }
+        }
+
+        if (objectsTurn.inParty && !inDialog && !tradeActive && !inventoryActive && !choiceActive && !blockSkillIcons)
+        {
+            skipTurnAnim.SetBool("Active", true);
+
+            if (!haveAggressiveNpcs)
+                goFurtherAnim.SetBool("Active", true);
+        }
+        else
+        {
+            skipTurnAnim.SetBool("Active", false);
+            goFurtherAnim.SetBool("Active", false);
+        }
     }
 
     public void DialogStart(InteractiveObject speaker)
@@ -386,6 +447,8 @@ public class GameManager : MonoBehaviour {
         InventoryInactive();
         clickToSkip.raycastTarget = true;
         StartCoroutine("DialogCooldown");
+
+        CheckSkipAndGo();
     }
 
     void DialogUpdate()
@@ -445,7 +508,10 @@ public class GameManager : MonoBehaviour {
         }
 
         if (!specialDialog) //Clear selection if no choise or trade
+        {
             ClearSelectedObject();
+            CheckSkipAndGo();
+        }
 
         InventoryActive();
 
@@ -469,6 +535,8 @@ public class GameManager : MonoBehaviour {
         InventoryToggle();
 
         ClearSelectedObject();
+
+        CheckSkipAndGo();
     }
 
     void TradeActive()
@@ -487,6 +555,8 @@ public class GameManager : MonoBehaviour {
         tradeActive = false;
         InventoryToggle();
         StartCoroutine("SetTradeInactive");
+
+        CheckSkipAndGo();
     }
 
     IEnumerator SetTradeInactive()
@@ -513,6 +583,8 @@ public class GameManager : MonoBehaviour {
                 inventory.SetBool("Active", false);
                 inventoryActive = false;
             }
+
+            CheckSkipAndGo();
         }
     }
 
@@ -520,12 +592,16 @@ public class GameManager : MonoBehaviour {
     {
         inventory.SetBool("Active", false);
         inventoryActive = false;
+
+        CheckSkipAndGo();
     }
     
     void InventoryInactive()
     {
         inventory.SetBool("Inactive", true);
         inventoryActive = false;
+
+        CheckSkipAndGo();
     }
 
     void InventoryActive()

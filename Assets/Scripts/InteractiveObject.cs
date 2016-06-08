@@ -235,7 +235,7 @@ public class InteractiveObject : MonoBehaviour {
 
             _anim.SetTrigger("Damage");
 
-            if (!inParty)
+            if (!inParty && attacker != this)
             {
                 if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
                     npcControl.agressiveTo = NpcController.Target.enemies;
@@ -247,8 +247,6 @@ public class InteractiveObject : MonoBehaviour {
                 }
             }
         }
-        if (health <= 0)
-            Death();
     }
 
     public void Recover(float amount)
@@ -262,16 +260,15 @@ public class InteractiveObject : MonoBehaviour {
             _anim.SetTrigger("Recover");
     }
 
-    void Death()
+    public void Death()
     {
         GameManager.Instance.objectList.Remove(this);
 
-        StartCoroutine("DeathCoroutine");
-    }
-
-    IEnumerator DeathCoroutine()
-    {
-        yield return new WaitForSeconds(1f);
+        if (GameManager.Instance.objectsTurn == this)
+        {
+            GameManager.Instance.objectsTurn = null;
+            print("npc dead");
+        }
 
         if (npcControl != null)
             npcControl.DropOnDead();

@@ -89,7 +89,7 @@ public class SkillController : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if (!gathered && GameManager.Instance.objectsTurn.inParty)
+        if (!gathered && GameManager.Instance.objectsTurn.inParty && !GameManager.Instance.blockSkillIcons)
         {
             bool emptySlot = false;
             foreach (InventorySlotController slot in GameManager.Instance.inventoryController.slots)

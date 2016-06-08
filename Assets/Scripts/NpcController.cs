@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class NpcController : MonoBehaviour {
 
-    public enum Target {none, everyone, enemies}
+    public enum Target {none, everyone, enemies, self}
 
     public Target agressiveTo = Target.none;
     
@@ -74,7 +74,7 @@ public class NpcController : MonoBehaviour {
             else
                 chosenSkill = -1;
 
-            //check other enemies
+            //check other enemies. if no other enemies found, become calm
             if (agressiveTo == Target.enemies)
             {
                 bool alone = true;
@@ -98,12 +98,12 @@ public class NpcController : MonoBehaviour {
 
     void Action(int actionNumber)
     {
-        if (actionNumber < 0)
+        if (actionNumber < 0) // NPC IS LAZY
         {
-            // NPC IS LAZY
-            //print(objectController._name + " is lazy.");
-            GameManager.Instance.PrintActionFeedback(objectController._name, null, null, false, false, false);
-            GameManager.Instance.SetTurn();
+            GameManager.Instance.UnitSkipsTurn();
+
+            //GameManager.Instance.PrintActionFeedback(objectController._name, null, null, false, false, false);
+            //GameManager.Instance.SetTurn();
         }
         else
         {
@@ -158,6 +158,10 @@ public class NpcController : MonoBehaviour {
 
                     GameManager.Instance.UseSkill(skills[actionNumber], obj);
                 }
+                else if (agressiveTo == Target.self)
+                {
+                    GameManager.Instance.UseSkill(skills[actionNumber], this.objectController);
+                }
             }
             else // DEFFENSIVE/RECOVER SKILL
             {
@@ -199,6 +203,10 @@ public class NpcController : MonoBehaviour {
                     
                     objectController._anim.SetTrigger("Action");
                     GameManager.Instance.UseSkill(skills[actionNumber], obj);
+                }
+                else if (agressiveTo == Target.self)
+                {
+                    GameManager.Instance.UseSkill(skills[actionNumber], this.objectController);
                 }
             }
         }
