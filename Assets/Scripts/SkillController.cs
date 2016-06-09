@@ -20,14 +20,14 @@ public class SkillController : MonoBehaviour {
 
     public int skillLevel = 1;
 
+    public float frenzy = 5;
+
     public float damageTarget = 0;
     public float recoverTarget = 0;
-    public float frenzyTarget = 5;
     public Effect effectTarget = Effect.none;
 
     public float damageCaster = 0;
     public float recoverCaster = 0;
-    public float frenzyCaster = 5;
     public Effect effectCaster = Effect.none;
 
     public float missRate = 0; // from 0 to 1
@@ -50,8 +50,6 @@ public class SkillController : MonoBehaviour {
                 target.Damage(damageTarget + targetRandom, caster);
                 target.Recover(recoverTarget + targetRandom);
 
-                if (target == GameManager.Instance.party[0])
-                    GameManager.Instance.FrenzyDamage(frenzyTarget + targetRandom);
 
                 if (effectTarget != Effect.none)
                 {
@@ -72,8 +70,6 @@ public class SkillController : MonoBehaviour {
                 caster.Damage(damageCaster + casterRandom, caster);
                 caster.Recover(recoverCaster + casterRandom);
                 
-                if (caster == GameManager.Instance.party[0])
-                    GameManager.Instance.FrenzyDamage(frenzyCaster + casterRandom);
 
                 if (effectCaster != Effect.none)
                 {
@@ -88,6 +84,10 @@ public class SkillController : MonoBehaviour {
                 }
             }
         }
+        
+        // FRENZY DMG
+        if (target == GameManager.Instance.party[0] || caster == GameManager.Instance.party[0])
+            GameManager.Instance.FrenzyDamage(frenzy);
     }
 
     void Start()
