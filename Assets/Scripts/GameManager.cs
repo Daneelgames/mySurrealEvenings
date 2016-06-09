@@ -406,9 +406,7 @@ public class GameManager : MonoBehaviour {
 
         blockSkillIcons = false;
 
-
         CheckSkipAndGo();
-
     }
 
     void CheckSkipAndGo()
@@ -471,7 +469,7 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator DialogCooldown()
     {
-        yield return new WaitForSeconds(0.5F);
+        yield return new WaitForSeconds(0.3F);
         canSkipDialog = true;
     }
 

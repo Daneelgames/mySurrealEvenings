@@ -89,6 +89,7 @@ public class SkillController : MonoBehaviour {
         if (target == GameManager.Instance.party[0] || caster == GameManager.Instance.party[0])
             GameManager.Instance.FrenzyDamage(frenzy);
     }
+
     void OnMouseDown()
     {
         if (!gathered && GameManager.Instance.objectsTurn.inParty && !GameManager.Instance.blockSkillIcons)
