@@ -9,6 +9,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
     public iconType type = iconType.sanity;
 
     private int enemyAmount = 0;
+    private float enemyLvlAmount = 0;
 
     public void MouseEnter()
     {
@@ -40,8 +41,14 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
                 foreach (InteractiveObject npc in GameManager.Instance.objectList)
                 {
                     if (npc.npcControl != null && npc.npcControl.agressiveTo == NpcController.Target.everyone)
+                    {
                         enemyAmount += 1;
+                        enemyLvlAmount += npc.npcControl.overallDifficulty;
+                    }
                 }
+
+                enemyAmount += Mathf.RoundToInt(enemyLvlAmount);
+
                 switch (enemyAmount)
                 {
                     case 0:

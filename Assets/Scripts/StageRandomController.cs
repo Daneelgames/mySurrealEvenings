@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 public class StageRandomController : MonoBehaviour {
 
@@ -89,19 +90,49 @@ public class StageRandomController : MonoBehaviour {
         List<NpcController> newNpcList = new List<NpcController>(npcList);
         List<Transform> newCellsList = new List<Transform>(GameManager.Instance.npcCells);
 
-        while (curDif < stageDifficulty)
+        List<NpcController> npcOnStage = new List<NpcController>();
+
+        while (curDif < stageDifficulty && newCellsList.Count > 0)
         {
             int randomNpc = Random.Range(0, newNpcList.Count);
 
             if (npcList[randomNpc].overallDifficulty < stageDifficulty)
             {
-                curDif += npcList[randomNpc].overallDifficulty;
+                curDif += newNpcList[randomNpc].overallDifficulty;
 
                 Transform randomCell = newCellsList[Random.Range(0, newCellsList.Count)];
 
-                Instantiate(npcList[randomNpc].gameObject, randomCell.position, npcList[randomNpc].transform.rotation);
+                GameObject go =  Instantiate(newNpcList[randomNpc].gameObject, randomCell.position, newNpcList[randomNpc].transform.rotation) as GameObject;
+
+                npcOnStage.Add(go.GetComponent<NpcController>());
 
                 newCellsList.Remove(randomCell);
+            }
+        }
+
+        if (curDif < stageDifficulty && newCellsList.Count == 0) // second iteration - replace lowest level npcs
+        {
+            npcOnStage = npcOnStage.OrderByDescending(w => w.overallDifficulty).ToList(); //sort by diff. lowlevels at the end
+
+            for (int i = npcOnStage.Count; i > 0; i --)
+            {
+                int randomNpc = Random.Range(0, newNpcList.Count);
+                if (npcOnStage[i].overallDifficulty < newNpcList[randomNpc].overallDifficulty)
+                {
+                    curDif -= npcOnStage[i].overallDifficulty;
+
+                    GameObject go = Instantiate(newNpcList[randomNpc].gameObject, npcOnStage[i].transform.position, newNpcList[randomNpc].transform.rotation) as GameObject;
+
+                    curDif += newNpcList[randomNpc].overallDifficulty;
+
+                    npcOnStage.Remove(npcOnStage[i]);
+                    Destroy(npcOnStage[i].gameObject);
+
+                    npcOnStage.Add(go.GetComponent<NpcController>());
+                }
+
+                if (curDif >= stageDifficulty)
+                    break;
             }
         }
     }
