@@ -65,7 +65,8 @@ public class GameManager : MonoBehaviour {
 
     public Animator skipTurnAnim;
     public Animator goFurtherAnim;
-
+    public Animator sanityMeterAnim;
+    
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -83,8 +84,6 @@ public class GameManager : MonoBehaviour {
 
         transform.FindChild("Canvas").gameObject.SetActive(true);
 
-        skillList = GetComponent<SkillList>();
-
         GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>().inParty = true;
         party[0] = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
         party[0].inParty = true;
@@ -95,10 +94,10 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        StartStage();
+        NewStage();
     }
 
-    void StartStage()
+    void NewStage()
     {
         stageRandomController.BuildStage();
 
@@ -217,6 +216,10 @@ public class GameManager : MonoBehaviour {
     public void FrenzyDamage(float baseFrenzyDmg)
     {
         curSanity -= baseFrenzyDmg;
+        // FRENZY FEEDBACK
+        sanityMeterAnim.SetFloat("Sanity", curSanity);
+
+        // FRENZY FEEDBACK
     }
 
     public void UseSkill(GameObject skill, InteractiveObject target)
@@ -285,7 +288,10 @@ public class GameManager : MonoBehaviour {
             }
             else // NPC IS LAZY, SKIP HIS MOVE
             {
-                generatedString = caster + " is doing nothing!";
+                if (!objectsTurn.inParty)
+                    generatedString = caster + " is doing nothing!";
+                else
+                    generatedString = "Escape failed!";
             }
         }
         else // THIS ONE PRINTS BUTTON DESCRIPTION
@@ -411,28 +417,30 @@ public class GameManager : MonoBehaviour {
 
     void CheckSkipAndGo()
     {
-        bool haveAggressiveNpcs = false;
-
-        foreach (InteractiveObject obj in objectList)
-        {
-            if (obj.npcControl != null && obj.npcControl.agressiveTo == NpcController.Target.everyone)
-            {
-                haveAggressiveNpcs = true;
-                break;
-            }
-        }
-
         if (objectsTurn.inParty && !inDialog && !tradeActive && !inventoryActive && !choiceActive && !blockSkillIcons)
         {
             skipTurnAnim.SetBool("Active", true);
-
-            if (!haveAggressiveNpcs)
-                goFurtherAnim.SetBool("Active", true);
+            goFurtherAnim.SetBool("Active", true);
         }
         else
         {
             skipTurnAnim.SetBool("Active", false);
             goFurtherAnim.SetBool("Active", false);
+        }
+    }
+
+    public void LeaveLevel(int enemyAmount)
+    {
+        float randomChance = Random.Range(0f, 10f);
+        
+
+        if (randomChance >= enemyAmount)
+        {
+            print("escape");
+        }
+        else
+        {
+            UnitSkipsTurn();
         }
     }
 

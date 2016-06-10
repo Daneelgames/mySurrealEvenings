@@ -221,7 +221,7 @@ public class InteractiveObject : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.5f);
         transform.position = newPlace.position;
-        transform.Find("sprite").transform.Rotate(0, 180, 0);
+        transform.Find("sprite").transform.localScale = new Vector3 (-1, 1, 1);
     }
 
     public void Damage(float baseDmg, InteractiveObject attacker)
@@ -243,7 +243,6 @@ public class InteractiveObject : MonoBehaviour {
                 }
             }
         }
-
         attacker._anim.SetTrigger("Action");
 
         if (this != attacker)
@@ -280,6 +279,12 @@ public class InteractiveObject : MonoBehaviour {
         if (npcControl != null)
             npcControl.DropOnDead();
 
-        Destroy(gameObject);
+        if (inParty)
+        {
+            GameManager.Instance.party.Remove(this);
+            inParty = false;
+        }
+
+        gameObject.SetActive(false);
     }
 }

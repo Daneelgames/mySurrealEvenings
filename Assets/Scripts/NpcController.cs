@@ -6,6 +6,8 @@ public class NpcController : MonoBehaviour {
 
     public enum Target {none, everyone, enemies, self}
 
+    public float overallDifficulty = 1f;
+
     public Target agressiveTo = Target.none;
     
     [SerializeField]
@@ -92,8 +94,14 @@ public class NpcController : MonoBehaviour {
                     chosenSkill = -1;
                 }
             }
-            Action(chosenSkill);
+            StartCoroutine("SetAction", chosenSkill);
         }
+    }
+
+    IEnumerator SetAction(int chosenSkill)
+    {
+        yield return new WaitForSeconds(0.3F);
+        Action(chosenSkill);
     }
 
     void Action(int actionNumber)
@@ -101,9 +109,6 @@ public class NpcController : MonoBehaviour {
         if (actionNumber < 0) // NPC IS LAZY
         {
             GameManager.Instance.UnitSkipsTurn();
-
-            //GameManager.Instance.PrintActionFeedback(objectController._name, null, null, false, false, false);
-            //GameManager.Instance.SetTurn();
         }
         else
         {
