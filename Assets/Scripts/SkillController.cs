@@ -90,6 +90,7 @@ public class SkillController : MonoBehaviour {
             GameManager.Instance.FrenzyDamage(frenzy);
     }
 
+
     void OnMouseDown()
     {
         if (!gathered && GameManager.Instance.objectsTurn.inParty && !GameManager.Instance.blockSkillIcons)

@@ -24,7 +24,6 @@ public class InteractiveObject : MonoBehaviour {
 
     public NpcController npcControl;
 
-    [HideInInspector]
     public Animator _anim;
 
     public GameObject teamUpItem;
@@ -55,7 +54,6 @@ public class InteractiveObject : MonoBehaviour {
         maxHealth = health;
         GameManager.Instance.objectList.Add(this);
         ToggleSelectedFeedback();
-        _anim = GetComponent<Animator>();
     }
 
     void OnMouseDown()
@@ -141,7 +139,6 @@ public class InteractiveObject : MonoBehaviour {
         GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
         localCanvas.HideSkills();
         localCanvas.HideIcons();
-        _anim.SetTrigger("Action");
     }
     
 
@@ -233,9 +230,7 @@ public class InteractiveObject : MonoBehaviour {
         {
             float DMG = baseDmg * (100 / GameManager.Instance.curSanity);
             health -= DMG;
-
-            _anim.SetTrigger("Damage");
-
+            
             if (!inParty && attacker != this)
             {
                 if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
@@ -248,6 +243,17 @@ public class InteractiveObject : MonoBehaviour {
                 }
             }
         }
+
+        attacker._anim.SetTrigger("Action");
+
+        if (this != attacker)
+            StartCoroutine("ActionTriggerDelay");
+    }
+
+    IEnumerator ActionTriggerDelay()
+    {
+        yield return new WaitForSeconds(0.3F);
+        _anim.SetTrigger("Action");
     }
 
     public void Recover(float amount)
