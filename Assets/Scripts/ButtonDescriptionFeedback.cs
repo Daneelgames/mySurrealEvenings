@@ -37,6 +37,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
             else if (type == iconType.goFurther)
             {
                 enemyAmount = 0;
+                enemyLvlAmount = 0;
                 string escapeDescription = "";
                 foreach (InteractiveObject npc in GameManager.Instance.objectList)
                 {
