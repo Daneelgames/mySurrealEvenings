@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -66,7 +67,9 @@ public class GameManager : MonoBehaviour {
     public Animator skipTurnAnim;
     public Animator goFurtherAnim;
     public Animator sanityMeterAnim;
-    
+
+    private bool changeScene = false;
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -75,21 +78,23 @@ public class GameManager : MonoBehaviour {
             // If that is the case, we destroy other instances
             Destroy(gameObject);
         }
+        else
+        {
+            // Here we save our singleton instance
+            Instance = this;
 
-        // Here we save our singleton instance
-        Instance = this;
+            // Furthermore we make sure that we don't destroy between scenes (this is optional)
+            DontDestroyOnLoad(gameObject);
 
-        // Furthermore we make sure that we don't destroy between scenes (this is optional)
-        DontDestroyOnLoad(gameObject);
+            transform.FindChild("Canvas").gameObject.SetActive(true);
 
-        transform.FindChild("Canvas").gameObject.SetActive(true);
+            GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>().inParty = true;
+            party[0] = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
+            party[0].inParty = true;
 
-        GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>().inParty = true;
-        party[0] = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
-        party[0].inParty = true;
-
-        GetRandomSkills(skills_1);
-        skillsCurrent = skills_1;
+            GetRandomSkills(skills_1);
+            skillsCurrent = skills_1;
+        }
     }
 
     void Start()
@@ -99,6 +104,7 @@ public class GameManager : MonoBehaviour {
 
     void NewStage()
     {
+        print("Build stage");
         stageRandomController.BuildStage();
 
         SortObjects();
@@ -181,7 +187,8 @@ public class GameManager : MonoBehaviour {
 
         foreach(InteractiveObject obj in objectList)
         {
-            obj.ToggleSelectedFeedback();
+            if (obj != null)
+                obj.ToggleSelectedFeedback();
         }
 
         // UPDATE STATUS WINDOWS
@@ -197,7 +204,8 @@ public class GameManager : MonoBehaviour {
 
             foreach (InteractiveObject obj in objectList)
             {
-                obj.ToggleSelectedFeedback();
+                if (obj != null)
+                    obj.ToggleSelectedFeedback();
             }
             if (!turnOver)
                 objInfoController.HideWindows();
@@ -433,15 +441,27 @@ public class GameManager : MonoBehaviour {
     {
         float randomChance = Random.Range(0f, 10f);
         
+        if (!changeScene)
+        {
+            if (randomChance >= enemyAmount)
+            {
+                changeScene = true;
+                turnOver = true;
+                StartCoroutine("LoadScene", "LevelGlobal");
+            }
+            else
+            {
+                UnitSkipsTurn();
+            }
+        }
+    }
 
-        if (randomChance >= enemyAmount)
-        {
-            print("escape");
-        }
-        else
-        {
-            UnitSkipsTurn();
-        }
+    IEnumerator LoadScene (string sceneName)
+    {
+        yield return new WaitForSeconds(0.5F);
+        SceneManager.LoadScene(sceneName);
+        changeScene = false;
+        turnOver = false;
     }
 
     public void DialogStart(InteractiveObject speaker)
