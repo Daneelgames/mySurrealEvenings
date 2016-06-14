@@ -15,6 +15,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
     {
         if (GameManager.Instance.objectsTurn.inParty && !GameManager.Instance.blockSkillIcons)
         {
+            GameManager.Instance.mouseOverButton = true;
             if (type == iconType.skipTurn)
                 GameManager.Instance.PrintActionFeedback(null, desctiption, null, false, false, true);
             else if (type == iconType.sanity)
@@ -103,6 +104,9 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
     public void MouseExit()
     {
         if (GameManager.Instance.objectsTurn.inParty && !GameManager.Instance.blockSkillIcons)
+        {
             GameManager.Instance.HideTextManually();
+            GameManager.Instance.mouseOverButton = false;
+        }
     }
 }
