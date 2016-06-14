@@ -296,10 +296,7 @@ public class GameManager : MonoBehaviour {
             }
             else // NPC IS LAZY, SKIP HIS MOVE
             {
-                if (!objectsTurn.inParty)
-                    generatedString = caster + " is doing nothing!";
-                else
-                    generatedString = "Escape failed!";
+                generatedString = caster + " is doing nothing!";
             }
         }
         else // THIS ONE PRINTS BUTTON DESCRIPTION
@@ -439,27 +436,25 @@ public class GameManager : MonoBehaviour {
 
     public void LeaveLevel(int enemyAmount)
     {
-        float randomChance = Random.Range(0f, 10f);
-        
         if (!changeScene)
         {
-            if (randomChance >= enemyAmount)
+            if (enemyAmount > 0)
             {
-                changeScene = true;
-                turnOver = true;
-                StartCoroutine("LoadScene", "LevelGlobal");
+                ChoiceActive(null, true);
             }
             else
             {
-                UnitSkipsTurn();
+                StartCoroutine("LoadScene");
             }
         }
     }
 
-    IEnumerator LoadScene (string sceneName)
+    IEnumerator LoadScene ()
     {
+        changeScene = true;
+        turnOver = true;
         yield return new WaitForSeconds(0.5F);
-        SceneManager.LoadScene(sceneName);
+        print("Load Day");
         changeScene = false;
         turnOver = false;
     }
@@ -523,7 +518,7 @@ public class GameManager : MonoBehaviour {
             }
             else if (selectedObject.activeDialog == 1) // CHECK FOR TEAM UP
             {
-                ChoiceActive(selectedObject);
+                ChoiceActive(selectedObject, false);
                 specialDialog = true;
             }
         }
@@ -532,7 +527,7 @@ public class GameManager : MonoBehaviour {
         {
             if (selectedObject.activeDialog == 5 && selectedObject.npcControl.skills.Count < 5) // CHECK FOR CALM
             {
-                ChoiceActive(selectedObject);
+                ChoiceActive(selectedObject, false);
                 specialDialog = true;
             }
         }
@@ -552,14 +547,16 @@ public class GameManager : MonoBehaviour {
         objInfoController.HideDialogBackground();
     }
 
-    void ChoiceActive(InteractiveObject npc)
+    void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy)
     {
-        InventoryToggle();
-        choiceController.ShowWindow(npc);
+        if (!sleepNearEnemy)
+            InventoryToggle();
+
+        choiceController.ShowWindow(npc, sleepNearEnemy);
         choiceActive = true;
     }
 
-    public void ChoiceInactive()
+    public void ChoiceInactive(bool sleep)
     {
         choiceActive = false;
         InventoryToggle();
@@ -567,6 +564,11 @@ public class GameManager : MonoBehaviour {
         ClearSelectedObject();
 
         CheckSkipAndGo();
+
+        if (sleep)
+        {
+            StartCoroutine("LoadScene");
+        }
     }
 
     void TradeActive()
@@ -614,7 +616,7 @@ public class GameManager : MonoBehaviour {
                 inventoryActive = false;
             }
 
-            CheckSkipAndGo();
+            //CheckSkipAndGo();
         }
     }
 

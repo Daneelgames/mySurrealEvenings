@@ -51,43 +51,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
 
                 enemyAmount += Mathf.RoundToInt(enemyLvlAmount);
 
-                switch (enemyAmount)
-                {
-                    case 0:
-                        escapeDescription = "Go further.";
-                        break;
-                    case 1:
-                        escapeDescription = "90% chance to escape.";
-                        break;
-                    case 2:
-                        escapeDescription = "80% chance to escape.";
-                        break;
-                    case 3:
-                        escapeDescription = "70% chance to escape.";
-                        break;
-                    case 4:
-                        escapeDescription = "60% chance to escape.";
-                        break;
-                    case 5:
-                        escapeDescription = "50% chance to escape.";
-                        break;
-                    case 6:
-                        escapeDescription = "40% chance to escape.";
-                        break;
-                    case 7:
-                        escapeDescription = "30% chance to escape.";
-                        break;
-                    case 8:
-                        escapeDescription = "20% chance to escape.";
-                        break;
-                    case 9:
-                        escapeDescription = "10% chance to escape.";
-                        break;
-                    default:
-                        escapeDescription = "Go further.";
-                        break;
-                }
-
+                escapeDescription = "Go to sleep.";
                 GameManager.Instance.PrintActionFeedback(null, escapeDescription, null, false, false, true);
             }
         }
