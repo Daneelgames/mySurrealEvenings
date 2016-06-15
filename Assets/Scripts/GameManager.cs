@@ -562,7 +562,6 @@ public class GameManager : MonoBehaviour {
         choiceActive = false;
         InventoryToggle();
 
-
         ClearSelectedObject();
 
         CheckSkipAndGo();

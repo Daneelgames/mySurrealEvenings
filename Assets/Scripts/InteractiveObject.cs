@@ -252,7 +252,7 @@ public class InteractiveObject : MonoBehaviour {
     IEnumerator ActionTriggerDelay()
     {
         yield return new WaitForSeconds(0.3F);
-        _anim.SetTrigger("Action");
+        _anim.SetTrigger("Damage");
     }
 
     public void Recover(float amount)
