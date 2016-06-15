@@ -549,10 +549,11 @@ public class GameManager : MonoBehaviour {
 
     void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy)
     {
-        if (!sleepNearEnemy)
-            InventoryToggle();
+        InventoryClosed();
 
         choiceController.ShowWindow(npc, sleepNearEnemy);
+        goFurtherAnim.SetBool("Active", false);
+        skipTurnAnim.SetBool("Active", false);
         choiceActive = true;
     }
 
@@ -561,6 +562,7 @@ public class GameManager : MonoBehaviour {
         choiceActive = false;
         InventoryToggle();
 
+
         ClearSelectedObject();
 
         CheckSkipAndGo();
@@ -568,6 +570,8 @@ public class GameManager : MonoBehaviour {
         if (sleep)
         {
             StartCoroutine("LoadScene");
+            goFurtherAnim.SetBool("Active", true);
+            skipTurnAnim.SetBool("Active", true);
         }
     }
 
