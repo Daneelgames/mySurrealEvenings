@@ -11,8 +11,6 @@ public class StageRandomController : MonoBehaviour {
 
     public List<NpcController> npcList;
 
-    public List<GameObject> backgrounds;
-
     public void BuildStage()
     {
         curStageIndex += 1;
@@ -20,8 +18,6 @@ public class StageRandomController : MonoBehaviour {
         SetDifficulty();
 
         SpawnNpc();
-
-        SetBackground();
     }
 
     void SetDifficulty() // based on levelIndex + random
@@ -135,10 +131,5 @@ public class StageRandomController : MonoBehaviour {
                     break;
             }
         }
-    }
-
-    void SetBackground()
-    {
-        Instantiate(backgrounds[Random.Range(0, backgrounds.Count)], Vector3.zero, Quaternion.identity);
     }
 }
