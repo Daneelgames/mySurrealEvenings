@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -20,7 +21,7 @@ public class InteractiveObject : MonoBehaviour {
     public ActiveObjectCanvasController localCanvas;
 
     [SerializeField]
-    private MeshRenderer turnFeedback;
+    private Animator turnFeedbackAnim;
 
     public NpcController npcControl;
 
@@ -40,6 +41,8 @@ public class InteractiveObject : MonoBehaviour {
     public int activeDialog = 0;
     public int activePhrase = 0;
 
+    public Image healthbar;
+
     [SerializeField]
     private GameObject teleportParticles;
 
@@ -54,6 +57,11 @@ public class InteractiveObject : MonoBehaviour {
         maxHealth = health;
         GameManager.Instance.objectList.Add(this);
         ToggleSelectedFeedback();
+    }
+
+    void Update()
+    {
+        healthbar.fillAmount = Mathf.Lerp(health / maxHealth, healthbar.fillAmount, 0.5f);
     }
 
     void OnMouseDown()
@@ -96,12 +104,12 @@ public class InteractiveObject : MonoBehaviour {
     {
         if (GameManager.Instance.objectsTurn == this)
         {
-            turnFeedback.enabled = true;
+            turnFeedbackAnim.SetBool("Active", true);
             if (!inParty && npcControl != null)
                 StartCoroutine("NpcSetAction");
         }
         else
-            turnFeedback.enabled = false;
+            turnFeedbackAnim.SetBool("Active", false);
     }
 
     IEnumerator NpcSetAction()
