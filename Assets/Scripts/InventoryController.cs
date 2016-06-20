@@ -41,6 +41,8 @@ public class InventoryController : MonoBehaviour {
             SkillController skillController = skill.GetComponent<SkillController>();
             ItemGet(skillController);
         }
+
+        SetMoneyFeedback();
     }
 
     public void MoneyGet(int amount)

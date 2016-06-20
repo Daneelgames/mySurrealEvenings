@@ -99,6 +99,7 @@ public class TradeWindowController : MonoBehaviour {
 
         slots[item].RemoveItem();
         slots[item].GetComponent<Image>().color = Color.clear;
+        npc.skills.RemoveAt(item);
         items.RemoveAt(item);
 
         SortSlots();
