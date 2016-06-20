@@ -40,7 +40,7 @@ TextureImporter:
   textureFormat: -1
   maxTextureSize: 2048
   textureSettings:
-    filterMode: -1
+    filterMode: 1
     aniso: 16
     mipBias: -1
     wrapMode: 1
@@ -667,7 +667,7 @@ TextureImporter:
         - {x: 16.5, y: 235.5}
         - {x: 10.5, y: 243.5}
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Sprites
   userData: 
   assetBundleName: 
   assetBundleVariant: 
