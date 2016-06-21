@@ -70,6 +70,11 @@ public class GameManager : MonoBehaviour {
 
     private bool changeScene = false;
 
+    public Image fader;
+    private bool fade = false;
+
+    public GameObject dayScreen;
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -100,6 +105,19 @@ public class GameManager : MonoBehaviour {
     void Start()
     {
         NewStage();
+        dayScreen.SetActive(false);
+    }
+
+    void Update()
+    {
+        if (fade)
+        {
+            fader.color = Color.Lerp(fader.color, Color.black, 0.1f);
+        }
+        else
+        {
+            fader.color = Color.Lerp(fader.color, Color.clear, 0.1f);
+        }
     }
 
     void NewStage()
@@ -444,17 +462,55 @@ public class GameManager : MonoBehaviour {
             }
             else
             {
-                StartCoroutine("LoadScene");
+                StartCoroutine("LoadDay");
             }
         }
     }
 
-    IEnumerator LoadScene ()
+    IEnumerator LoadDay()
     {
         changeScene = true;
         turnOver = true;
-        yield return new WaitForSeconds(0.5F);
+
+        fade = true;
+
+        yield return new WaitForSeconds(0.75F);
+        fader.color = Color.black;
         print("Load Day");
+        yield return new WaitForSeconds(0.75F);
+        dayScreen.SetActive(true);
+        fade = false;
+        yield return new WaitForSeconds(0.75F);
+        fader.color = Color.clear;
+
+        changeScene = false;
+        turnOver = false;
+    }
+
+    public void DayOver()
+    {
+        if (!changeScene)
+            StartCoroutine("LoadNight");
+    }
+
+    IEnumerator LoadNight()
+    {
+        changeScene = true;
+        turnOver = true;
+
+        fade = true;
+
+        yield return new WaitForSeconds(0.75F);
+        fader.color = Color.black;
+        print("Load Night");
+        yield return new WaitForSeconds(0.75F);
+        //screen is black
+        NewStage(); // generate new stage
+        dayScreen.SetActive(false);
+        fade = false;
+        yield return new WaitForSeconds(0.75F);
+        fader.color = Color.clear;
+
         changeScene = false;
         turnOver = false;
     }
@@ -568,7 +624,7 @@ public class GameManager : MonoBehaviour {
 
         if (sleep)
         {
-            StartCoroutine("LoadScene");
+            StartCoroutine("LoadDay");
             goFurtherAnim.SetBool("Active", true);
             skipTurnAnim.SetBool("Active", true);
         }

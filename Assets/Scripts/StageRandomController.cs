@@ -11,13 +11,35 @@ public class StageRandomController : MonoBehaviour {
 
     public List<NpcController> npcList;
 
+    public List<NpcController> newNpcList = new List<NpcController>();
+    public List<Transform> newCellsList = new List<Transform>();
+    public List<NpcController> npcOnStage = new List<NpcController>();
+
     public void BuildStage()
     {
+        ClearNpc();
+
         curStageIndex += 1;
 
         SetDifficulty();
-
+        
         SpawnNpc();
+    }
+
+    void ClearNpc()
+    {
+        if (GameManager.Instance.objectList.Count > 0)
+        {
+            for (int i = GameManager.Instance.objectList.Count - 1; i >= 0; i--)
+            {
+                if (!GameManager.Instance.objectList[i].inParty)
+                {
+                    print(GameManager.Instance.objectList[i].name);
+                    Destroy(GameManager.Instance.objectList[i].gameObject);
+                    GameManager.Instance.objectList.RemoveAt(i);
+                }
+            }
+        }
     }
 
     void SetDifficulty() // based on levelIndex + random
@@ -83,10 +105,10 @@ public class StageRandomController : MonoBehaviour {
     void SpawnNpc()
     {
         float curDif = 0;
-        List<NpcController> newNpcList = new List<NpcController>(npcList);
-        List<Transform> newCellsList = new List<Transform>(GameManager.Instance.npcCells);
+        newNpcList = new List<NpcController>(npcList);
+        newCellsList = new List<Transform>(GameManager.Instance.npcCells);
 
-        List<NpcController> npcOnStage = new List<NpcController>();
+        npcOnStage = new List<NpcController>();
 
         while (curDif < stageDifficulty && newCellsList.Count > 0)
         {
@@ -110,9 +132,12 @@ public class StageRandomController : MonoBehaviour {
         {
             npcOnStage = npcOnStage.OrderByDescending(w => w.overallDifficulty).ToList(); //sort by diff. lowlevels at the end
 
-            for (int i = npcOnStage.Count; i > 0; i --)
+            for (int i = npcOnStage.Count - 1; i >= 0; i --)
             {
                 int randomNpc = Random.Range(0, newNpcList.Count);
+
+                print("randomNpc " + randomNpc);
+                print( "npconstage " + i);
                 if (npcOnStage[i].overallDifficulty < newNpcList[randomNpc].overallDifficulty)
                 {
                     curDif -= npcOnStage[i].overallDifficulty;
@@ -120,9 +145,9 @@ public class StageRandomController : MonoBehaviour {
                     GameObject go = Instantiate(newNpcList[randomNpc].gameObject, npcOnStage[i].transform.position, newNpcList[randomNpc].transform.rotation) as GameObject;
 
                     curDif += newNpcList[randomNpc].overallDifficulty;
-
-                    npcOnStage.Remove(npcOnStage[i]);
+                    GameManager.Instance.objectList.Remove(npcOnStage[i].objectController);
                     Destroy(npcOnStage[i].gameObject);
+                    npcOnStage.Remove(npcOnStage[i]);
 
                     npcOnStage.Add(go.GetComponent<NpcController>());
                 }

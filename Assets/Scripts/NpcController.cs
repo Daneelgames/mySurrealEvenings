@@ -10,8 +10,7 @@ public class NpcController : MonoBehaviour {
 
     public Target agressiveTo = Target.none;
     
-    [SerializeField]
-    InteractiveObject objectController;
+    public InteractiveObject objectController;
 
     public List<GameObject> skills = new List<GameObject>();
 

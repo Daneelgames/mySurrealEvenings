@@ -1,9 +1,10 @@
 fileFormatVersion: 2
 guid: 429d31fb01e3a2742ad364b00c6e44b9
-timeCreated: 1466405161
+timeCreated: 1466495181
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: backpack_00001_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -38,7 +39,7 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -49,7 +50,26 @@ TextureImporter:
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: backpack_00001_0
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 12
+        width: 95
+        height: 106
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -31.5, y: 53}
+        - {x: -47.5, y: 13}
+        - {x: -47.5, y: -43}
+        - {x: -38.5, y: -53}
+        - {x: 33.5, y: -53}
+        - {x: 47.5, y: -49}
+        - {x: 47.5, y: 32}
+        - {x: 31.5, y: 53}
     outline: []
   spritePackingTag: 
   userData: 
