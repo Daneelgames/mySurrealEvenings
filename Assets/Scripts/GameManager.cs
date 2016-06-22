@@ -210,8 +210,8 @@ public class GameManager : MonoBehaviour {
         }
 
         // UPDATE STATUS WINDOWS
-        objInfoController.ShowWindows(objectsTurn, curSelected, false);
-        InventoryClosed();
+        //objInfoController.ShowWindows(objectsTurn, curSelected, false);
+        //InventoryClosed();
     }
 
     public void ClearSelectedObject()
@@ -263,7 +263,7 @@ public class GameManager : MonoBehaviour {
             }
         }
 
-        objInfoController.ShowWindows(objectsTurn, target, false);
+        //objInfoController.ShowWindows(objectsTurn, target, false);
 
         turnOver = true;
         //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);

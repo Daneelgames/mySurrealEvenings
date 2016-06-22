@@ -64,6 +64,7 @@ public class InteractiveObject : MonoBehaviour {
         healthbar.fillAmount = Mathf.Lerp(health / maxHealth, healthbar.fillAmount, 0.5f);
     }
 
+    /*
     void OnMouseDown()
     {
         // click on object
@@ -85,6 +86,7 @@ public class InteractiveObject : MonoBehaviour {
         //_spriteRenderer.color = Color.white;
     }
 
+    */
     void OnMouseUpAsButton()
     {
         // click on object
