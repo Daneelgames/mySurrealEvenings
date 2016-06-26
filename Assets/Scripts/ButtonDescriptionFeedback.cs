@@ -10,6 +10,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
 
     private int enemyAmount = 0;
     private float enemyLvlAmount = 0;
+    
 
     public void MouseEnter()
     {
