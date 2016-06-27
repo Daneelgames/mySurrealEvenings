@@ -12,9 +12,11 @@ public class InventoryController : MonoBehaviour {
 
     public List<GameObject> uniqueItemsDropped = new List<GameObject>();
 
-    public int money = 0;
+    public int candies = 0;
+    public int trash = 0;
 
-    public Text moneyCounter;
+    public Text candyCounter;
+    public Text trashCounter;
 
     [SerializeField]
     private Sprite sellIcon;
@@ -42,24 +44,25 @@ public class InventoryController : MonoBehaviour {
             ItemGet(skillController);
         }
 
-        SetMoneyFeedback();
+        SetResourcesFeedback();
     }
 
     public void MoneyGet(int amount)
     {
-        money += amount;
-        SetMoneyFeedback();
+        candies += amount;
+        SetResourcesFeedback();
     }
 
     public void MoneyLose(int amount)
     {
-        money -= amount;
-        SetMoneyFeedback();
+        candies -= amount;
+        SetResourcesFeedback();
     }
 
-    public void SetMoneyFeedback()
+    public void SetResourcesFeedback()
     {
-        moneyCounter.text = "" + money;
+        candyCounter.text = "" + candies;
+        trashCounter.text = "" + trash;
     }
 
     public void ItemGet(SkillController skill)

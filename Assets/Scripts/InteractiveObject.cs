@@ -161,7 +161,7 @@ public class InteractiveObject : MonoBehaviour {
                 activeDialog = 0; //default dialog
 
                 // CHECK TEAMUP ITEM
-                if (GameManager.Instance.inventoryController.money >= teamUpMoney && teamUpItem != null && GameManager.Instance.party.Count < 3)
+                if (GameManager.Instance.inventoryController.candies >= teamUpMoney && teamUpItem != null && GameManager.Instance.party.Count < 3)
                 {
                     foreach (GameObject item in GameManager.Instance.skillsCurrent)
                     {
@@ -189,7 +189,7 @@ public class InteractiveObject : MonoBehaviour {
                 activeDialog = 4; // BASIC AGGRESSIVE DIALOG
 
                 // CHECK CALM ITEM
-                if (GameManager.Instance.inventoryController.money >= calmMoney && calmItem != null)
+                if (GameManager.Instance.inventoryController.candies >= calmMoney && calmItem != null)
                 {
                     foreach (GameObject item in GameManager.Instance.skillsCurrent)
                     {

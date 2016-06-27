@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -75,6 +74,7 @@ public class GameManager : MonoBehaviour {
 
     public GameObject dayScreen;
 
+    public DayController crossesController; 
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -479,6 +479,7 @@ public class GameManager : MonoBehaviour {
         print("Load Day");
         yield return new WaitForSeconds(0.75F);
         dayScreen.SetActive(true);
+        crossesController.NightOver();
         fade = false;
         yield return new WaitForSeconds(0.75F);
         fader.color = Color.clear;
@@ -664,7 +665,7 @@ public class GameManager : MonoBehaviour {
         {
             if (!inventoryActive)
             {
-                inventoryController.SetMoneyFeedback();
+                inventoryController.SetResourcesFeedback();
                 inventory.SetBool("Active", true);
                 inventoryActive = true;
                 inventoryController.SortSlots();

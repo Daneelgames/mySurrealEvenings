@@ -69,7 +69,7 @@ public class TradeWindowController : MonoBehaviour {
 
             sendDescription = skillToSell.description + " Buy for " + price + " moneye.";
 
-            if (items.Count > 1 && GameManager.Instance.inventoryController.money >= items[skill].price && GameManager.Instance.inventoryController.emptySlots > 0)
+            if (items.Count > 1 && GameManager.Instance.inventoryController.candies >= items[skill].price && GameManager.Instance.inventoryController.emptySlots > 0)
                 slotAnimators[skill].SetBool("ShowIcon", true);
 
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
