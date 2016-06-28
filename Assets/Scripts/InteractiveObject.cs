@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class InteractiveObject : MonoBehaviour {
+public class InteractiveObject : MonoBehaviour
+{
 
     public string _name = "Npc";
 
@@ -13,7 +14,7 @@ public class InteractiveObject : MonoBehaviour {
 
     public float health = 1;
     public float maxHealth = 1;
-    public List<Effect> unitEffect = new List<Effect> {Effect.none};
+    public List<Effect> unitEffect = new List<Effect> { Effect.none };
 
     public bool inParty = false;
 
@@ -33,7 +34,7 @@ public class InteractiveObject : MonoBehaviour {
     public GameObject calmItem;
     public int calmMoney = 5;
 
-    public enum DialogAction {none, setAgressive, trade }
+    public enum DialogAction { none, setAgressive, trade }
     public DialogAction actionOnDialog = DialogAction.none;
 
     public List<ListWrapper> dialogues = new List<ListWrapper>();
@@ -51,6 +52,8 @@ public class InteractiveObject : MonoBehaviour {
     {
         public List<string> stringList;
     }
+
+    public GameObject deathParticles;
 
     void Awake()
     {
@@ -150,7 +153,7 @@ public class InteractiveObject : MonoBehaviour {
         localCanvas.HideSkills();
         localCanvas.HideIcons();
     }
-    
+
 
     public void StartDialog()
     {
@@ -227,11 +230,11 @@ public class InteractiveObject : MonoBehaviour {
         StartCoroutine("TakeNewPlace", newPlace);
     }
 
-    IEnumerator TakeNewPlace (Transform newPlace)
+    IEnumerator TakeNewPlace(Transform newPlace)
     {
         yield return new WaitForSeconds(0.5f);
         transform.position = newPlace.position;
-        transform.Find("sprite").transform.localScale = new Vector3 (-1, 1, 1);
+        transform.Find("sprite").transform.localScale = new Vector3(-1, 1, 1);
     }
 
     public void Damage(float baseDmg, InteractiveObject attacker)
@@ -240,7 +243,7 @@ public class InteractiveObject : MonoBehaviour {
         {
             float DMG = baseDmg * (100 / GameManager.Instance.curSanity);
             health -= DMG;
-            
+
             if (!inParty && attacker != this)
             {
                 if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
@@ -263,6 +266,15 @@ public class InteractiveObject : MonoBehaviour {
     {
         yield return new WaitForSeconds(0.3F);
         _anim.SetTrigger("Damage");
+        yield return new WaitForSeconds(0.5F);
+        if (health <= 0)
+        {
+            _anim.gameObject.SetActive(false);
+            Instantiate(deathParticles, transform.position, Quaternion.identity);
+            
+            if (npcControl != null)
+                npcControl.DropOnDead();
+        }
     }
 
     public void Recover(float amount)
@@ -283,11 +295,7 @@ public class InteractiveObject : MonoBehaviour {
         if (GameManager.Instance.objectsTurn == this)
         {
             GameManager.Instance.objectsTurn = null;
-
         }
-
-        if (npcControl != null)
-            npcControl.DropOnDead();
 
         if (inParty)
         {

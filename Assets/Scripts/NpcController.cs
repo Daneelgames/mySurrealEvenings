@@ -2,22 +2,26 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class NpcController : MonoBehaviour {
+public class NpcController : MonoBehaviour
+{
 
-    public enum Target {none, everyone, enemies, self}
+    public enum Target { none, everyone, enemies, self }
 
     public float overallDifficulty = 1f;
 
     public Target agressiveTo = Target.none;
-    
+
     public InteractiveObject objectController;
 
     public List<GameObject> skills = new List<GameObject>();
 
     public int levelPreffered = 1;
 
-    public int moneyDrop = 5;
-    
+    public int candyDrop = 3;
+    public int trashDrop = 2;
+
+    public GameObject dropFeedback;
+
     void Start()
     {
         if (agressiveTo == Target.everyone)
@@ -143,7 +147,7 @@ public class NpcController : MonoBehaviour {
 
                         GameManager.Instance.UseSkill(skills[actionNumber], obj);
                     }
-                } 
+                }
                 else if (agressiveTo == Target.enemies)
                 {
                     // target offensive to only enemies
@@ -204,7 +208,7 @@ public class NpcController : MonoBehaviour {
 
                     int randomObject = Random.Range(0, GameManager.Instance.objectList.Count);
                     obj = GameManager.Instance.objectList[randomObject];
-                    
+
                     objectController._anim.SetTrigger("Action");
                     GameManager.Instance.UseSkill(skills[actionNumber], obj);
                 }
@@ -229,17 +233,33 @@ public class NpcController : MonoBehaviour {
 
     public void DropOnDead()
     {
-        moneyDrop += Mathf.RoundToInt(Random.Range(-moneyDrop / 2, moneyDrop / 2));
+        RemoveAggressiveFeedback();
+        
+        float candyChance = Random.Range(0f, 1f);
+        float trashChance = Random.Range(0f, 1f);
+        float skillChance = Random.Range(0f, 1f);
 
-        float randomChance = Random.Range(0f, 1f);
-        if (randomChance > 0.25f) // DROP RANDOM
+        int candyValue = candyDrop + Mathf.RoundToInt(Random.Range(-candyDrop / 2, candyDrop / 2));
+        int trashValue = trashDrop + Mathf.RoundToInt(Random.Range(-trashDrop / 2, trashDrop / 2));
+
+        if (candyChance > 0.25f) // DROP RANDOM
         {
-            GameManager.Instance.inventoryController.MoneyGet(moneyDrop);
+            GameManager.Instance.inventoryController.CandyGet(candyValue);
+        }
+        if (trashChance > 0.25f) // DROP RANDOM
+        {
+            GameManager.Instance.inventoryController.TrashGet(trashValue);
+        }
+        if (skillChance > 0.5f)
+        {
             if (skills.Count > 0)
             {
                 GameObject skillDrop = skills[Random.Range(0, skills.Count)];
                 Instantiate(skillDrop, transform.position, transform.rotation);
             }
-        }  
+        }
+
+        GameObject newDropFeedback = Instantiate(dropFeedback.gameObject, transform.position, Quaternion.identity) as GameObject;
+        newDropFeedback.GetComponent<NpcDropFeedbackController>().SetValues(candyValue, trashValue);
     }
 }

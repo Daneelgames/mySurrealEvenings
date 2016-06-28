@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_mySurrealEvenings.CSharp.Plugins", "_mySurrealEvenings.CSharp.Plugins.csproj", "{D7292CA3-2906-39EB-8021-AE92E5FC633A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_mySurrealEvenings.CSharp", "_mySurrealEvenings.CSharp.csproj", "{7473B090-0239-23FA-A6E2-712A2E47B4BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "_mySurrealEvenings.CSharp.Editor", "_mySurrealEvenings.CSharp.Editor.csproj", "{092836A5-5125-0B50-3035-B02624BD8B30}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7292CA3-2906-39EB-8021-AE92E5FC633A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7292CA3-2906-39EB-8021-AE92E5FC633A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7292CA3-2906-39EB-8021-AE92E5FC633A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7292CA3-2906-39EB-8021-AE92E5FC633A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7473B090-0239-23FA-A6E2-712A2E47B4BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7473B090-0239-23FA-A6E2-712A2E47B4BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7473B090-0239-23FA-A6E2-712A2E47B4BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7473B090-0239-23FA-A6E2-712A2E47B4BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{092836A5-5125-0B50-3035-B02624BD8B30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{092836A5-5125-0B50-3035-B02624BD8B30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{092836A5-5125-0B50-3035-B02624BD8B30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{092836A5-5125-0B50-3035-B02624BD8B30}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

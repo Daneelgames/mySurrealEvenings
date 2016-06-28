@@ -13,6 +13,9 @@ public class DayController : MonoBehaviour
     public Animator candyCounterAnimator;
     public Animator trashCounterAnimator;
 
+    public Animator toyButtonAnimator;
+    public Animator childButtonAnimator;
+
     public Text toyFeedbackText;
     public Text childFeedbackText;
     public Animator feedbackAnimator;
@@ -21,6 +24,8 @@ public class DayController : MonoBehaviour
     {
         UpdateTrash();
         UpdateCandy();
+        UpdateToy();
+        UpdateChild();
 
         int curDay = GameManager.Instance.stageRandomController.curStageIndex - 1;
 
@@ -31,60 +36,78 @@ public class DayController : MonoBehaviour
     {
         feedbackAnimator.SetTrigger("UpdateToy");
 
-		float healthPercent = GameManager.Instance.party[0].health / GameManager.Instance.party[0].maxHealth;
-		string name = GameManager.Instance.party[0]._name;
-		string newText = "";
-		if (healthPercent >= 0.75f)
-		{
-			newText = name + " as good as new!";
-		}
-		else if (healthPercent < 0.75f && healthPercent >= 0.5f)
-		{
-			newText = name + " is fine.";
-		}
-		else if (healthPercent < 0.5f && healthPercent >= 0.25f)
-		{
-			newText =  "Need to fix " + name + ".";
-		}
-		else if (healthPercent < 0.25f && healthPercent >= 0.1f)
-		{
-			newText = name + " almost broke.";
-		}
-		else if (healthPercent < 0.1f)
-		{
-			newText = name + " is CRITICAL !!!";
-		}
+        float healthPercent = GameManager.Instance.party[0].health / GameManager.Instance.party[0].maxHealth;
+        string name = GameManager.Instance.party[0]._name;
+        string newText = "";
+        if (healthPercent >= 0.9f)
+        {
+            newText = name + " is not damaged.";
+        }
+        else if (healthPercent >= 0.75f && healthPercent < 0.9f)
+        {
+            newText = name + " is almost as good as new!";
+        }
+        else if (healthPercent < 0.75f && healthPercent >= 0.5f)
+        {
+            newText = name + " is a bit battered.";
+        }
+        else if (healthPercent < 0.5f && healthPercent >= 0.25f)
+        {
+            newText = "Need to fix " + name + ".";
+        }
+        else if (healthPercent < 0.25f && healthPercent >= 0.1f)
+        {
+            newText = name + " almost broke.";
+        }
+        else if (healthPercent < 0.1f)
+        {
+            newText = name + " is CRITICAL !!!";
+        }
 
-		toyFeedbackText.text = newText;
+        toyFeedbackText.text = newText;
+
+        if (healthPercent < 0.75f)
+            toyButtonAnimator.SetBool("Active", true);
+        else
+            toyButtonAnimator.SetBool("Active", false);
     }
 
     void UpdateChild()
     {
         feedbackAnimator.SetTrigger("UpdateChild");
 
-		float sanityPercent = GameManager.Instance.curSanity / 100;
-		string newText = "";
-		if (sanityPercent >= 0.75f)
-		{
-			newText = "I feel great!";
-		}
-		else if (sanityPercent < 0.75f && sanityPercent >= 0.5f)
-		{
-			newText = "i'm ok";
-		}
-		else if (sanityPercent < 0.5f && sanityPercent >= 0.25f)
-		{
-			newText =  "I'm scared...";
-		}
-		else if (sanityPercent < 0.25f && sanityPercent >= 0.1f)
-		{
-			newText = "I'm trembling!";
-		}
-		else if (sanityPercent < 0.1f)
-		{
-			newText = "I AM TERRIFIED";
-		}
-		toyFeedbackText.text = newText;
+        float sanityPercent = GameManager.Instance.curSanity / 100;
+        string newText = "";
+        if (sanityPercent >= 0.9f)
+        {
+            newText = "I'm perfectly fine!";
+        }
+        else if (sanityPercent >= 0.75f && sanityPercent < 0.9f)
+        {
+            newText = "I feel almost great!";
+        }
+        else if (sanityPercent < 0.75f && sanityPercent >= 0.5f)
+        {
+            newText = "i'm ok";
+        }
+        else if (sanityPercent < 0.5f && sanityPercent >= 0.25f)
+        {
+            newText = "I'm scared...";
+        }
+        else if (sanityPercent < 0.25f && sanityPercent >= 0.1f)
+        {
+            newText = "I'm trembling!";
+        }
+        else if (sanityPercent < 0.1f)
+        {
+            newText = "I AM TERRIFIED";
+        }
+        childFeedbackText.text = newText;
+
+        if (sanityPercent < 0.75f)
+            childButtonAnimator.SetBool("Active", true);
+        else
+            childButtonAnimator.SetBool("Active", false);
     }
 
     void UpdateTrash()
@@ -96,5 +119,36 @@ public class DayController : MonoBehaviour
     {
         candyCounterAnimator.SetTrigger("Update");
         candyCounter.text = "" + GameManager.Instance.inventoryController.candies;
+    }
+
+    public void HealToy()
+    {
+        if (GameManager.Instance.party[0].health / GameManager.Instance.party[0].maxHealth < 0.9f && GameManager.Instance.inventoryController.trash > 0)
+        {
+            float healAmount = Random.Range(0.75f, 1.25f);
+            GameManager.Instance.party[0].Recover(healAmount);
+
+            GameManager.Instance.inventoryController.TrashLose(1);
+
+            UpdateToy();
+            UpdateTrash();
+        }
+    }
+
+    public void HealChild()
+    {
+        if (GameManager.Instance.curSanity / 100 < 0.9f && GameManager.Instance.inventoryController.candies > 0)
+        {
+            float healAmount = Random.Range(7.5f, 12.5f);
+            if (100 - GameManager.Instance.curSanity >= healAmount)
+                GameManager.Instance.curSanity += healAmount;
+            else
+                GameManager.Instance.curSanity = 100;
+
+            GameManager.Instance.inventoryController.CandyLose(1);
+
+            UpdateChild();
+            UpdateCandy();
+        }
     }
 }

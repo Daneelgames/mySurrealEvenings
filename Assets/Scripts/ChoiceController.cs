@@ -55,7 +55,7 @@ public class ChoiceController : MonoBehaviour {
             {
                 npc.inParty = true;
                 GameManager.Instance.party.Add(npc);
-                GameManager.Instance.inventoryController.MoneyLose(npc.teamUpMoney);
+                GameManager.Instance.inventoryController.CandyLose(npc.teamUpMoney);
                 GameManager.Instance.inventoryController.ItemLost(npc.teamUpItem.GetComponent<SkillController>());
 
                 npc.TeamUp();
@@ -64,7 +64,7 @@ public class ChoiceController : MonoBehaviour {
             }
             else if (npc.activeDialog == 5) // calm down
             {
-                GameManager.Instance.inventoryController.MoneyLose(npc.calmMoney);
+                GameManager.Instance.inventoryController.CandyLose(npc.calmMoney);
                 GameManager.Instance.inventoryController.ItemLost(npc.calmItem.GetComponent<SkillController>());
                 npc.npcControl.agressiveTo = NpcController.Target.none;
                 npc.actionOnDialog = InteractiveObject.DialogAction.none;

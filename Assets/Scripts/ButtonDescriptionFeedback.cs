@@ -1,16 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ButtonDescriptionFeedback : MonoBehaviour {
+public class ButtonDescriptionFeedback : MonoBehaviour
+{
 
-    public enum iconType { sanity, goFurther, skipTurn}
+    public enum iconType { sanity, goFurther, skipTurn }
 
     public string desctiption = "This is a button.";
     public iconType type = iconType.sanity;
 
     private int enemyAmount = 0;
     private float enemyLvlAmount = 0;
-    
+
 
     public void MouseEnter()
     {
@@ -24,14 +25,19 @@ public class ButtonDescriptionFeedback : MonoBehaviour {
                 float curSanity = GameManager.Instance.curSanity;
                 string sanityDescription = "";
 
-                if (curSanity >= 75)
-                    sanityDescription = "Sanity is high.";
+                if (curSanity >= 90)
+                    sanityDescription = "Child is perfectly fine!";
+                else if (curSanity < 90 && curSanity >= 75)
+                    sanityDescription = "Child feels almost great!";
                 else if (curSanity < 75 && curSanity >= 50)
-                    sanityDescription = "Sanity is normal.";
+                    sanityDescription = "Child is OK.";
                 else if (curSanity < 50 && curSanity >= 25)
-                    sanityDescription = "Sanity is low.";
-                else if (curSanity < 25 )
-                    sanityDescription = "Sanity is critical!";
+                    sanityDescription = "Child is scared...";
+                else if (curSanity < 25 && curSanity >= 10)
+                    sanityDescription = "Child is trembling!";
+                else if (curSanity < 10)
+                    sanityDescription = "CHILD IS TERRIFIED";
+
 
                 GameManager.Instance.PrintActionFeedback(null, sanityDescription, null, false, false, true);
             }

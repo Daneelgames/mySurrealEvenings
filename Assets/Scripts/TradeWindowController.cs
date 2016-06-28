@@ -95,7 +95,7 @@ public class TradeWindowController : MonoBehaviour {
         
         GameManager.Instance.skills_1.Add(items[item].gameObject);
         GameManager.Instance.inventoryController.ItemGet(items[item]);
-        GameManager.Instance.inventoryController.MoneyLose(items[item].price);
+        GameManager.Instance.inventoryController.CandyLose(items[item].price);
 
         slots[item].RemoveItem();
         slots[item].GetComponent<Image>().color = Color.clear;

@@ -122,7 +122,6 @@ public class GameManager : MonoBehaviour {
 
     void NewStage()
     {
-        print("Build stage");
         stageRandomController.BuildStage();
 
         SortObjects();
@@ -136,6 +135,8 @@ public class GameManager : MonoBehaviour {
             obj.ToggleTurnFeedback();
         }
         CheckSkipAndGo();
+        
+        sanityMeterAnim.SetFloat("Sanity", curSanity);
     }
 
     void GetRandomSkills(List<GameObject> skills)
@@ -248,6 +249,14 @@ public class GameManager : MonoBehaviour {
         // FRENZY FEEDBACK
     }
 
+    public void RecoverSanity(float recoverAmount)
+    {
+        curSanity += recoverAmount;
+        // FRENZY FEEDBACK
+        sanityMeterAnim.SetFloat("Sanity", curSanity);
+
+        // FRENZY FEEDBACK
+    }
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
 
@@ -383,7 +392,6 @@ public class GameManager : MonoBehaviour {
 
     IEnumerator NewTurn()
     {
-
         for (int i = objectList.Count - 1; i >= 0; i--)
         {
             if (objectList[i].health <= 0)

@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class InventoryController : MonoBehaviour {
+public class InventoryController : MonoBehaviour
+{
 
     public List<SkillController> items = new List<SkillController>();
 
@@ -47,15 +48,27 @@ public class InventoryController : MonoBehaviour {
         SetResourcesFeedback();
     }
 
-    public void MoneyGet(int amount)
+    public void CandyGet(int amount)
     {
         candies += amount;
         SetResourcesFeedback();
     }
 
-    public void MoneyLose(int amount)
+    public void CandyLose(int amount)
     {
         candies -= amount;
+        SetResourcesFeedback();
+    }
+
+    public void TrashGet(int amount)
+    {
+        trash += amount;
+        SetResourcesFeedback();
+    }
+
+    public void TrashLose(int amount)
+    {
+        trash -= amount;
         SetResourcesFeedback();
     }
 
@@ -112,7 +125,7 @@ public class InventoryController : MonoBehaviour {
 
                 //print("sell for " + moneyGet);
 
-                MoneyGet(moneyGet);
+                CandyGet(moneyGet);
             }
 
             GameManager.Instance.inventory.SetTrigger("Update");
@@ -121,7 +134,7 @@ public class InventoryController : MonoBehaviour {
             items.RemoveAt(slotNumber);
             GameManager.Instance.skills_1.RemoveAt(slotNumber);
         }
-            SortSlots();
+        SortSlots();
     }
 
     public void SortSlots()
@@ -156,10 +169,10 @@ public class InventoryController : MonoBehaviour {
                 }
 
                 SkillController skillToSell = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>();
-                    int price = Mathf.RoundToInt(skillToSell.price / 5);
-                    if (price < 1)
-                        price = 1;
-                    
+                int price = Mathf.RoundToInt(skillToSell.price / 5);
+                if (price < 1)
+                    price = 1;
+
                 sendDescription = skillToSell.description + " Sell for " + price + " moneye.";
             }
             else
@@ -184,7 +197,7 @@ public class InventoryController : MonoBehaviour {
         GameManager.Instance.mouseOverButton = false;
         GameManager.Instance.HideTextManually();
 
-        foreach(Animator anim in slotAnimators)
+        foreach (Animator anim in slotAnimators)
         {
             anim.SetBool("ShowTrash", false);
         }
