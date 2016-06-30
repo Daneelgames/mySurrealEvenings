@@ -239,10 +239,10 @@ public class InteractiveObject : MonoBehaviour
 
     public void Damage(float baseDmg, InteractiveObject attacker)
     {
+        float DMG = 0;
         if (baseDmg > 0)
         {
-            float DMG = baseDmg * (100 / GameManager.Instance.curSanity);
-            health -= DMG;
+            DMG = baseDmg * (100 / GameManager.Instance.curSanity);
 
             if (!inParty && attacker != this)
             {
@@ -259,19 +259,26 @@ public class InteractiveObject : MonoBehaviour
         attacker._anim.SetTrigger("Action");
 
         if (this != attacker)
-            StartCoroutine("ActionTriggerDelay");
+            StartCoroutine("ActionTriggerDelay", DMG);
+        else
+        {
+            health -= DMG;
+        }
     }
 
-    IEnumerator ActionTriggerDelay()
+    IEnumerator ActionTriggerDelay(float dmg)
     {
         yield return new WaitForSeconds(0.3F);
+        health -= dmg;
         _anim.SetTrigger("Damage");
+        GameManager.Instance.CameraShake(0.25f);
+
         yield return new WaitForSeconds(0.5F);
         if (health <= 0)
         {
             _anim.gameObject.SetActive(false);
             Instantiate(deathParticles, transform.position, Quaternion.identity);
-            
+
             if (npcControl != null)
                 npcControl.DropOnDead();
         }

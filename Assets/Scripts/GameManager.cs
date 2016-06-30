@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviour
+{
 
     public static GameManager Instance { get; private set; }
 
@@ -74,7 +75,8 @@ public class GameManager : MonoBehaviour {
 
     public GameObject dayScreen;
 
-    public DayController crossesController; 
+    public DayController crossesController;
+    public Animator cameraAnim;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -128,21 +130,21 @@ public class GameManager : MonoBehaviour {
 
         objectsTurn = party[0];
         clickToSkip.raycastTarget = false;
-        
+
         foreach (InteractiveObject obj in objectList)
         {
             //print(obj.name);
             obj.ToggleTurnFeedback();
         }
         CheckSkipAndGo();
-        
+
         sanityMeterAnim.SetFloat("Sanity", curSanity);
     }
 
     void GetRandomSkills(List<GameObject> skills)
     {
         List<GameObject> tempList = new List<GameObject>(skillList.allSkills);
-        
+
         while (skills.Count < 3)
         {
             float random = Random.Range(0f, 1f);
@@ -155,7 +157,7 @@ public class GameManager : MonoBehaviour {
                 skills.Add(tempList[randomSkill]);
                 tempList.RemoveAt(randomSkill);
             }
-            else if(skill.skillLevel == 2 && random > 0.25)
+            else if (skill.skillLevel == 2 && random > 0.25)
             {
                 skills.Add(tempList[randomSkill]);
                 tempList.RemoveAt(randomSkill);
@@ -204,7 +206,7 @@ public class GameManager : MonoBehaviour {
         // SET TARGET
         selectedObject = curSelected;
 
-        foreach(InteractiveObject obj in objectList)
+        foreach (InteractiveObject obj in objectList)
         {
             if (obj != null)
                 obj.ToggleSelectedFeedback();
@@ -695,7 +697,7 @@ public class GameManager : MonoBehaviour {
 
         CheckSkipAndGo();
     }
-    
+
     void InventoryInactive()
     {
         inventory.SetBool("Inactive", true);
@@ -722,5 +724,17 @@ public class GameManager : MonoBehaviour {
     {
         if (!tradeActive)
             mouseOverButton = false;
+    }
+
+    public void CameraShake(float waitTime)
+    {
+        StartCoroutine("ShakeCam", waitTime);
+    }
+
+    IEnumerator ShakeCam(float waitTime)
+    {
+        cameraAnim.SetBool("Shake", true);
+        yield return new WaitForSeconds(waitTime);
+        cameraAnim.SetBool("Shake", false);
     }
 }
