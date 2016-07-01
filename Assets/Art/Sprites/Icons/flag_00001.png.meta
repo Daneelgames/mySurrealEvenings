@@ -1,0 +1,77 @@
+fileFormatVersion: 2
+guid: 51d4de1344b4db4489b3a11545e0313d
+timeCreated: 1467411645
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: flag_00001_0
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: flag_00001_0
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 5
+        width: 87
+        height: 111
+      alignment: 9
+      pivot: {x: 0.14227602, y: 0.75061744}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 73.62199, y: 27.681465}
+        - {x: -12.378014, y: 27.681465}
+        - {x: -12.378014, y: -45.318535}
+        - {x: 7.6219864, y: -83.318535}
+        - {x: 33.621986, y: -83.318535}
+        - {x: 37.621986, y: -81.318535}
+        - {x: 74.62199, y: -14.318535}
+        - {x: 74.62199, y: 25.681465}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

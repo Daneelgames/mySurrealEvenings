@@ -42,7 +42,7 @@ public class InteractiveObject : MonoBehaviour
     public int activeDialog = 0;
     public int activePhrase = 0;
 
-    public Image healthbar;
+    public Animator healthbar;
 
     [SerializeField]
     private GameObject teleportParticles;
@@ -62,10 +62,6 @@ public class InteractiveObject : MonoBehaviour
         ToggleSelectedFeedback();
     }
 
-    void Update()
-    {
-        healthbar.fillAmount = Mathf.Lerp(health / maxHealth, healthbar.fillAmount, 0.5f);
-    }
 
     /*
     void OnMouseDown()
@@ -263,6 +259,8 @@ public class InteractiveObject : MonoBehaviour
         else
         {
             health -= DMG;
+            UpdateHeart();
+            GameManager.Instance.CameraShake(0.5f);
         }
     }
 
@@ -271,7 +269,8 @@ public class InteractiveObject : MonoBehaviour
         yield return new WaitForSeconds(0.3F);
         health -= dmg;
         _anim.SetTrigger("Damage");
-        GameManager.Instance.CameraShake(0.25f);
+        UpdateHeart();
+        GameManager.Instance.CameraShake(0.5f);
 
         yield return new WaitForSeconds(0.5F);
         if (health <= 0)
@@ -293,6 +292,13 @@ public class InteractiveObject : MonoBehaviour
 
         if (amount > 0)
             _anim.SetTrigger("Recover");
+
+        UpdateHeart();
+    }
+
+    void UpdateHeart()
+    {
+        healthbar.SetFloat("HealthPercentage", health / maxHealth);
     }
 
     public void Death()
