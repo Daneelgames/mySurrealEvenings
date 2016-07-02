@@ -1,0 +1,76 @@
+fileFormatVersion: 2
+guid: 1291f646c0ceb144fb59c924d78ec724
+timeCreated: 1467449843
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: healButton_00001_0
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: healButton_00001_0
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 22
+        width: 112
+        height: 83
+      alignment: 9
+      pivot: {x: 0.9501882, y: 0.08104623}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -91.42108, y: 76.27316}
+        - {x: -106.42108, y: 60.273163}
+        - {x: -106.42108, y: 6.273163}
+        - {x: -91.42108, y: -6.726837}
+        - {x: 5.5789185, y: -6.726837}
+        - {x: 5.5789185, y: 17.273163}
+        - {x: -36.42108, y: 76.27316}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

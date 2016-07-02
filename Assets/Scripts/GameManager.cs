@@ -369,7 +369,7 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnCooldown()
     {
         turnOver = false;
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.75f);
         canSkipTurn = true;
         clickToSkip.raycastTarget = true;
     }
@@ -397,7 +397,10 @@ public class GameManager : MonoBehaviour
         for (int i = objectList.Count - 1; i >= 0; i--)
         {
             if (objectList[i].health <= 0)
-                objectList[i].Death();
+            {
+                if (objectList[i] != party[0])
+                    objectList[i].Death();
+            }
         }
 
         if (objectsTurn != null)
@@ -486,7 +489,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.75F);
         fader.color = Color.black;
-        print("Load Day");
+        //        print("Load Day");
         yield return new WaitForSeconds(0.75F);
         dayScreen.SetActive(true);
         crossesController.NightOver();
@@ -513,7 +516,7 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.75F);
         fader.color = Color.black;
-        print("Load Night");
+        //        print("Load Night");
         yield return new WaitForSeconds(0.75F);
         //screen is black
         NewStage(); // generate new stage

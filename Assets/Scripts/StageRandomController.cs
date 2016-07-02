@@ -34,7 +34,7 @@ public class StageRandomController : MonoBehaviour {
             {
                 if (!GameManager.Instance.objectList[i].inParty)
                 {
-                    print(GameManager.Instance.objectList[i].name);
+//                    print(GameManager.Instance.objectList[i].name);
                     Destroy(GameManager.Instance.objectList[i].gameObject);
                     GameManager.Instance.objectList.RemoveAt(i);
                 }
@@ -136,8 +136,8 @@ public class StageRandomController : MonoBehaviour {
             {
                 int randomNpc = Random.Range(0, newNpcList.Count);
 
-                print("randomNpc " + randomNpc);
-                print( "npconstage " + i);
+  //              print("randomNpc " + randomNpc);
+//                print( "npconstage " + i);
                 if (npcOnStage[i].overallDifficulty < newNpcList[randomNpc].overallDifficulty)
                 {
                     curDif -= npcOnStage[i].overallDifficulty;

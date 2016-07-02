@@ -2,7 +2,8 @@
 using UnityEngine.UI;
 using System.Collections;
 
-public class ChoiceController : MonoBehaviour {
+public class ChoiceController : MonoBehaviour
+{
 
     private Animator _anim;
 
@@ -41,7 +42,7 @@ public class ChoiceController : MonoBehaviour {
             npc = null;
 
             title.text = "Go to sleep?";
-            description.text = "Sleeping with monsters around may be bad idea.";
+            description.text = "Aggressive monsters will scare you and damage your toy while you're sleeping.";
         }
 
         _anim.SetTrigger("Active");
@@ -73,7 +74,11 @@ public class ChoiceController : MonoBehaviour {
         }
 
         GameManager.Instance.ChoiceInactive(sleepChoice);
-        _anim.SetTrigger("Yes");
+        {
+            _anim.SetTrigger("Yes");
+            GameManager.Instance.FrenzyDamage(25f);
+            GameManager.Instance.party[0].Damage(0.25f * GameManager.Instance.party[0].maxHealth, GameManager.Instance.party[0]);
+        }
     }
 
     public void No()

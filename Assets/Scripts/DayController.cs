@@ -19,7 +19,7 @@ public class DayController : MonoBehaviour
     public Text toyFeedbackText;
     public Text childFeedbackText;
     public Animator feedbackAnimator;
-
+    public DayEventsController dayEvents;
     public void NightOver()
     {
         UpdateTrash();
@@ -28,11 +28,13 @@ public class DayController : MonoBehaviour
         UpdateChild();
 
         int curDay = GameManager.Instance.stageRandomController.curStageIndex - 1;
+        
+        dayEvents.GenerateEvents();
 
         crosses[curDay].SetActive(true);
     }
 
-    void UpdateToy()
+    public void UpdateToy()
     {
         feedbackAnimator.SetTrigger("UpdateToy");
 
@@ -65,14 +67,9 @@ public class DayController : MonoBehaviour
         }
 
         toyFeedbackText.text = newText;
-
-        if (healthPercent < 0.75f)
-            toyButtonAnimator.SetBool("Active", true);
-        else
-            toyButtonAnimator.SetBool("Active", false);
     }
 
-    void UpdateChild()
+    public void UpdateChild()
     {
         feedbackAnimator.SetTrigger("UpdateChild");
 
@@ -103,19 +100,14 @@ public class DayController : MonoBehaviour
             newText = "I AM TERRIFIED";
         }
         childFeedbackText.text = newText;
-
-        if (sanityPercent < 0.75f)
-            childButtonAnimator.SetBool("Active", true);
-        else
-            childButtonAnimator.SetBool("Active", false);
     }
 
-    void UpdateTrash()
+    public void UpdateTrash()
     {
         trashCounterAnimator.SetTrigger("Update");
         trashCounter.text = "" + GameManager.Instance.inventoryController.trash;
     }
-    void UpdateCandy()
+    public void UpdateCandy()
     {
         candyCounterAnimator.SetTrigger("Update");
         candyCounter.text = "" + GameManager.Instance.inventoryController.candies;
@@ -132,6 +124,7 @@ public class DayController : MonoBehaviour
 
             UpdateToy();
             UpdateTrash();
+            toyButtonAnimator.SetTrigger("Active");
         }
     }
 
@@ -149,6 +142,7 @@ public class DayController : MonoBehaviour
 
             UpdateChild();
             UpdateCandy();
+            childButtonAnimator.SetTrigger("Active");
         }
     }
 }

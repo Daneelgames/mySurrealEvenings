@@ -9,7 +9,6 @@ public class ObjectsInfoController : MonoBehaviour {
 
     public Image unitSpriteCaster;
     public Text _nameCaster;
-    public Image healthbarCaster;
 
     public List<Image> effectsCaster = new List<Image>();
 
@@ -19,7 +18,6 @@ public class ObjectsInfoController : MonoBehaviour {
 
     public Image unitSpriteTarget;
     public Text _nameTarget;
-    public Image healthbarTarget;
 
     public List<Image> effectsTarget = new List<Image>();
 
@@ -35,15 +33,6 @@ public class ObjectsInfoController : MonoBehaviour {
 
     //private float casterMaxHealth = 1;
     //private float targetMaxHealth = 1;
-
-    void Update()
-    {
-        if (windowsVisible)
-        {
-            healthbarCaster.fillAmount = Mathf.Lerp(caster.health / caster.maxHealth, healthbarCaster.fillAmount, 0.5f);
-            healthbarTarget.fillAmount = Mathf.Lerp(target.health / target.maxHealth, healthbarTarget.fillAmount, 0.5f);
-        }
-    }
 
     public void ShowWindows(InteractiveObject curCaster, InteractiveObject curTarget, bool isDialog)
     {

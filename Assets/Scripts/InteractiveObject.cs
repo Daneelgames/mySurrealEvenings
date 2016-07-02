@@ -275,8 +275,11 @@ public class InteractiveObject : MonoBehaviour
         yield return new WaitForSeconds(0.5F);
         if (health <= 0)
         {
-            _anim.gameObject.SetActive(false);
-            Instantiate(deathParticles, transform.position, Quaternion.identity);
+            if (GameManager.Instance.party[0] != this)
+            {
+                _anim.gameObject.SetActive(false);
+                Instantiate(deathParticles, transform.position, Quaternion.identity);
+            }
 
             if (npcControl != null)
                 npcControl.DropOnDead();
@@ -298,7 +301,14 @@ public class InteractiveObject : MonoBehaviour
 
     void UpdateHeart()
     {
-        healthbar.SetFloat("HealthPercentage", health / maxHealth);
+        if (GameManager.Instance.party[0] == this && health <= 0)
+        {
+            healthbar.SetFloat("HealthPercentage", 0.2f);
+        }
+        else
+        {
+            healthbar.SetFloat("HealthPercentage", health / maxHealth);
+        }
     }
 
     public void Death()
