@@ -4,11 +4,18 @@ using System.Collections;
 public class CursorController : MonoBehaviour
 {
 
-    public Texture2D cursorSprite;
+    public GameObject cursorSprite;
+    public Canvas myCanvas;
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
-        Cursor.SetCursor(cursorSprite, Vector2.zero, CursorMode.Auto);
+        Cursor.visible = false;
+    }
+
+    void Update()
+    {  Vector2 pos;
+         RectTransformUtility.ScreenPointToLocalPointInRectangle(myCanvas.transform as RectTransform, Input.mousePosition, myCanvas.worldCamera, out pos);
+         cursorSprite.transform.position = myCanvas.transform.TransformPoint(pos);
     }
 }

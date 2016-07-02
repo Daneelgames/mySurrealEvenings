@@ -73,12 +73,15 @@ public class ChoiceController : MonoBehaviour
             }
         }
 
-        GameManager.Instance.ChoiceInactive(sleepChoice);
+
+        if (sleepChoice)
         {
-            _anim.SetTrigger("Yes");
             GameManager.Instance.FrenzyDamage(25f);
             GameManager.Instance.party[0].Damage(0.25f * GameManager.Instance.party[0].maxHealth, GameManager.Instance.party[0]);
         }
+        
+        GameManager.Instance.ChoiceInactive(sleepChoice);
+        _anim.SetTrigger("Yes");
     }
 
     public void No()

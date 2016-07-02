@@ -77,6 +77,7 @@ public class GameManager : MonoBehaviour
 
     public DayController crossesController;
     public Animator cameraAnim;
+    public Animator clockAnim;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -489,8 +490,9 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(0.75F);
         fader.color = Color.black;
+        clockAnim.SetTrigger("ShowClock");
         //        print("Load Day");
-        yield return new WaitForSeconds(0.75F);
+        yield return new WaitForSeconds(10F);
         dayScreen.SetActive(true);
         crossesController.NightOver();
         fade = false;
