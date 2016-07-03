@@ -119,13 +119,26 @@ public class InventoryController : MonoBehaviour
             {
                 GameManager.Instance.tradeController.SellItem(slots[slotNumber].itemInSlot);
 
-                int moneyGet = Mathf.RoundToInt(slots[slotNumber].itemInSlot.price / 5);
-                if (moneyGet < 1)
-                    moneyGet = 1;
+                int moneyGet = 0;
+                if (slots[slotNumber].itemInSlot.price > 0)
+                {
+                    moneyGet = Mathf.RoundToInt(slots[slotNumber].itemInSlot.price / 2);
+                    if (moneyGet < 1)
+                        moneyGet = 1;
+                }
+                int trashGet = 0;
+                if (slots[slotNumber].itemInSlot.priceTrash > 0)
+                {
+                    trashGet = Mathf.RoundToInt(slots[slotNumber].itemInSlot.priceTrash / 2);
+                    print (trashGet + " trash");
+                    if (trashGet < 1)
+                        trashGet = 1;
+                }
 
                 //print("sell for " + moneyGet);
 
                 CandyGet(moneyGet);
+                TrashGet(trashGet);
             }
 
             GameManager.Instance.inventory.SetTrigger("Update");
@@ -169,11 +182,33 @@ public class InventoryController : MonoBehaviour
                 }
 
                 SkillController skillToSell = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>();
-                int price = Mathf.RoundToInt(skillToSell.price / 5);
-                if (price < 1)
-                    price = 1;
+                int price = 0;
+                string priceString = "";
+                if (skillToSell.price > 0)
+                {
+                    price = Mathf.RoundToInt(skillToSell.price / 2);
+                    if (price < 1)
+                        price = 1;
 
-                sendDescription = skillToSell.description + " Sell for " + price + " moneye.";
+                    priceString = price + " candies";
+                }
+
+                int priceTrash = 0;
+                string priceTrashString = "";
+                if (skillToSell.priceTrash > 0)
+                {
+                    priceTrash = Mathf.RoundToInt(skillToSell.priceTrash / 2);
+                    if (priceTrash < 1)
+                        priceTrash = 1;
+
+                    priceTrashString = priceTrash + " junk";
+                }
+
+                string priceAndPrice = "";
+                if (price > 0 && priceTrash > 0)
+                priceAndPrice = " and ";
+
+                sendDescription = skillToSell.description + " Sell for " + priceString + priceAndPrice + priceTrashString + ".";
             }
             else
             {

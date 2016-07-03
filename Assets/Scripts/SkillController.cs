@@ -8,6 +8,7 @@ public class SkillController : MonoBehaviour {
     public string skillName;
 
     public int price = 1;
+    public int priceTrash = 1;
 
     public enum Type {offensive, recover}
     public enum Range {one, all, allParty, allAgressive}

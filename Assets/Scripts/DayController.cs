@@ -85,7 +85,7 @@ public class DayController : MonoBehaviour
         }
         else if (sanityPercent < 0.75f && sanityPercent >= 0.5f)
         {
-            newText = "i'm ok";
+            newText = "I'm ok.";
         }
         else if (sanityPercent < 0.5f && sanityPercent >= 0.25f)
         {

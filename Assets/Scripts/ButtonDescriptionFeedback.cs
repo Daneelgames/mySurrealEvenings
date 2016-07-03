@@ -26,17 +26,17 @@ public class ButtonDescriptionFeedback : MonoBehaviour
                 string sanityDescription = "";
 
                 if (curSanity >= 90)
-                    sanityDescription = "Child is perfectly fine!";
+                    sanityDescription = "I'm perfectly fine!";
                 else if (curSanity < 90 && curSanity >= 75)
-                    sanityDescription = "Child feels almost great!";
+                    sanityDescription = "I feel almost great!";
                 else if (curSanity < 75 && curSanity >= 50)
-                    sanityDescription = "Child is OK.";
+                    sanityDescription = "I'm ok.";
                 else if (curSanity < 50 && curSanity >= 25)
-                    sanityDescription = "Child is scared...";
+                    sanityDescription = "I'm scared...";
                 else if (curSanity < 25 && curSanity >= 10)
-                    sanityDescription = "Child is trembling!";
+                    sanityDescription = "I'm trembling!";
                 else if (curSanity < 10)
-                    sanityDescription = "CHILD IS TERRIFIED";
+                    sanityDescription = "I AM TERRIFIED";
 
 
                 GameManager.Instance.PrintActionFeedback(null, sanityDescription, null, false, false, true);

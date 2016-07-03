@@ -254,16 +254,35 @@ public class InteractiveObject : MonoBehaviour
         }
         attacker._anim.SetTrigger("Action");
 
+
+
         if (this != attacker)
             StartCoroutine("ActionTriggerDelay", DMG);
         else
         {
-            health -= DMG;
-            UpdateHeart();
-            GameManager.Instance.CameraShake(0.5f);
+            StartCoroutine("ActionTriggerDelaySelf", DMG);
         }
     }
 
+    IEnumerator ActionTriggerDelaySelf(float dmg)
+    {
+        yield return new WaitForSeconds(0.3F);
+        health -= dmg;
+        UpdateHeart();
+        GameManager.Instance.CameraShake(0.5f);
+        yield return new WaitForSeconds(0.5F);
+        if (health <= 0)
+        {
+            if (GameManager.Instance.party[0] != this)
+            {
+                _anim.gameObject.SetActive(false);
+                Instantiate(deathParticles, transform.position, Quaternion.identity);
+            }
+
+            if (npcControl != null)
+                npcControl.DropOnDead();
+        }
+    }
     IEnumerator ActionTriggerDelay(float dmg)
     {
         yield return new WaitForSeconds(0.3F);

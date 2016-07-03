@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
-public class TradeWindowController : MonoBehaviour {
+public class TradeWindowController : MonoBehaviour
+{
 
     public NpcController npc;
 
@@ -66,8 +67,24 @@ public class TradeWindowController : MonoBehaviour {
 
             SkillController skillToSell = items[skill];
             int price = skillToSell.price;
+            string priceString = "";
+            if (skillToSell.price > 0)
+            {
+                priceString = price + " candies";
+            }
 
-            sendDescription = skillToSell.description + " Buy for " + price + " moneye.";
+            int priceTrash = skillToSell.priceTrash;
+            string priceTrashString = "";
+            if (skillToSell.priceTrash > 0)
+            {
+                priceTrashString = priceTrash + " junk";
+            }
+
+            string priceAndPrice = "";
+            if (price > 0 && priceTrash > 0)
+                priceAndPrice = " and ";
+
+            sendDescription = skillToSell.description + " Buy for " + priceString + priceAndPrice + priceTrashString + ".";
 
             if (items.Count > 1 && GameManager.Instance.inventoryController.candies >= items[skill].price && GameManager.Instance.inventoryController.emptySlots > 0)
                 slotAnimators[skill].SetBool("ShowIcon", true);
@@ -92,10 +109,11 @@ public class TradeWindowController : MonoBehaviour {
     public void BuyItem(int item)
     {
         _anim.SetTrigger("Update");
-        
+
         GameManager.Instance.skills_1.Add(items[item].gameObject);
         GameManager.Instance.inventoryController.ItemGet(items[item]);
         GameManager.Instance.inventoryController.CandyLose(items[item].price);
+        GameManager.Instance.inventoryController.TrashLose(items[item].priceTrash);
 
         slots[item].RemoveItem();
         slots[item].GetComponent<Image>().color = Color.clear;

@@ -28,12 +28,12 @@ public class ChoiceController : MonoBehaviour
             if (npc.activeDialog == 1) //TEAM Up
             {
                 title.text = npc._name + " may join";
-                description.text = "If you give " + npc.teamUpMoney + " moneye and " + npc.teamUpItem.GetComponent<SkillController>().skillName;
+                description.text = "In exchange of  " + npc.teamUpMoney + " candies and " + npc.teamUpItem.GetComponent<SkillController>().skillName;
             }
             else if (npc.activeDialog == 5) //CALM
             {
                 title.text = npc._name + " may calm down";
-                description.text = "If you give " + npc.calmMoney + " moneye and " + npc.calmItem.GetComponent<SkillController>().skillName;
+                description.text = "In exchange of  " + npc.calmMoney + " candies and " + npc.calmItem.GetComponent<SkillController>().skillName;
             }
         }
         else
