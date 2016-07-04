@@ -230,7 +230,7 @@ public class InteractiveObject : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         transform.position = newPlace.position;
-        transform.Find("sprite").transform.localScale = new Vector3(-1, 1, 1);
+        transform.Find("sprite").transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
     public void Damage(float baseDmg, InteractiveObject attacker)
