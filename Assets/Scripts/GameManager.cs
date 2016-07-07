@@ -492,17 +492,26 @@ public class GameManager : MonoBehaviour
         fader.color = Color.black;
         clockAnim.SetTrigger("ShowClock");
         //        print("Load Day");
-        yield return new WaitForSeconds(10F);
-        dayScreen.SetActive(true);
-        crossesController.NightOver();
-        fade = false;
-        yield return new WaitForSeconds(0.75F);
-        fader.color = Color.clear;
 
-        changeScene = false;
-        turnOver = false;
+        if (curSanity <= 0 || party[0].health <= 0)
+        {
+            StartCoroutine("Screamer");
+            float randomTime = Random.Range(1f, 9.75f);
+            yield return new WaitForSeconds(randomTime);
+        }
+        else
+        {
+            yield return new WaitForSeconds(10F);
+            dayScreen.SetActive(true);
+            crossesController.NightOver();
+            fade = false;
+            yield return new WaitForSeconds(0.75F);
+            fader.color = Color.clear;
+
+            changeScene = false;
+            turnOver = false;
+        }
     }
-
     public void DayOver()
     {
         if (!changeScene)

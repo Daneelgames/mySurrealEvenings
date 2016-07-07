@@ -1,0 +1,353 @@
+fileFormatVersion: 2
+guid: dd2ec6e5b48fc9d44b46824db96fccc9
+timeCreated: 1467746949
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: eyel
+    21300002: eyer
+    21300004: eyelll
+    21300006: eyerrr
+    21300008: tong7
+    21300010: eyell
+    21300012: eyerr
+    21300014: tong6
+    21300016: face
+    21300018: tong5
+    21300020: tong4
+    21300022: tong3
+    21300024: chin
+    21300026: tong2
+    21300028: tong1
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: eyel
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 411
+        width: 142
+        height: 95
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -54, y: 47.5}
+        - {x: -71, y: 30.5}
+        - {x: -71, y: -20.5}
+        - {x: -57, y: -47.5}
+        - {x: 47, y: -47.5}
+        - {x: 71, y: -41.5}
+        - {x: 71, y: 28.5}
+        - {x: 42, y: 47.5}
+    - name: eyer
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 396
+        width: 122
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -2, y: 53.5}
+        - {x: -57, y: 53.5}
+        - {x: -61, y: 49.5}
+        - {x: -61, y: -22.5}
+        - {x: -49, y: -53.5}
+        - {x: 2, y: -53.5}
+        - {x: 19, y: -51.5}
+        - {x: 61, y: -4.5}
+        - {x: 61, y: 20.5}
+        - {x: 57, y: 31.5}
+    - name: eyelll
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 487
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: eyerrr
+      rect:
+        serializedVersion: 2
+        x: 349
+        y: 463
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: tong7
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 416
+        width: 35
+        height: 62
+      alignment: 9
+      pivot: {x: 0.49999914, y: 0.08496537}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 4.5000305, y: 56.732147}
+        - {x: -10.4999695, y: 56.732147}
+        - {x: -13.4999695, y: 55.732147}
+        - {x: -17.49997, y: 38.732147}
+        - {x: -17.49997, y: -5.267853}
+        - {x: 17.50003, y: -5.267853}
+        - {x: 17.50003, y: 38.732147}
+        - {x: 10.5000305, y: 51.732147}
+    - name: eyell
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 383
+        width: 75
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: eyerr
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 391
+        width: 54
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11, y: 23}
+        - {x: -27, y: 23}
+        - {x: -27, y: -23}
+        - {x: 5, y: -23}
+        - {x: 27, y: -12}
+        - {x: 27, y: 5}
+        - {x: 19, y: 19}
+    - name: tong6
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 349
+        width: 40
+        height: 62
+      alignment: 9
+      pivot: {x: 0.5173866, y: 0.1186169}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -9.695465, y: 54.645752}
+        - {x: -20.695465, y: 49.645752}
+        - {x: -20.695465, y: 2.645752}
+        - {x: -18.695465, y: -7.354248}
+        - {x: 18.304535, y: -7.354248}
+        - {x: 19.304535, y: -6.354248}
+        - {x: 19.304535, y: 54.645752}
+    - name: face
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 141
+        width: 402
+        height: 238
+      alignment: 9
+      pivot: {x: 0.9082819, y: 0.096748285}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -220.12933, y: -18.026093}
+        - {x: -189.12933, y: 6.9739075}
+        - {x: -173.12933, y: -19.026093}
+        - {x: -164.12933, y: -23.026093}
+        - {x: -141.12933, y: 18.973907}
+        - {x: -134.12933, y: 3.9739075}
+        - {x: -120.12933, y: -20.026093}
+        - {x: -111.12933, y: -13.026093}
+        - {x: -103.12933, y: 22.973907}
+        - {x: -61.129333, y: -13.026093}
+        - {x: -49.129333, y: 10.973907}
+        - {x: -5.1293335, y: -19.026093}
+        - {x: 19.870667, y: -18.026093}
+        - {x: 36.870667, y: -9.026093}
+        - {x: 36.870667, y: 118.97391}
+        - {x: 13.8706665, y: 163.9739}
+        - {x: -1.1293335, y: 181.9739}
+        - {x: -48.129333, y: 210.9739}
+        - {x: -83.12933, y: 214.9739}
+        - {x: -288.12933, y: 214.9739}
+        - {x: -332.12933, y: 199.9739}
+        - {x: -364.12933, y: 166.9739}
+        - {x: -365.12933, y: 159.9739}
+        - {x: -365.12933, y: 84.97391}
+        - {x: -341.12933, y: -0.02609253}
+        - {x: -332.12933, y: -8.026093}
+        - {x: -310.12933, y: -23.026093}
+        - {x: -291.12933, y: -23.026093}
+        - {x: -257.12933, y: -16.026093}
+        - {x: -241.12933, y: -0.02609253}
+        - {x: -226.12933, y: -18.026093}
+    - name: tong5
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 285
+        width: 39
+        height: 63
+      alignment: 9
+      pivot: {x: 0.571329, y: 0.09155322}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.28183, y: 57.232147}
+        - {x: -22.28183, y: 52.232147}
+        - {x: -22.28183, y: -0.7678528}
+        - {x: -18.28183, y: -5.767853}
+        - {x: 16.71817, y: -5.767853}
+        - {x: 16.71817, y: 57.232147}
+    - name: tong4
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 219
+        width: 37
+        height: 62
+      alignment: 9
+      pivot: {x: 0.50000083, y: 0.107399724}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -4.5000305, y: 55.341217}
+        - {x: -18.50003, y: 46.341217}
+        - {x: -18.50003, y: -4.658783}
+        - {x: -9.5000305, y: -6.658783}
+        - {x: 18.49997, y: -6.658783}
+        - {x: 18.49997, y: 55.341217}
+    - name: tong3
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 156
+        width: 38
+        height: 59
+      alignment: 9
+      pivot: {x: 0.5549051, y: 0.06386217}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21.086395, y: 55.232132}
+        - {x: -21.086395, y: -2.767868}
+        - {x: -16.086395, y: -3.767868}
+        - {x: 16.913605, y: -3.767868}
+        - {x: 16.913605, y: 42.232132}
+        - {x: 15.913605, y: 55.232132}
+    - name: chin
+      rect:
+        serializedVersion: 2
+        x: 14
+        y: 2
+        width: 360
+        height: 129
+      alignment: 9
+      pivot: {x: 0.9385282, y: 0.86660063}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -86.87015, y: 17.208519}
+        - {x: -121.87015, y: 4.208519}
+        - {x: -212.87015, y: -0.791481}
+        - {x: -277.87015, y: 17.208519}
+        - {x: -307.87015, y: 17.208519}
+        - {x: -337.87015, y: 1.208519}
+        - {x: -337.87015, y: -9.791481}
+        - {x: -322.87015, y: -56.79148}
+        - {x: -271.87015, y: -90.79148}
+        - {x: -206.87015, y: -111.79148}
+        - {x: -92.87015, y: -111.79148}
+        - {x: 2.1298523, y: -100.79148}
+        - {x: 22.129852, y: -68.79148}
+        - {x: 22.129852, y: 9.208519}
+        - {x: 18.129852, y: 17.208519}
+    - name: tong2
+      rect:
+        serializedVersion: 2
+        x: 454
+        y: 86
+        width: 42
+        height: 66
+      alignment: 9
+      pivot: {x: 0.5331181, y: 0.08904428}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -7.3909607, y: 60.123077}
+        - {x: -22.39096, y: 52.123077}
+        - {x: -22.39096, y: -5.8769226}
+        - {x: 19.60904, y: -5.8769226}
+        - {x: 19.60904, y: 60.123077}
+    - name: tong1
+      rect:
+        serializedVersion: 2
+        x: 455
+        y: 13
+        width: 44
+        height: 68
+      alignment: 9
+      pivot: {x: 0.5632241, y: 0.04999461}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19.78186, y: 64.600365}
+        - {x: -24.78186, y: 58.600365}
+        - {x: -24.78186, y: -2.3996334}
+        - {x: -22.78186, y: -3.3996334}
+        - {x: 19.21814, y: -3.3996334}
+        - {x: 19.21814, y: 46.600365}
+        - {x: 14.21814, y: 64.600365}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
