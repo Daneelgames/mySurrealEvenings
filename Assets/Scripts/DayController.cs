@@ -38,8 +38,8 @@ public class DayController : MonoBehaviour
     {
         feedbackAnimator.SetTrigger("UpdateToy");
 
-        float healthPercent = GameManager.Instance.party[0].health / GameManager.Instance.party[0].maxHealth;
-        string name = GameManager.Instance.party[0]._name;
+        float healthPercent = GameManager.Instance.player.health / GameManager.Instance.player.maxHealth;
+        string name = GameManager.Instance.player._name;
         string newText = "";
         if (healthPercent >= 0.9f)
         {
@@ -115,10 +115,10 @@ public class DayController : MonoBehaviour
 
     public void HealToy()
     {
-        if (GameManager.Instance.party[0].health / GameManager.Instance.party[0].maxHealth < 0.9f && GameManager.Instance.inventoryController.trash > 0)
+        if (GameManager.Instance.player.health / GameManager.Instance.player.maxHealth < 0.9f && GameManager.Instance.inventoryController.trash > 0)
         {
             float healAmount = Random.Range(0.75f, 1.25f);
-            GameManager.Instance.party[0].Recover(healAmount);
+            GameManager.Instance.player.Recover(healAmount);
 
             GameManager.Instance.inventoryController.TrashLose(1);
 

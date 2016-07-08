@@ -22,14 +22,12 @@ public class GameManager : MonoBehaviour
     public List<Transform> npcCells;
     public List<Transform> partyCells;
 
-    public List<InteractiveObject> party = new List<InteractiveObject>();
-    public List<int> partyHealth = new List<int>();
+    public InteractiveObject player;
+    public int partyHealth;
 
     public List<GameObject> skillsCurrent = new List<GameObject>();
 
-    public List<GameObject> skills_1 = new List<GameObject>();
-    public List<GameObject> skills_2 = new List<GameObject>();
-    public List<GameObject> skills_3 = new List<GameObject>();
+    public List<GameObject> skills = new List<GameObject>();
 
     public SkillList skillList;
 
@@ -97,11 +95,11 @@ public class GameManager : MonoBehaviour
             transform.FindChild("Canvas").gameObject.SetActive(true);
 
             GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>().inParty = true;
-            party[0] = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
-            party[0].inParty = true;
+            player = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
+            player.inParty = true;
 
-            GetRandomSkills(skills_1);
-            skillsCurrent = skills_1;
+            GetRandomSkills(skills);
+            skillsCurrent = skills;
         }
     }
 
@@ -129,7 +127,7 @@ public class GameManager : MonoBehaviour
 
         SortObjects();
 
-        objectsTurn = party[0];
+        objectsTurn = player;
         clickToSkip.raycastTarget = false;
 
         foreach (InteractiveObject obj in objectList)
@@ -146,7 +144,7 @@ public class GameManager : MonoBehaviour
     {
         List<GameObject> tempList = new List<GameObject>(skillList.allSkills);
 
-        while (skills.Count < 3)
+        while (skills.Count < 8)
         {
             float random = Random.Range(0f, 1f);
             int randomSkill = Random.Range(0, tempList.Count);
@@ -156,44 +154,35 @@ public class GameManager : MonoBehaviour
             if (skill.skillLevel == 1)
             {
                 skills.Add(tempList[randomSkill]);
-                tempList.RemoveAt(randomSkill);
+                //tempList.RemoveAt(randomSkill);
             }
             else if (skill.skillLevel == 2 && random > 0.25)
             {
                 skills.Add(tempList[randomSkill]);
-                tempList.RemoveAt(randomSkill);
+                //tempList.RemoveAt(randomSkill);
             }
             else if (skill.skillLevel == 3 && random > 0.5)
             {
                 skills.Add(tempList[randomSkill]);
-                tempList.RemoveAt(randomSkill);
+                //tempList.RemoveAt(randomSkill);
             }
             else if (skill.skillLevel == 4 && random > 0.75)
             {
                 skills.Add(tempList[randomSkill]);
-                tempList.RemoveAt(randomSkill);
+                //tempList.RemoveAt(randomSkill);
             }
             else if (skill.skillLevel == 5 && random > 0.9)
             {
                 skills.Add(tempList[randomSkill]);
-                tempList.RemoveAt(randomSkill);
+                //tempList.RemoveAt(randomSkill);
             }
         }
     }
 
     void SetPartySkills()
     {
-        if (party.Count > 1)
-            skills_2 = new List<GameObject>(party[1].npcControl.skills);
-        if (party.Count > 2)
-            skills_3 = new List<GameObject>(party[2].npcControl.skills);
-
-        if (objectsTurn == party[0])
-            skillsCurrent = skills_1;
-        else if (party.Count > 1 && objectsTurn == party[1])
-            skillsCurrent = skills_2;
-        else if (party.Count > 2 && objectsTurn == party[2])
-            skillsCurrent = skills_3;
+        if (objectsTurn == player)
+            skillsCurrent = skills;
     }
 
     void SortObjects()
@@ -291,6 +280,19 @@ public class GameManager : MonoBehaviour
 
         PrintActionFeedback(objectsTurn._name, skill.name, target._name, hitself, offensive, false);
         SetTurn();
+        int skillIndex = 0;
+
+        for (int i = 0; i < skillsCurrent.Count; i++)
+        {
+            if (skill == skillsCurrent[i])
+            {
+                skillIndex = i;
+                break;
+            }
+        }
+
+        if (objectsTurn.inParty)
+            inventoryController.DeleteItem(skillIndex);
     }
 
     public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf, bool offensive, bool iconDescription)
@@ -399,7 +401,7 @@ public class GameManager : MonoBehaviour
         {
             if (objectList[i].health <= 0)
             {
-                if (objectList[i] != party[0])
+                if (objectList[i] != player)
                     objectList[i].Death();
             }
         }
@@ -493,7 +495,7 @@ public class GameManager : MonoBehaviour
         clockAnim.SetTrigger("ShowClock");
         //        print("Load Day");
 
-        if (curSanity <= 0 || party[0].health <= 0)
+        if (curSanity <= 0 || player.health <= 0)
         {
             StartCoroutine("Screamer");
             float randomTime = Random.Range(1f, 9.75f);
@@ -722,7 +724,7 @@ public class GameManager : MonoBehaviour
 
     void InventoryActive()
     {
-        if (objectsTurn == party[0])
+        if (objectsTurn == player)
         {
             inventory.SetBool("Inactive", false);
         }

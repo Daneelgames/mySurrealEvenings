@@ -124,11 +124,9 @@ public class NpcController : MonoBehaviour
                 if (agressiveTo == Target.everyone)
                 {
                     // target offensive to all
-                    if (randomChance > 0.1f)
+                    if (randomChance > 0.2f)
                     {
-                        int randomParty = Random.Range(0, GameManager.Instance.party.Count);
-
-                        GameManager.Instance.UseSkill(skills[actionNumber], GameManager.Instance.party[randomParty]);
+                        GameManager.Instance.UseSkill(skills[actionNumber], GameManager.Instance.player);
                     }
                     else
                     {
@@ -176,11 +174,9 @@ public class NpcController : MonoBehaviour
                 if (agressiveTo == Target.everyone)
                 {
                     //target recover more to NPCs
-                    if (randomChance < 0.1f)
+                    if (randomChance < 0.2f)
                     {
-                        int randomParty = Random.Range(0, GameManager.Instance.party.Count);
-
-                        GameManager.Instance.UseSkill(skills[actionNumber], GameManager.Instance.party[randomParty]);
+                        GameManager.Instance.UseSkill(skills[actionNumber], GameManager.Instance.player);
                     }
                     else
                     {

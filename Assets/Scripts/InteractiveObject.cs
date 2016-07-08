@@ -28,9 +28,6 @@ public class InteractiveObject : MonoBehaviour
 
     public Animator _anim;
 
-    public GameObject teamUpItem;
-    public int teamUpMoney = 5;
-
     public GameObject calmItem;
     public int calmMoney = 5;
 
@@ -62,41 +59,14 @@ public class InteractiveObject : MonoBehaviour
         ToggleSelectedFeedback();
     }
 
-
-    /*
-    void OnMouseDown()
-    {
-        // click on object
-        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.tradeActive && !GameManager.Instance.inDialog)
-        {
-
-            foreach (InteractiveObject obj in GameManager.Instance.party)
-            {
-                if (GameManager.Instance.objectsTurn == obj)
-                {
-                    //_spriteRenderer.color = Color.gray;
-                }
-            }
-        }
-    }
-
-    void OnMouseUp()
-    {
-        //_spriteRenderer.color = Color.white;
-    }
-
-    */
     void OnMouseUpAsButton()
     {
         // click on object
         if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.tradeActive && !GameManager.Instance.inDialog && !GameManager.Instance.choiceActive)
         {
-            foreach (InteractiveObject obj in GameManager.Instance.party)
+            if (GameManager.Instance.objectsTurn == GameManager.Instance.player)
             {
-                if (GameManager.Instance.objectsTurn == obj)
-                {
-                    GameManager.Instance.SetSelectedObject(this);
-                }
+                GameManager.Instance.SetSelectedObject(this);
             }
         }
     }
@@ -159,19 +129,6 @@ public class InteractiveObject : MonoBehaviour
             {
                 activeDialog = 0; //default dialog
 
-                // CHECK TEAMUP ITEM
-                if (GameManager.Instance.inventoryController.candies >= teamUpMoney && teamUpItem != null && GameManager.Instance.party.Count < 3)
-                {
-                    foreach (GameObject item in GameManager.Instance.skillsCurrent)
-                    {
-                        if (item == teamUpItem)
-                        {
-                            activeDialog = 1; // teamUp
-                            break;
-                        }
-                    }
-                }
-
                 if (actionOnDialog == DialogAction.trade)
                     activeDialog = 2; // TRADE DIALOG
 
@@ -209,28 +166,6 @@ public class InteractiveObject : MonoBehaviour
         activePhrase = 0;
         GameManager.Instance.DialogStart(this);
         localCanvas.HideIcons();
-    }
-
-    public void TeamUp()
-    {
-        Transform newPlace = transform;
-
-        if (GameManager.Instance.party.Count == 2)
-            newPlace = GameManager.Instance.partyCells[1];
-        if (GameManager.Instance.party.Count == 3)
-            newPlace = GameManager.Instance.partyCells[2];
-
-        Instantiate(teleportParticles, transform.position, teleportParticles.transform.rotation);
-        Instantiate(teleportParticles, newPlace.position, teleportParticles.transform.rotation);
-
-        StartCoroutine("TakeNewPlace", newPlace);
-    }
-
-    IEnumerator TakeNewPlace(Transform newPlace)
-    {
-        yield return new WaitForSeconds(0.5f);
-        transform.position = newPlace.position;
-        transform.Find("sprite").transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
     }
 
     public void Damage(float baseDmg, InteractiveObject attacker)
@@ -273,7 +208,7 @@ public class InteractiveObject : MonoBehaviour
         yield return new WaitForSeconds(0.5F);
         if (health <= 0)
         {
-            if (GameManager.Instance.party[0] != this)
+            if (GameManager.Instance.player != this)
             {
                 _anim.gameObject.SetActive(false);
                 Instantiate(deathParticles, transform.position, Quaternion.identity);
@@ -294,7 +229,7 @@ public class InteractiveObject : MonoBehaviour
         yield return new WaitForSeconds(0.5F);
         if (health <= 0)
         {
-            if (GameManager.Instance.party[0] != this)
+            if (GameManager.Instance.player != this)
             {
                 _anim.gameObject.SetActive(false);
                 Instantiate(deathParticles, transform.position, Quaternion.identity);
@@ -320,7 +255,7 @@ public class InteractiveObject : MonoBehaviour
 
     void UpdateHeart()
     {
-        if (GameManager.Instance.party[0] == this && health <= 0)
+        if (GameManager.Instance.player == this && health <= 0)
         {
             healthbar.SetFloat("HealthPercentage", 0.2f);
         }
@@ -341,7 +276,6 @@ public class InteractiveObject : MonoBehaviour
 
         if (inParty)
         {
-            GameManager.Instance.party.Remove(this);
             inParty = false;
         }
 

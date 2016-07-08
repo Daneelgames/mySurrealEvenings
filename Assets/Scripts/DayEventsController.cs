@@ -89,7 +89,7 @@ public class DayEventsController : MonoBehaviour
                     break;
 
                 case DayEventTypes.ToyDamage:
-                    GameManager.Instance.party[0].Damage(0.25f * GameManager.Instance.party[0].maxHealth, GameManager.Instance.party[0]);
+                    GameManager.Instance.player.Damage(0.25f * GameManager.Instance.player.maxHealth, GameManager.Instance.player);
                     GameManager.Instance.crossesController.UpdateToy();
 
                     switch (i)
@@ -260,7 +260,7 @@ public class DayEventsController : MonoBehaviour
     }
     void ChangeToy()
     {
-        float toyPercentage = GameManager.Instance.party[0].health / GameManager.Instance.party[0].maxHealth;
+        float toyPercentage = GameManager.Instance.player.health / GameManager.Instance.player.maxHealth;
 
         if (toyPercentage > 0.7) // damage
         {
@@ -306,7 +306,7 @@ public class DayEventsController : MonoBehaviour
 
             if (trash < 3) // add
             {
-                if (trash < Random.Range(0f, GameManager.Instance.party[0].maxHealth))
+                if (trash < Random.Range(0f, GameManager.Instance.player.maxHealth))
                 {
                     int dayTimeIndex = Random.Range(0, timesOfDay.Count); // 0 = morning,1 = afternoon, 2 = evening
                     //print(timesOfDay[dayTimeIndex]);
@@ -316,7 +316,7 @@ public class DayEventsController : MonoBehaviour
             }
             else if (trash > 7) // remove
             {
-                if (trash > Random.Range(0f, GameManager.Instance.party[0].maxHealth))
+                if (trash > Random.Range(0f, GameManager.Instance.player.maxHealth))
                 {
                     int dayTimeIndex = Random.Range(0, timesOfDay.Count); // 0 = morning,1 = afternoon, 2 = evening
                     //print(timesOfDay[dayTimeIndex]);

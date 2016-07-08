@@ -110,7 +110,7 @@ public class TradeWindowController : MonoBehaviour
     {
         _anim.SetTrigger("Update");
 
-        GameManager.Instance.skills_1.Add(items[item].gameObject);
+        GameManager.Instance.skills.Add(items[item].gameObject);
         GameManager.Instance.inventoryController.ItemGet(items[item]);
         GameManager.Instance.inventoryController.CandyLose(items[item].price);
         GameManager.Instance.inventoryController.TrashLose(items[item].priceTrash);

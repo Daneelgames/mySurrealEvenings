@@ -87,7 +87,7 @@ public class SkillController : MonoBehaviour {
         }
         
         // FRENZY DMG
-        if (target == GameManager.Instance.party[0] || caster == GameManager.Instance.party[0])
+        if (target == GameManager.Instance.player || caster == GameManager.Instance.player)
             GameManager.Instance.FrenzyDamage(frenzy);
     }
 
@@ -119,7 +119,7 @@ public class SkillController : MonoBehaviour {
                     }
                 }
                 GameManager.Instance.inventoryController.ItemGet(newSkill.GetComponent<SkillController>());
-                GameManager.Instance.skills_1.Add(newSkill);
+                GameManager.Instance.skills.Add(newSkill);
 
                 GameManager.Instance.HideTextManually();
                 GameManager.Instance.mouseOverButton = false;
@@ -137,8 +137,8 @@ public class SkillController : MonoBehaviour {
 
     void FlyToInventory()
     {
-        if (Vector3.Distance(transform.position, GameManager.Instance.party[0].transform.position) > 3f)
-            transform.position = Vector3.Lerp(transform.position, GameManager.Instance.party[0].transform.position, 5f * Time.deltaTime);
+        if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) > 3f)
+            transform.position = Vector3.Lerp(transform.position, GameManager.Instance.player.transform.position, 5f * Time.deltaTime);
         else
             Destroy(gameObject);
     }

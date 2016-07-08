@@ -26,6 +26,8 @@ public class InventoryController : MonoBehaviour
 
     public int emptySlots = 5;
 
+    public int maxItems = 8;
+
     void GetEmptySlots()
     {
         emptySlots = 5;
@@ -104,7 +106,7 @@ public class InventoryController : MonoBehaviour
                 slot.RemoveItem();
                 slot.GetComponent<Image>().color = Color.clear;
                 items.Remove(item);
-                GameManager.Instance.skills_1.Remove(item.gameObject);
+                GameManager.Instance.skills.Remove(item.gameObject);
                 SortSlots();
                 break;
             }
@@ -130,7 +132,7 @@ public class InventoryController : MonoBehaviour
                 if (slots[slotNumber].itemInSlot.priceTrash > 0)
                 {
                     trashGet = Mathf.RoundToInt(slots[slotNumber].itemInSlot.priceTrash / 2);
-                    print (trashGet + " trash");
+                    print(trashGet + " trash");
                     if (trashGet < 1)
                         trashGet = 1;
                 }
@@ -145,14 +147,14 @@ public class InventoryController : MonoBehaviour
             slots[slotNumber].RemoveItem();
             slots[slotNumber].GetComponent<Image>().color = Color.clear;
             items.RemoveAt(slotNumber);
-            GameManager.Instance.skills_1.RemoveAt(slotNumber);
+            GameManager.Instance.skills.RemoveAt(slotNumber);
         }
         SortSlots();
     }
 
     public void SortSlots()
     {
-        for (int i = 0; i < 4; i++)
+        for (int i = 0; i < maxItems - 1; i++)
         {
             if (slots[i].itemInSlot == null && slots[i + 1].itemInSlot != null)
             {
@@ -206,7 +208,7 @@ public class InventoryController : MonoBehaviour
 
                 string priceAndPrice = "";
                 if (price > 0 && priceTrash > 0)
-                priceAndPrice = " and ";
+                    priceAndPrice = " and ";
 
                 sendDescription = skillToSell.description + " Sell for " + priceString + priceAndPrice + priceTrashString + ".";
             }

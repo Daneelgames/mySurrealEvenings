@@ -3,7 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 
 
-public class ActiveObjectCanvasController : MonoBehaviour {
+public class ActiveObjectCanvasController : MonoBehaviour
+{
 
     [SerializeField]
     private GameObject[] buttonIcons;
@@ -30,16 +31,16 @@ public class ActiveObjectCanvasController : MonoBehaviour {
     {
         _canvas.worldCamera = Camera.main;
     }
-    
+
 
     public void ShowIcons()
     {
-        if (GameManager.Instance.objectsTurn == GameManager.Instance.party[0]) // if player moves - show both icons
+        if (GameManager.Instance.objectsTurn == GameManager.Instance.player) // if player moves - show both icons
         {
             foreach (GameObject go in buttonIcons)
                 go.SetActive(true);
         }
-        else // hide talk icon if not player
+        else // show onli action icon if not player
         {
             buttonIcons[1].SetActive(true);
         }
@@ -71,7 +72,7 @@ public class ActiveObjectCanvasController : MonoBehaviour {
     {
         _animator.SetTrigger("Show");
 
-        for (int i = 0; i < GameManager.Instance.skillsCurrent.Count; i ++)
+        for (int i = 0; i < GameManager.Instance.skillsCurrent.Count; i++)
         {
             skillIcons[i].SetActive(true);
             //if (GameManager.Instance.skillsCurrent[i] != null)
@@ -87,6 +88,7 @@ public class ActiveObjectCanvasController : MonoBehaviour {
         }
 
         skillsVisible = true;
+        StartCoroutine("HideTalkAfterPause");
     }
 
     public void HideSkills()
@@ -100,10 +102,17 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
     IEnumerator HideSkillsAfterPause()
     {
+        buttonIcons[0].SetActive(true);
         yield return new WaitForSeconds(0.25f);
-
         foreach (GameObject go in skillIcons)
             go.SetActive(false);
+
+    }
+    IEnumerator HideTalkAfterPause()
+    {
+        yield return new WaitForSeconds(0.1f);
+
+        buttonIcons[0].SetActive(false);
     }
 
     public void PointerEnterButton(int skill)
@@ -118,10 +127,10 @@ public class ActiveObjectCanvasController : MonoBehaviour {
 
     public void PointerExitButton()
     {
-		GameManager.Instance.mouseOverButton = false;
-		
-		if (!GameManager.Instance.blockSkillIcons)
-			GameManager.Instance.HideTextManually();
+        GameManager.Instance.mouseOverButton = false;
+
+        if (!GameManager.Instance.blockSkillIcons)
+            GameManager.Instance.HideTextManually();
     }
 
     public void AggressiveStart()
