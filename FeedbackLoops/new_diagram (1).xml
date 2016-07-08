@@ -1,0 +1,20 @@
+<graph version="v4.05" name="" author="" interval="1" timeMode="turn-based" distributionMode="fixed speed" speed="100" actions="1" dice="D6" skill="" strategy="" multiplayer="" width="600" height="560" numberOfRuns="100" visibleRuns="25" colorCoding="0">
+  <connection type="State Connection" start="4" end="1" label="+1" position="0.5" color="Black" thickness="2"/>
+  <connection type="Resource Connection" start="2" end="11" label="0" position="0.5" color="Black" thickness="2"/>
+  <node symbol="Pool" x="251" y="191" color="Black" caption="Sanity" thickness="2" captionPos="0.25" activationMode="passive" pullMode="pull any" actions="1" resourceColor="Red" startingResources="10" capacity="-1"/>
+  <node symbol="Drain" x="251" y="329" color="Black" caption="Kill Mob" thickness="2" captionPos="0.25" activationMode="interactive" pullMode="pull any" actions="1"/>
+  <node symbol="Pool" x="401" y="330" color="Black" caption="Mobs" thickness="2" captionPos="0.25" activationMode="passive" pullMode="pull any" actions="1" resourceColor="Black" startingResources="0" capacity="3"/>
+  <connection type="State Connection" start="9" end="12" label="*" position="0.5" color="Black" thickness="2"/>
+  <connection type="Resource Connection" start="12" end="2" label="1D3" position="0.5" color="Black" thickness="2"/>
+  <connection type="Resource Connection" start="13" end="4" label="3" position="0.5" color="Black" thickness="2"/>
+  <connection type="State Connection" start="9" end="13" label="*" position="0.5" color="Black" thickness="2"/>
+  <node symbol="Source" x="500" y="51" color="Black" caption="Turn" thickness="2" captionPos="0.25" activationMode="interactive" pullMode="pull any" actions="1" resourceColor="Black"/>
+  <connection type="State Connection" start="9" end="11" label="*" position="0.5" color="Black" thickness="2"/>
+  <node symbol="Drain" x="396" y="190" color="Black" caption="Nightmares" thickness="2" captionPos="0.25" activationMode="passive" pullMode="pull any" actions="1"/>
+  <node symbol="Source" x="252" y="47" color="Black" caption="Sleep" thickness="2" captionPos="0.25" activationMode="passive" pullMode="pull any" actions="1" resourceColor="Red"/>
+  <node symbol="Source" x="504" y="329" color="Black" caption="Spawn" thickness="2" captionPos="0.25" activationMode="onstart" pullMode="pull any" actions="1" resourceColor="Black"/>
+  <connection type="Resource Connection" start="4" end="3" label="50%" position="0.5" color="Black" thickness="2"/>
+  <connection type="Resource Connection" start="2" end="3" label="1D2" position="0.5" color="Black" thickness="2"/>
+  <node symbol="EndCondition" x="121" y="187" color="Black" caption="Lose" thickness="2" captionPos="0.25" activationMode="passive" pullMode="pull any" actions="1"/>
+  <connection type="State Connection" start="2" end="16" label="&lt;=0" position="0.5" color="Black" thickness="2"/>
+</graph>
