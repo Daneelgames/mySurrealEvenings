@@ -76,6 +76,7 @@
     <Compile Include="Assets\Scripts\ChoiceController.cs" />
     <Compile Include="Assets\Scripts\CursorController.cs" />
     <Compile Include="Assets\Scripts\DayController.cs" />
+    <Compile Include="Assets\Scripts\DayEventsController.cs" />
     <Compile Include="Assets\Scripts\DestroyOnStart.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InteractiveObject.cs" />
