@@ -62,7 +62,7 @@ public class InteractiveObject : MonoBehaviour
     void OnMouseUpAsButton()
     {
         // click on object
-        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.tradeActive && !GameManager.Instance.inDialog && !GameManager.Instance.choiceActive)
+        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.inDialog && !GameManager.Instance.choiceActive)
         {
             if (GameManager.Instance.objectsTurn == GameManager.Instance.player)
             {
@@ -101,22 +101,10 @@ public class InteractiveObject : MonoBehaviour
         }
     }
 
-    public void ToggleSkills()
-    {
-        if (!localCanvas.skillsVisible)
-        {
-            localCanvas.ShowSkills();
-        }
-        else
-        {
-            localCanvas.HideSkills();
-        }
-    }
 
     public void UseSkill(int skill)
     {
         GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
-        localCanvas.HideSkills();
         localCanvas.HideIcons();
     }
 

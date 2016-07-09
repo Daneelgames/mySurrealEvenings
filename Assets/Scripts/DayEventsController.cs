@@ -185,7 +185,7 @@ public class DayEventsController : MonoBehaviour
                     break;
 
                 case DayEventTypes.TrashRemove:
-                    GameManager.Instance.inventoryController.TrashLose(Random.Range(1, GameManager.Instance.inventoryController.trash));
+                    GameManager.Instance.inventoryController.TrashLose(Random.Range(1, GameManager.Instance.inventoryController.pills));
                     GameManager.Instance.crossesController.UpdateTrash();
 
                     switch (i)
@@ -302,7 +302,7 @@ public class DayEventsController : MonoBehaviour
     {
         if (timesOfDay.Count > 0)
         {
-            int trash = GameManager.Instance.inventoryController.trash;
+            int trash = GameManager.Instance.inventoryController.pills;
 
             if (trash < 3) // add
             {

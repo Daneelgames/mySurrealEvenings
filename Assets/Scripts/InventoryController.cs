@@ -14,10 +14,10 @@ public class InventoryController : MonoBehaviour
     public List<GameObject> uniqueItemsDropped = new List<GameObject>();
 
     public int candies = 0;
-    public int trash = 0;
+    public int pills = 0;
 
     public Text candyCounter;
-    public Text trashCounter;
+    public Text pillsCounter;
 
     [SerializeField]
     private Sprite sellIcon;
@@ -64,20 +64,20 @@ public class InventoryController : MonoBehaviour
 
     public void TrashGet(int amount)
     {
-        trash += amount;
+        pills += amount;
         SetResourcesFeedback();
     }
 
     public void TrashLose(int amount)
     {
-        trash -= amount;
+        pills -= amount;
         SetResourcesFeedback();
     }
 
     public void SetResourcesFeedback()
     {
         candyCounter.text = "" + candies;
-        trashCounter.text = "" + trash;
+        pillsCounter.text = "" + pills;
     }
 
     public void ItemGet(SkillController skill)
@@ -117,6 +117,7 @@ public class InventoryController : MonoBehaviour
     {
         if (items.Count > slotNumber)
         {
+            /*
             if (GameManager.Instance.tradeActive)
             {
                 GameManager.Instance.tradeController.SellItem(slots[slotNumber].itemInSlot);
@@ -142,6 +143,7 @@ public class InventoryController : MonoBehaviour
                 CandyGet(moneyGet);
                 TrashGet(trashGet);
             }
+            */
 
             GameManager.Instance.inventory.SetTrigger("Update");
             slots[slotNumber].RemoveItem();
@@ -174,53 +176,12 @@ public class InventoryController : MonoBehaviour
         if (skill >= 0 && slots[skill].itemInSlot != null && !GameManager.Instance.choiceActive)
         {
             string sendDescription = "";
-            if (GameManager.Instance.tradeActive)
-            {
-                if (GameManager.Instance.tradeController.emptySlots > 0)
-                {
-                    slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = sellIcon;
-                    if (items.Count > 1)
-                        slotAnimators[skill].SetBool("ShowTrash", true);
-                }
+            if (items.Count > 1)
+                slotAnimators[skill].SetBool("ShowTrash", true);
 
-                SkillController skillToSell = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>();
-                int price = 0;
-                string priceString = "";
-                if (skillToSell.price > 0)
-                {
-                    price = Mathf.RoundToInt(skillToSell.price / 2);
-                    if (price < 1)
-                        price = 1;
+            slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = trashIcon;
 
-                    priceString = price + " candies";
-                }
-
-                int priceTrash = 0;
-                string priceTrashString = "";
-                if (skillToSell.priceTrash > 0)
-                {
-                    priceTrash = Mathf.RoundToInt(skillToSell.priceTrash / 2);
-                    if (priceTrash < 1)
-                        priceTrash = 1;
-
-                    priceTrashString = priceTrash + " junk";
-                }
-
-                string priceAndPrice = "";
-                if (price > 0 && priceTrash > 0)
-                    priceAndPrice = " and ";
-
-                sendDescription = skillToSell.description + " Sell for " + priceString + priceAndPrice + priceTrashString + ".";
-            }
-            else
-            {
-                if (items.Count > 1)
-                    slotAnimators[skill].SetBool("ShowTrash", true);
-
-                slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = trashIcon;
-
-                sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
-            }
+            sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
 
 
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);

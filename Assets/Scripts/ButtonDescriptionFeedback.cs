@@ -4,7 +4,7 @@ using System.Collections;
 public class ButtonDescriptionFeedback : MonoBehaviour
 {
 
-    public enum iconType { sanity, goFurther, skipTurn }
+    public enum iconType { sanity, goToSleep, skipTurn }
 
     public string desctiption = "This is a button.";
     public iconType type = iconType.sanity;
@@ -42,7 +42,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour
                 GameManager.Instance.PrintActionFeedback(null, sanityDescription, null, false, false, true);
             }
 
-            else if (type == iconType.goFurther)
+            else if (type == iconType.goToSleep)
             {
                 enemyAmount = 0;
                 enemyLvlAmount = 0;
@@ -58,7 +58,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour
 
                 enemyAmount += Mathf.RoundToInt(enemyLvlAmount);
 
-                escapeDescription = "Go to sleep.";
+                escapeDescription = "Take a pill and go to sleep.";
                 GameManager.Instance.PrintActionFeedback(null, escapeDescription, null, false, false, true);
             }
         }
@@ -66,7 +66,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour
 
     public void MouseClick()
     {
-        if (type == iconType.goFurther)
+        if (type == iconType.goToSleep)
         {
             GameManager.Instance.LeaveLevel(enemyAmount);
         }

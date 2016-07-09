@@ -105,7 +105,7 @@ public class DayController : MonoBehaviour
     public void UpdateTrash()
     {
         trashCounterAnimator.SetTrigger("Update");
-        trashCounter.text = "" + GameManager.Instance.inventoryController.trash;
+        trashCounter.text = "" + GameManager.Instance.inventoryController.pills;
     }
     public void UpdateCandy()
     {
@@ -115,7 +115,7 @@ public class DayController : MonoBehaviour
 
     public void HealToy()
     {
-        if (GameManager.Instance.player.health / GameManager.Instance.player.maxHealth < 0.9f && GameManager.Instance.inventoryController.trash > 0)
+        if (GameManager.Instance.player.health / GameManager.Instance.player.maxHealth < 0.9f && GameManager.Instance.inventoryController.pills > 0)
         {
             float healAmount = Random.Range(0.75f, 1.25f);
             GameManager.Instance.player.Recover(healAmount);

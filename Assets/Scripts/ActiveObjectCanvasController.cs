@@ -25,53 +25,34 @@ public class ActiveObjectCanvasController : MonoBehaviour
     [SerializeField]
     Image aggressiveIcon;
 
-    public bool skillsVisible = false;
+    public bool iconsVisible = false;
 
     void Awake()
     {
         _canvas.worldCamera = Camera.main;
     }
 
+    void Start()
+    {
+        HideIcons();
+    }
 
     public void ShowIcons()
     {
-        if (GameManager.Instance.objectsTurn == GameManager.Instance.player) // if player moves - show both icons
+        if (!iconsVisible)
         {
             foreach (GameObject go in buttonIcons)
                 go.SetActive(true);
+                
+            ShowSkills();
+
+            _animator.SetTrigger("Show");
+            iconsVisible = true;
         }
-        else // show onli action icon if not player
-        {
-            buttonIcons[1].SetActive(true);
-        }
-
-
-        _animator.SetTrigger("Show");
-    }
-
-    public void HideIcons()
-    {
-        _animator.SetTrigger("Hide");
-
-        StartCoroutine("HideIconsAfterPause");
-        skillsVisible = false;
-    }
-
-    IEnumerator HideIconsAfterPause()
-    {
-        yield return new WaitForSeconds(0.25f);
-
-        foreach (GameObject go in buttonIcons)
-            go.SetActive(false);
-
-        foreach (GameObject go in skillIcons)
-            go.SetActive(false);
     }
 
     public void ShowSkills()
     {
-        _animator.SetTrigger("Show");
-
         for (int i = 0; i < GameManager.Instance.skillsCurrent.Count; i++)
         {
             skillIcons[i].SetActive(true);
@@ -86,34 +67,17 @@ public class ActiveObjectCanvasController : MonoBehaviour
                 skillIcons[i].GetComponent<Image>().enabled = false;
             }
         }
-
-        skillsVisible = true;
-        StartCoroutine("HideTalkAfterPause");
     }
 
-    public void HideSkills()
+    public void HideIcons()
     {
-        _animator.SetTrigger("HideSkills");
-
-        StartCoroutine("HideSkillsAfterPause");
-
-        skillsVisible = false;
+        if (iconsVisible)
+        {
+            _animator.SetTrigger("Hide");
+            iconsVisible = false;
+        }
     }
 
-    IEnumerator HideSkillsAfterPause()
-    {
-        buttonIcons[0].SetActive(true);
-        yield return new WaitForSeconds(0.25f);
-        foreach (GameObject go in skillIcons)
-            go.SetActive(false);
-
-    }
-    IEnumerator HideTalkAfterPause()
-    {
-        yield return new WaitForSeconds(0.1f);
-
-        buttonIcons[0].SetActive(false);
-    }
 
     public void PointerEnterButton(int skill)
     {

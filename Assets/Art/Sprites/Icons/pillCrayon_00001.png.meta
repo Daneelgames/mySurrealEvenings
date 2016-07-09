@@ -1,10 +1,9 @@
 fileFormatVersion: 2
-guid: 429d31fb01e3a2742ad364b00c6e44b9
-timeCreated: 1466495181
+guid: fe539458da964f24f9bce28d094e9044
+timeCreated: 1468064251
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: backpack_00001_0
+  fileIDToRecycleName: {}
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -31,47 +30,28 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: 16
+    aniso: -1
     mipBias: -1
-    wrapMode: 1
-  nPOTScale: 0
+    wrapMode: -1
+  nPOTScale: 1
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 2
+  spriteMode: 0
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 1
-  textureType: 8
+  alphaIsTransparency: 0
+  textureType: -1
   buildTargetSettings: []
   spriteSheet:
-    sprites:
-    - name: backpack_00001_0
-      rect:
-        serializedVersion: 2
-        x: 14
-        y: 12
-        width: 95
-        height: 106
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -31.5, y: 53}
-        - {x: -47.5, y: 13}
-        - {x: -47.5, y: -43}
-        - {x: -38.5, y: -53}
-        - {x: 33.5, y: -53}
-        - {x: 47.5, y: -49}
-        - {x: 47.5, y: 32}
-        - {x: 31.5, y: 53}
+    sprites: []
     outline: []
-  spritePackingTag: Icons
+  spritePackingTag: 
   userData: 
   assetBundleName: 
   assetBundleVariant: 

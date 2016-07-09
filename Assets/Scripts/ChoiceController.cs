@@ -18,9 +18,9 @@ public class ChoiceController : MonoBehaviour
         _anim = GetComponent<Animator>();
     }
 
-    public void ShowWindow(InteractiveObject _npc, bool sleepNearEnemy)
+    public void ShowWindow(InteractiveObject _npc, bool sleepNearEnemy, bool outOfPills)
     {
-        if (!sleepNearEnemy)
+        if (!sleepNearEnemy && !outOfPills)
         {
             sleepChoice = false;
             npc = _npc;
@@ -30,13 +30,29 @@ public class ChoiceController : MonoBehaviour
                 description.text = "In exchange of  " + npc.calmMoney + " candies and " + npc.calmItem.GetComponent<SkillController>().skillName;
             }
         }
-        else
+        else if (sleepNearEnemy && !outOfPills)
         {
             sleepChoice = true;
             npc = null;
 
-            title.text = "Go to sleep?";
-            description.text = "Aggressive monsters will scare you and damage your toy while you're sleeping.";
+            title.text = "Monsters around.";
+            description.text = "Monsters will scare you and damage your toy while you're sleeping. Fall asleep?";
+        }
+        else if (!sleepNearEnemy && outOfPills)
+        {
+            sleepChoice = true;
+            npc = null;
+
+            title.text = "No pills.";
+            description.text = "The next night will be much worse. Fall asleep?";
+        }
+        else if (sleepNearEnemy && outOfPills)
+        {
+            sleepChoice = true;
+            npc = null;
+
+            title.text = "Monsters and no pills";
+            description.text = "You're going to bed with the monsters around. And you run out of pills. This is madness. Fall asleep?";
         }
 
         _anim.SetTrigger("Active");

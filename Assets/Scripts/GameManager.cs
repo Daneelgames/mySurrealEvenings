@@ -45,17 +45,13 @@ public class GameManager : MonoBehaviour
 
     public ObjectsInfoController objInfoController;
 
-    public Animator tradeWindow;
-    public bool tradeActive = false;
 
     public Animator inventory;
     public bool inventoryActive = false;
     public InventoryController inventoryController;
 
-    public TradeWindowController tradeController;
     public StageRandomController stageRandomController;
 
-    private NpcController curTrader = null;
 
     public bool choiceActive = false;
     public ChoiceController choiceController;
@@ -221,7 +217,7 @@ public class GameManager : MonoBehaviour
             if (!turnOver)
                 objInfoController.HideWindows();
 
-            if (!mouseOverButton && !tradeActive)
+            if (!mouseOverButton)
                 InventoryClosed();
         }
     }
@@ -456,7 +452,7 @@ public class GameManager : MonoBehaviour
 
     void CheckSkipAndGo()
     {
-        if (objectsTurn.inParty && !inDialog && !tradeActive && !inventoryActive && !choiceActive && !blockSkillIcons)
+        if (objectsTurn.inParty && !inDialog && !inventoryActive && !choiceActive && !blockSkillIcons)
         {
             skipTurnAnim.SetBool("Active", true);
             goFurtherAnim.SetBool("Active", true);
@@ -472,9 +468,17 @@ public class GameManager : MonoBehaviour
     {
         if (!changeScene)
         {
+            bool noPills = false;
+            if (inventoryController.pills < 1)
+                noPills = true;
+
+            bool haveEnemies = false;
             if (enemyAmount > 0)
+                haveEnemies = true;
+
+            if (haveEnemies || noPills)
             {
-                ChoiceActive(null, true);
+                ChoiceActive(null, haveEnemies, noPills);
             }
             else
             {
@@ -494,6 +498,12 @@ public class GameManager : MonoBehaviour
         fader.color = Color.black;
         clockAnim.SetTrigger("ShowClock");
         //        print("Load Day");
+
+        if (inventoryController.pills > 0)
+        {
+            inventoryController.pills -= 1;
+            GameManager.Instance.inventory.SetTrigger("Update");
+        }
 
         if (curSanity <= 0 || player.health <= 0)
         {
@@ -544,8 +554,6 @@ public class GameManager : MonoBehaviour
 
     public void DialogStart(InteractiveObject speaker)
     {
-        if (selectedObject.npcControl != null)
-            curTrader = selectedObject.npcControl;
 
         inDialog = true;
         mouseOverButton = false;
@@ -594,14 +602,9 @@ public class GameManager : MonoBehaviour
 
         if (selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo != NpcController.Target.everyone)
         {
-            if (selectedObject.actionOnDialog == InteractiveObject.DialogAction.trade)
+            if (selectedObject.activeDialog == 1) // CHECK FOR TEAM UP
             {
-                TradeActive(); // OPEN SHOP
-                specialDialog = true;
-            }
-            else if (selectedObject.activeDialog == 1) // CHECK FOR TEAM UP
-            {
-                ChoiceActive(selectedObject, false);
+                ChoiceActive(selectedObject, false, false);
                 specialDialog = true;
             }
         }
@@ -610,7 +613,7 @@ public class GameManager : MonoBehaviour
         {
             if (selectedObject.activeDialog == 5 && selectedObject.npcControl.skills.Count < 5) // CHECK FOR CALM
             {
-                ChoiceActive(selectedObject, false);
+                ChoiceActive(selectedObject, false, false);
                 specialDialog = true;
             }
         }
@@ -630,11 +633,11 @@ public class GameManager : MonoBehaviour
         objInfoController.HideDialogBackground();
     }
 
-    void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy)
+    void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy, bool outOfPills)
     {
         InventoryClosed();
 
-        choiceController.ShowWindow(npc, sleepNearEnemy);
+        choiceController.ShowWindow(npc, sleepNearEnemy, outOfPills);
         goFurtherAnim.SetBool("Active", false);
         skipTurnAnim.SetBool("Active", false);
         choiceActive = true;
@@ -657,37 +660,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void TradeActive()
-    {
-        InventoryToggle();
-        tradeWindow.SetBool("Active", true);
-        tradeActive = true;
-        tradeController.npc = curTrader;
-        tradeController.OpenTradeWindow();
-    }
-
-    public void TradeOver()
-    {
-        mouseOverButton = false;
-        HideTextManually();
-        tradeActive = false;
-        InventoryToggle();
-        StartCoroutine("SetTradeInactive");
-
-        CheckSkipAndGo();
-    }
-
-    IEnumerator SetTradeInactive()
-    {
-        tradeWindow.SetBool("Active", false);
-        yield return new WaitForSeconds(0.2f);
-        mouseOverButton = false;
-        objInfoController.HideWindows();
-    }
-
     public void InventoryToggle()
     {
-        if (objectsTurn.inParty && !tradeActive && !choiceActive)
+        if (objectsTurn.inParty && !choiceActive)
         {
             if (!inventoryActive)
             {
@@ -732,14 +707,12 @@ public class GameManager : MonoBehaviour
 
     public void MouseEnterButton()
     {
-        if (!tradeActive)
-            mouseOverButton = true;
+        mouseOverButton = true;
     }
 
     public void MouseExitButton()
     {
-        if (!tradeActive)
-            mouseOverButton = false;
+        mouseOverButton = false;
     }
 
     public void CameraShake(float waitTime)

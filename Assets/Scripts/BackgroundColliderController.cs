@@ -5,7 +5,7 @@ public class BackgroundColliderController : MonoBehaviour {
 
     void OnMouseDown()
     {
-        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.inDialog && !GameManager.Instance.choiceActive && !GameManager.Instance.tradeActive)
+        if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.inDialog && !GameManager.Instance.choiceActive)
         {
             GameManager.Instance.ClearSelectedObject();
         }
