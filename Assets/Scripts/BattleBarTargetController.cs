@@ -26,7 +26,7 @@ public class BattleBarTargetController : MonoBehaviour
         {
             float distance = Vector2.Distance(crossPos, targets[i].transform.position);
 
-            if (distance < 2)
+            if (distance < 1.25)
             {
                 hit = true;
                 targets[i].SetTrigger("Hit");

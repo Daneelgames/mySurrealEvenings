@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     public BattleBarController battleBar;
 
     public SkillController skillInAction;
-
+    public CameraHolderController camHolder;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -255,6 +255,9 @@ public class GameManager : MonoBehaviour
     }
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
+
+        camHolder.TargetFocus(target.transform.position);
+
         attackTarget = target;
         skipTurnAnim.SetBool("Active", false);
         goFurtherAnim.SetBool("Active", false);
@@ -649,6 +652,7 @@ public class GameManager : MonoBehaviour
     void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy, bool outOfPills)
     {
         InventoryClosed();
+        ClearSelectedObject();
 
         choiceController.ShowWindow(npc, sleepNearEnemy, outOfPills);
         goFurtherAnim.SetBool("Active", false);

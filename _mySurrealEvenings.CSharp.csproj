@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\BattleBarController.cs" />
     <Compile Include="Assets\Scripts\BattleBarTargetController.cs" />
     <Compile Include="Assets\Scripts\ButtonDescriptionFeedback.cs" />
+    <Compile Include="Assets\Scripts\CameraHolderController.cs" />
     <Compile Include="Assets\Scripts\ChoiceController.cs" />
     <Compile Include="Assets\Scripts\CursorController.cs" />
     <Compile Include="Assets\Scripts\DayController.cs" />

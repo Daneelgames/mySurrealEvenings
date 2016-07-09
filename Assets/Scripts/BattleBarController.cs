@@ -57,6 +57,8 @@ public class BattleBarController : MonoBehaviour
     {
         float totalDamage = 0;
         totalDamage = GameManager.Instance.skillInAction.damageTarget / 100 * dmgPercent - 10 * missesAmount;
+        if (totalDamage < 0)
+            totalDamage = 10;
 
         if (currentAction == PlayerAction.Attack)
             GameManager.Instance.attackTarget.ReduceHealth(totalDamage);
