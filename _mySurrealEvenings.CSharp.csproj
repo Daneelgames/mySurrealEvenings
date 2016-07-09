@@ -72,6 +72,8 @@
     <Compile Include="Assets\Scripts\ActiveObjectCanvasController.cs" />
     <Compile Include="Assets\Scripts\AnimationRandomStartTime.cs" />
     <Compile Include="Assets\Scripts\BackgroundColliderController.cs" />
+    <Compile Include="Assets\Scripts\BattleBarController.cs" />
+    <Compile Include="Assets\Scripts\BattleBarTargetController.cs" />
     <Compile Include="Assets\Scripts\ButtonDescriptionFeedback.cs" />
     <Compile Include="Assets\Scripts\ChoiceController.cs" />
     <Compile Include="Assets\Scripts\CursorController.cs" />

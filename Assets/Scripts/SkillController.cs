@@ -3,17 +3,18 @@ using System.Collections;
 
 public enum Effect { none, poison, curse, insanity }
 
-public class SkillController : MonoBehaviour {
+public class SkillController : MonoBehaviour
+{
 
     public string skillName;
 
     public int price = 1;
     public int priceTrash = 1;
 
-    public enum Type {offensive, recover}
-    public enum Range {one, all, allParty, allAgressive}
+    public enum Type { offensive, recover }
+    public enum Range { one, all, allParty, allAgressive }
 
-    public Type skillType = Type.offensive; 
+    public Type skillType = Type.offensive;
 
     public Sprite skillSprite;
 
@@ -40,6 +41,7 @@ public class SkillController : MonoBehaviour {
 
     private bool gathered = false;
 
+    public GameObject targets;
     public void SetTargets(InteractiveObject caster, InteractiveObject target)
     {
         //print(caster.name);
@@ -70,7 +72,7 @@ public class SkillController : MonoBehaviour {
             {
                 caster.Damage(damageCaster + casterRandom, caster);
                 caster.Recover(recoverCaster + casterRandom);
-                
+
 
                 if (effectCaster != Effect.none)
                 {
@@ -85,10 +87,18 @@ public class SkillController : MonoBehaviour {
                 }
             }
         }
-        
+
         // FRENZY DMG
         if (target == GameManager.Instance.player || caster == GameManager.Instance.player)
             GameManager.Instance.FrenzyDamage(frenzy);
+
+        if (target != caster) // start battle bar
+        {
+            if (target.inParty)
+                GameManager.Instance.battleBar.StartDefence(targets);
+            else if (caster.inParty)
+                GameManager.Instance.battleBar.StartAttack(targets);
+        }
     }
 
 

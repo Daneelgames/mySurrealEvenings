@@ -43,7 +43,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
         {
             foreach (GameObject go in buttonIcons)
                 go.SetActive(true);
-                
+
             ShowSkills();
 
             _animator.SetTrigger("Show");
@@ -53,7 +53,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
 
     public void ShowSkills()
     {
-        for (int i = 0; i < GameManager.Instance.skillsCurrent.Count; i++)
+        for (int i = 0; i < 8; i++)
         {
             skillIcons[i].SetActive(true);
             //if (GameManager.Instance.skillsCurrent[i] != null)

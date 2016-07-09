@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ public class GameManager : MonoBehaviour
     public InteractiveObject selectedObject;
     public bool mouseOverButton = false;
     public bool turnOver = false;
+
+    public InteractiveObject attackTarget;
 
     public List<InteractiveObject> objectList = new List<InteractiveObject>();
 
@@ -72,6 +75,11 @@ public class GameManager : MonoBehaviour
     public DayController crossesController;
     public Animator cameraAnim;
     public Animator clockAnim;
+
+    public BattleBarController battleBar;
+
+    public SkillController skillInAction;
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -247,7 +255,7 @@ public class GameManager : MonoBehaviour
     }
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
-
+        attackTarget = target;
         skipTurnAnim.SetBool("Active", false);
         goFurtherAnim.SetBool("Active", false);
 
@@ -266,7 +274,11 @@ public class GameManager : MonoBehaviour
         //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);
         GameObject skillInstance = Instantiate(skill.GetComponent<SkillController>().AttackParticle, target.transform.position, target.transform.rotation) as GameObject;
         skillInstance.transform.parent = target.transform;
-        skill.GetComponent<SkillController>().SetTargets(objectsTurn, target);
+
+        SkillController _sc = skill.GetComponent<SkillController>(); // SET CURRENT ACTIVE SKILL
+        _sc.SetTargets(objectsTurn, target);
+        skillInAction = _sc;
+
         bool hitself = false;
         bool offensive = false;
         if (objectsTurn == target)
@@ -368,7 +380,8 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnCooldown()
     {
         turnOver = false;
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(1.2f);
+        attackTarget = null;
         canSkipTurn = true;
         clickToSkip.raycastTarget = true;
     }
@@ -676,12 +689,14 @@ public class GameManager : MonoBehaviour
                 inventory.SetBool("Active", false);
                 inventoryActive = false;
             }
-
-            //CheckSkipAndGo();
+            if (selectedObject != null)
+            {
+                ClearSelectedObject();
+            }
         }
     }
 
-    void InventoryClosed()
+    public void InventoryClosed()
     {
         inventory.SetBool("Active", false);
         inventoryActive = false;

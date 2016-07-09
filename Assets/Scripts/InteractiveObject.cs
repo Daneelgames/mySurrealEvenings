@@ -68,6 +68,7 @@ public class InteractiveObject : MonoBehaviour
             {
                 GameManager.Instance.SetSelectedObject(this);
             }
+            GameManager.Instance.InventoryClosed();
         }
     }
 
@@ -161,7 +162,9 @@ public class InteractiveObject : MonoBehaviour
         float DMG = 0;
         if (baseDmg > 0)
         {
-            DMG = baseDmg * (100 / GameManager.Instance.curSanity);
+            //DMG = baseDmg * (100 / GameManager.Instance.curSanity);
+
+            DMG = baseDmg;
 
             if (!inParty && attacker != this)
             {
@@ -193,7 +196,7 @@ public class InteractiveObject : MonoBehaviour
         health -= dmg;
         UpdateHeart();
         GameManager.Instance.CameraShake(0.5f);
-        yield return new WaitForSeconds(0.5F);
+        yield return new WaitForSeconds(1.2F);
         if (health <= 0)
         {
             if (GameManager.Instance.player != this)
@@ -209,12 +212,10 @@ public class InteractiveObject : MonoBehaviour
     IEnumerator ActionTriggerDelay(float dmg)
     {
         yield return new WaitForSeconds(0.3F);
-        health -= dmg;
         _anim.SetTrigger("Damage");
-        UpdateHeart();
-        GameManager.Instance.CameraShake(0.5f);
+        ReduceHealth(dmg);
 
-        yield return new WaitForSeconds(0.5F);
+        yield return new WaitForSeconds(1.2F);
         if (health <= 0)
         {
             if (GameManager.Instance.player != this)
@@ -226,6 +227,19 @@ public class InteractiveObject : MonoBehaviour
             if (npcControl != null)
                 npcControl.DropOnDead();
         }
+    }
+
+    public void ReduceHealth(float dmg)
+    {
+        health -= dmg;
+        UpdateHeart();
+        GameManager.Instance.CameraShake(0.3f);
+    }
+    public void ReturnHealth(float dmg)
+    {
+        health += dmg;
+        UpdateHeart();
+        GameManager.Instance.CameraShake(0.3f);
     }
 
     public void Recover(float amount)
