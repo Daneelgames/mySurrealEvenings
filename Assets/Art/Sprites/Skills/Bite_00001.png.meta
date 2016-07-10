@@ -62,16 +62,16 @@ TextureImporter:
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -44.5, y: 24}
-        - {x: -44.5, y: -40}
-        - {x: -39.5, y: -45}
-        - {x: 31.5, y: -45}
-        - {x: 44.5, y: -38}
-        - {x: 44.5, y: 33}
-        - {x: 37.5, y: 45}
-        - {x: -38.5, y: 45}
+      - - {x: -39.5, y: 45}
+        - {x: -44.5, y: 44}
+        - {x: -44.5, y: -43}
+        - {x: -35.5, y: -45}
+        - {x: 40.5, y: -45}
+        - {x: 44.5, y: -33}
+        - {x: 44.5, y: 36}
+        - {x: 40.5, y: 45}
     outline: []
-  spritePackingTag: 
+  spritePackingTag: Sprites
   userData: 
   assetBundleName: 
   assetBundleVariant: 

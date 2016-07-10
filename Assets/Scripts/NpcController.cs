@@ -18,7 +18,7 @@ public class NpcController : MonoBehaviour
     public int levelPreffered = 1;
 
     public int candyDrop = 3;
-    public int trashDrop = 2;
+    public int pillDrop = 2;
 
     public GameObject dropFeedback;
 
@@ -230,13 +230,13 @@ public class NpcController : MonoBehaviour
     public void DropOnDead()
     {
         RemoveAggressiveFeedback();
-        
+
         float candyChance = Random.Range(0f, 1f);
         float trashChance = Random.Range(0f, 1f);
         float skillChance = Random.Range(0f, 1f);
 
         int candyValue = candyDrop + Mathf.RoundToInt(Random.Range(-candyDrop / 2, candyDrop / 2));
-        int trashValue = trashDrop + Mathf.RoundToInt(Random.Range(-trashDrop / 2, trashDrop / 2));
+        int trashValue = pillDrop + Mathf.RoundToInt(Random.Range(-pillDrop / 2, pillDrop / 2));
 
         if (candyChance > 0.25f) // DROP RANDOM
         {

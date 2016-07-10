@@ -1,0 +1,415 @@
+fileFormatVersion: 2
+guid: ccf6ef2a9c594374495c44dc2ecac116
+timeCreated: 1468102091
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: skin1
+    21300002: skin2
+    21300004: DadsWig_00001_2
+    21300006: DadsWig_00001_3
+    21300008: DadsWig_00001_4
+    21300010: DadsWig_00001_5
+    21300012: DadsWig_00001_6
+    21300014: DadsWig_00001_7
+    21300016: DadsWig_00001_8
+    21300018: DadsWig_00001_9
+    21300020: DadsWig_00001_10
+    21300022: DadsWig_00001_11
+    21300024: DadsWig_00001_12
+    21300026: DadsWig_00001_13
+    21300028: meat
+    21300030: eye1
+    21300032: eye2
+    21300034: eye3
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: skin1
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 448
+        width: 321
+        height: 61
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -131.5, y: 30.5}
+        - {x: -160.5, y: 17.5}
+        - {x: -160.5, y: -30.5}
+        - {x: 150.5, y: -30.5}
+        - {x: 160.5, y: -15.5}
+        - {x: 160.5, y: 20.5}
+        - {x: 109.5, y: 30.5}
+    - name: skin2
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 389
+        width: 354
+        height: 55
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -177, y: -27.5}
+        - {x: 177, y: -27.5}
+        - {x: 177, y: 27.5}
+        - {x: -177, y: 27.5}
+    - name: DadsWig_00001_2
+      rect:
+        serializedVersion: 2
+        x: 425
+        y: 188
+        width: 32
+        height: 227
+      alignment: 9
+      pivot: {x: 0.43480015, y: 0.91666526}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -13.913605, y: 18.916992}
+        - {x: -13.913605, y: -208.08301}
+        - {x: 17.086395, y: -208.08301}
+        - {x: 18.086395, y: -200.08301}
+        - {x: 18.086395, y: 12.916992}
+        - {x: 14.086395, y: 18.916992}
+    - name: DadsWig_00001_3
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 177
+        width: 72
+        height: 128
+      alignment: 9
+      pivot: {x: 0.3551116, y: 0.092502}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8.568035, y: 116.159744}
+        - {x: -25.568035, y: 108.159744}
+        - {x: -25.568035, y: 4.1597443}
+        - {x: -19.568035, y: -5.8402557}
+        - {x: -9.568035, y: -11.840256}
+        - {x: 10.431965, y: -11.840256}
+        - {x: 46.431965, y: 47.159744}
+        - {x: 46.431965, y: 109.159744}
+        - {x: 43.431965, y: 116.159744}
+    - name: DadsWig_00001_4
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 176
+        width: 166
+        height: 205
+      alignment: 9
+      pivot: {x: 0.75556165, y: 0.21502976}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -125.42323, y: 160.9189}
+        - {x: -125.42323, y: 59.9189}
+        - {x: -121.42323, y: 51.9189}
+        - {x: -109.42323, y: 32.9189}
+        - {x: -78.42323, y: -14.0811}
+        - {x: -46.423233, y: -44.0811}
+        - {x: -7.423233, y: -44.0811}
+        - {x: 40.576767, y: -22.0811}
+        - {x: 40.576767, y: 160.9189}
+    - name: DadsWig_00001_5
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 178
+        width: 57
+        height: 156
+      alignment: 9
+      pivot: {x: 0.4755977, y: 0.9190613}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -27.10907, y: 12.626434}
+        - {x: -27.10907, y: -92.373566}
+        - {x: -18.10907, y: -131.37357}
+        - {x: -2.1090698, y: -143.37357}
+        - {x: 9.89093, y: -143.37357}
+        - {x: 29.89093, y: -112.373566}
+        - {x: 29.89093, y: 12.626434}
+    - name: DadsWig_00001_6
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 190
+        width: 43
+        height: 126
+      alignment: 9
+      pivot: {x: 0.32209033, y: 0.9250055}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13.150116, y: 9.44931}
+        - {x: -13.849884, y: 9.44931}
+        - {x: -13.849884, y: -52.55069}
+        - {x: -8.849884, y: -116.55069}
+        - {x: 6.150116, y: -116.55069}
+        - {x: 21.150116, y: -102.55069}
+        - {x: 29.150116, y: -80.55069}
+        - {x: 29.150116, y: 2.4493103}
+    - name: DadsWig_00001_7
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 87
+        width: 75
+        height: 82
+      alignment: 9
+      pivot: {x: 0.4350899, y: 0.17771223}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 31.36826, y: 5.427597}
+        - {x: 42.36826, y: 17.427597}
+        - {x: 42.36826, y: 67.4276}
+        - {x: -30.63174, y: 67.4276}
+        - {x: -32.63174, y: 61.427597}
+        - {x: -32.63174, y: -6.572403}
+        - {x: -25.63174, y: -14.572403}
+        - {x: 7.3682594, y: -14.572403}
+        - {x: 18.36826, y: -2.572403}
+        - {x: 18.36826, y: 3.427597}
+        - {x: 22.36826, y: 3.427597}
+    - name: DadsWig_00001_8
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 88
+        width: 47
+        height: 81
+      alignment: 9
+      pivot: {x: 0.61837673, y: 0.19090515}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23.063705, y: 65.53668}
+        - {x: -29.063705, y: 46.536682}
+        - {x: -29.063705, y: -11.463318}
+        - {x: -21.063705, y: -15.463318}
+        - {x: 8.936295, y: -15.463318}
+        - {x: 17.936295, y: -10.463318}
+        - {x: 17.936295, y: 65.53668}
+    - name: DadsWig_00001_9
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 98
+        width: 43
+        height: 70
+      alignment: 9
+      pivot: {x: 0.17652822, y: 0.84773165}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -0.5907135, y: 10.658783}
+        - {x: -7.5907135, y: 8.658783}
+        - {x: -7.5907135, y: -53.341217}
+        - {x: -5.5907135, y: -59.341217}
+        - {x: 22.409286, y: -59.341217}
+        - {x: 35.409286, y: -53.341217}
+        - {x: 35.409286, y: 3.658783}
+        - {x: 22.409286, y: 10.658783}
+    - name: DadsWig_00001_10
+      rect:
+        serializedVersion: 2
+        x: 287
+        y: 140
+        width: 67
+        height: 42
+      alignment: 9
+      pivot: {x: 0.16783848, y: 0.28473774}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13.754822, y: 30.041016}
+        - {x: -11.245178, y: 9.041016}
+        - {x: -11.245178, y: -11.958984}
+        - {x: 55.75482, y: -11.958984}
+        - {x: 55.75482, y: 18.041016}
+        - {x: 49.75482, y: 30.041016}
+    - name: DadsWig_00001_11
+      rect:
+        serializedVersion: 2
+        x: 361
+        y: 5
+        width: 143
+        height: 172
+      alignment: 9
+      pivot: {x: 0.35896185, y: 0.09566087}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 14.668457, y: 155.54633}
+        - {x: -37.331543, y: 103.546326}
+        - {x: -51.331543, y: 46.546326}
+        - {x: -51.331543, y: -16.453674}
+        - {x: 91.66846, y: -16.453674}
+        - {x: 91.66846, y: 51.546326}
+        - {x: 58.668457, y: 155.54633}
+    - name: DadsWig_00001_12
+      rect:
+        serializedVersion: 2
+        x: 8
+        y: 2
+        width: 259
+        height: 79
+      alignment: 9
+      pivot: {x: 0.9484261, y: 0.48239368}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 13.3576355, y: 14.8909}
+        - {x: 3.3576355, y: 27.8909}
+        - {x: -3.6423645, y: 40.8909}
+        - {x: -245.64236, y: 40.8909}
+        - {x: -245.64236, y: 14.8909}
+        - {x: -170.64236, y: -38.1091}
+        - {x: -53.642365, y: -38.1091}
+        - {x: -2.6423645, y: -23.1091}
+        - {x: 10.3576355, y: -15.1091}
+        - {x: 13.3576355, y: -4.1091003}
+    - name: DadsWig_00001_13
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 8
+        width: 57
+        height: 120
+      alignment: 9
+      pivot: {x: 0.805028, y: 0.9056869}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -1.8865967, y: -64.68243}
+        - {x: -3.8865967, y: -67.68243}
+        - {x: 11.113403, y: -16.682426}
+        - {x: 11.113403, y: 11.317574}
+        - {x: -21.886597, y: 11.317574}
+        - {x: -45.886597, y: -8.682426}
+        - {x: -45.886597, y: -85.68243}
+        - {x: -41.886597, y: -104.68243}
+        - {x: -22.886597, y: -108.68243}
+        - {x: 2.1134033, y: -108.68243}
+        - {x: 10.113403, y: -94.68243}
+        - {x: 9.113403, y: -69.68243}
+        - {x: 2.1134033, y: -65.68243}
+    - name: meat
+      rect:
+        serializedVersion: 2
+        x: 391
+        y: 437
+        width: 118
+        height: 73
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -50, y: 36.5}
+        - {x: -59, y: 34.5}
+        - {x: -59, y: -36.5}
+        - {x: 59, y: -36.5}
+        - {x: 59, y: 36.5}
+    - name: eye1
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 327
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16, y: 18}
+        - {x: -13, y: 18}
+        - {x: -18, y: 16}
+        - {x: -18, y: -10}
+        - {x: -13, y: -18}
+        - {x: 17, y: -18}
+        - {x: 18, y: -15}
+        - {x: 18, y: 15}
+    - name: eye2
+      rect:
+        serializedVersion: 2
+        x: 294
+        y: 262
+        width: 36
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -11, y: 18}
+        - {x: -18, y: 10}
+        - {x: -18, y: -10}
+        - {x: -17, y: -12}
+        - {x: -12, y: -17}
+        - {x: -10, y: -18}
+        - {x: 10, y: -18}
+        - {x: 18, y: -15}
+        - {x: 18, y: 13}
+        - {x: 11, y: 18}
+    - name: eye3
+      rect:
+        serializedVersion: 2
+        x: 297
+        y: 199
+        width: 36
+        height: 37
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18, y: 18.5}
+        - {x: -18, y: -14.5}
+        - {x: -11, y: -18.5}
+        - {x: 16, y: -18.5}
+        - {x: 18, y: -13.5}
+        - {x: 18, y: 15.5}
+        - {x: 16, y: 18.5}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

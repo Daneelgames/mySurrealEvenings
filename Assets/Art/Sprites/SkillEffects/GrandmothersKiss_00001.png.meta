@@ -1,0 +1,221 @@
+fileFormatVersion: 2
+guid: 6e99f8a34cb96994e819507688430222
+timeCreated: 1468106685
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: GrandmothersKiss_00001_0
+    21300002: eyel
+    21300004: eyer
+    21300006: lips
+    21300008: lipsKiss
+    21300010: decor
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: GrandmothersKiss_00001_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 147
+        width: 281
+        height: 357
+      alignment: 9
+      pivot: {x: 0.5148497, y: 0.21752891}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 132.32722, y: 98.34218}
+        - {x: 136.32722, y: 112.34218}
+        - {x: 136.32722, y: 180.34218}
+        - {x: 122.327225, y: 222.34218}
+        - {x: 111.327225, y: 244.34218}
+        - {x: 63.327225, y: 262.34216}
+        - {x: 49.327225, y: 272.34216}
+        - {x: 32.327225, y: 279.34216}
+        - {x: 17.327225, y: 279.34216}
+        - {x: -3.6727753, y: 271.34216}
+        - {x: -37.672775, y: 278.34216}
+        - {x: -79.672775, y: 278.34216}
+        - {x: -95.672775, y: 238.34218}
+        - {x: -115.672775, y: 204.34218}
+        - {x: -144.67278, y: 141.34218}
+        - {x: -144.67278, y: 124.34218}
+        - {x: -140.67278, y: 121.34218}
+        - {x: -141.67278, y: 88.34218}
+        - {x: -113.672775, y: 62.34218}
+        - {x: -91.672775, y: -20.657822}
+        - {x: -76.672775, y: -50.65782}
+        - {x: -71.672775, y: -53.65782}
+        - {x: -43.672775, y: -76.65782}
+        - {x: -41.672775, y: -77.65782}
+        - {x: 36.327225, y: -77.65782}
+        - {x: 51.327225, y: -60.65782}
+        - {x: 69.327225, y: -40.65782}
+        - {x: 128.32722, y: 66.34218}
+    - name: eyel
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 442
+        width: 34
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17, y: 16.5}
+        - {x: -17, y: -16.5}
+        - {x: 12, y: -16.5}
+        - {x: 17, y: -11.5}
+        - {x: 17, y: 15.5}
+        - {x: 14, y: 16.5}
+    - name: eyer
+      rect:
+        serializedVersion: 2
+        x: 459
+        y: 442
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -14, y: 17}
+        - {x: -18, y: 15}
+        - {x: -18, y: -12}
+        - {x: -13, y: -17}
+        - {x: 13, y: -17}
+        - {x: 18, y: -11}
+        - {x: 18, y: 9}
+        - {x: 14, y: 17}
+    - name: lips
+      rect:
+        serializedVersion: 2
+        x: 407
+        y: 368
+        width: 87
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -33.5, y: 21.5}
+        - {x: -43.5, y: 12.5}
+        - {x: -43.5, y: -2.5}
+        - {x: -40.5, y: -6.5}
+        - {x: -34.5, y: -7.5}
+        - {x: -29.5, y: -7.5}
+        - {x: -30.5, y: -7.5}
+        - {x: -35.5, y: -9.5}
+        - {x: -35.5, y: -11.5}
+        - {x: -32.5, y: -14.5}
+        - {x: -24.5, y: -14.5}
+        - {x: -18.5, y: -11.5}
+        - {x: -23.5, y: -13.5}
+        - {x: -24.5, y: -15.5}
+        - {x: -27.5, y: -15.5}
+        - {x: -33.5, y: -21.5}
+        - {x: 18.5, y: -21.5}
+        - {x: 43.5, y: -10.5}
+        - {x: 43.5, y: 21.5}
+    - name: lipsKiss
+      rect:
+        serializedVersion: 2
+        x: 344
+        y: 243
+        width: 115
+        height: 90
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -44.5, y: 45}
+        - {x: -45.5, y: 44}
+        - {x: -57.5, y: 24}
+        - {x: -57.5, y: -45}
+        - {x: 57.5, y: -45}
+        - {x: 57.5, y: 37}
+        - {x: 47.5, y: 45}
+    - name: decor
+      rect:
+        serializedVersion: 2
+        x: 271
+        y: 8
+        width: 231
+        height: 185
+      alignment: 9
+      pivot: {x: 0.96364236, y: 0.50375926}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -72.60138, y: 91.804535}
+        - {x: -82.60138, y: 89.804535}
+        - {x: -173.60138, y: 44.804535}
+        - {x: -218.60138, y: 5.804535}
+        - {x: -222.60138, y: -3.195465}
+        - {x: -222.60138, y: -74.195465}
+        - {x: -183.60138, y: -93.195465}
+        - {x: -10.601379, y: -93.195465}
+        - {x: 8.398621, y: -77.195465}
+        - {x: 8.398621, y: 74.804535}
+        - {x: 5.3986206, y: 91.804535}
+      - - {x: -198.60138, y: -27.195465}
+        - {x: -199.60138, y: -26.195465}
+        - {x: -199.60138, y: -27.195465}
+        - {x: -195.60138, y: -24.195465}
+        - {x: -194.60138, y: -21.195465}
+        - {x: -22.60138, y: -56.195465}
+        - {x: -21.60138, y: -57.195465}
+        - {x: -21.60138, y: -56.195465}
+        - {x: -24.60138, y: -59.195465}
+        - {x: -69.60138, y: -68.195465}
+        - {x: -74.60138, y: -72.195465}
+        - {x: -76.60138, y: -70.195465}
+        - {x: -82.60138, y: -65.195465}
+    outline: []
+  spritePackingTag: Sprites
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
