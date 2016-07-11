@@ -383,7 +383,7 @@ public class GameManager : MonoBehaviour
     IEnumerator TurnCooldown()
     {
         turnOver = false;
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.5f);
         attackTarget = null;
         canSkipTurn = true;
         clickToSkip.raycastTarget = true;

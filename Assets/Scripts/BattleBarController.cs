@@ -15,6 +15,9 @@ public class BattleBarController : MonoBehaviour
     public Animator cross;
     public int missesAmount;
 
+    public Animator def;
+    public Animator dmg;
+
     BattleBarTargetController newBar;
     public void StartAttack(GameObject targets)
     {
@@ -61,8 +64,14 @@ public class BattleBarController : MonoBehaviour
             totalDamage = 10;
 
         if (currentAction == PlayerAction.Attack)
+        {
+            dmg.SetTrigger("Update");
             GameManager.Instance.attackTarget.ReduceHealth(totalDamage);
+        }
         else
+        {
+            def.SetTrigger("Update");
             GameManager.Instance.attackTarget.ReturnHealth(totalDamage);
+        }
     }
 }
