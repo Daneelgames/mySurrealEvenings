@@ -161,7 +161,7 @@ public class DayEventsController : MonoBehaviour
                     break;
 
                 case DayEventTypes.TrashAdd:
-                    GameManager.Instance.inventoryController.TrashGet(Random.Range(1, 4));
+                    GameManager.Instance.inventoryController.PillGet(Random.Range(1, 4));
                     GameManager.Instance.crossesController.UpdateTrash();
 
                     switch (i)
@@ -185,7 +185,7 @@ public class DayEventsController : MonoBehaviour
                     break;
 
                 case DayEventTypes.TrashRemove:
-                    GameManager.Instance.inventoryController.TrashLose(Random.Range(1, GameManager.Instance.inventoryController.pills));
+                    GameManager.Instance.inventoryController.PillLose(Random.Range(1, GameManager.Instance.inventoryController.pills));
                     GameManager.Instance.crossesController.UpdateTrash();
 
                     switch (i)

@@ -142,7 +142,14 @@ public class InteractiveObject : MonoBehaviour
             }
             else if (theme == "Angry")
             {
-                    activeDialog = 6; //5 angry dialog  
+                activeDialog = 6; //6 angry dialog  
+                if (npcControl != null)
+                    npcControl.agressiveTo = NpcController.Target.everyone;
+            }
+            else if (theme == "Happy")
+            {
+                activeDialog = 7; //7 happy dialog  
+                npcControl.agressiveTo = NpcController.Target.none;
             }
         }
         else if (inParty)
@@ -197,7 +204,7 @@ public class InteractiveObject : MonoBehaviour
         {
             if (GameManager.Instance.player != this)
             {
-                _anim.gameObject.SetActive(false);
+                StartCoroutine("SetAnimInactive");
                 Instantiate(deathParticles, transform.position, Quaternion.identity);
             }
 
@@ -216,7 +223,7 @@ public class InteractiveObject : MonoBehaviour
         {
             if (GameManager.Instance.player != this)
             {
-                _anim.gameObject.SetActive(false);
+                StartCoroutine("SetAnimInactive");
                 Instantiate(deathParticles, transform.position, Quaternion.identity);
             }
 
@@ -263,6 +270,19 @@ public class InteractiveObject : MonoBehaviour
         }
     }
 
+    public void WalkAway()
+    {
+        health = 0;
+        UpdateHeart();
+        StartCoroutine("SetAnimInactive");
+        Instantiate(deathParticles, transform.position, Quaternion.identity);
+    }
+
+    IEnumerator SetAnimInactive()
+    {
+        yield return new WaitForSeconds(0.3f);
+        _anim.gameObject.SetActive(false);
+    }
     public void Death()
     {
         GameManager.Instance.objectList.Remove(this);

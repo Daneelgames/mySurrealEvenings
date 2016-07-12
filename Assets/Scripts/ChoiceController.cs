@@ -34,6 +34,7 @@ public class ChoiceController : MonoBehaviour
 
     void GenerateTradeWindow()
     {
+        rightSkillToSell = null;
         tradeArrows.SetActive(true);
 
         float pillChanceRight = 0;
@@ -236,7 +237,47 @@ public class ChoiceController : MonoBehaviour
         switch (choice)
         {
             case (ChoiceType.trade):
-                // make trade
+                
+                // RIGHT
+                if (tradeItemRight == "Skill" && rightSkillToSell != null) // get skill
+                {
+                    if (GameManager.Instance.skillsCurrent.Count < 8)
+                    {
+                        GameManager.Instance.skills.Add(rightSkillToSell.gameObject);
+                        GameManager.Instance.inventoryController.ItemGet(rightSkillToSell);
+                    }
+                    else
+                    {
+
+                    }
+                    npc.npcControl.RemoveSkill(rightSkillToSell);
+                }
+                else if (tradeItemRight == "Pill")
+                {
+                    GameManager.Instance.inventoryController.PillGet(tradeItemRightAmount);
+                }
+                else if (tradeItemRight == "Candy")
+                {
+                    GameManager.Instance.inventoryController.CandyGet(tradeItemRightAmount);
+                }
+                
+                // LEFT
+                if (tradeItemLeft == "Skill" && leftSkillToSell != null) // lose skill
+                {
+                    print(leftSkillToSell.skillName);
+                    GameManager.Instance.skills.Remove(leftSkillToSell.gameObject);
+                    GameManager.Instance.inventoryController.ItemLost(leftSkillToSell);
+                }
+                else if (tradeItemLeft == "Pill")
+                {
+                    GameManager.Instance.inventoryController.PillLose(tradeItemLeftAmount);
+                }
+                else if (tradeItemLeft == "Candy")
+                {
+                    GameManager.Instance.inventoryController.CandyLose(tradeItemLeftAmount);
+                }
+
+
                 break;
 
             case (ChoiceType.repel):
@@ -258,7 +299,7 @@ public class ChoiceController : MonoBehaviour
                 //something
                 break;
         }
-        GameManager.Instance.ChoiceInactive(choice, true, null);
+        GameManager.Instance.ChoiceInactive(choice, true, npc);
         _anim.SetTrigger("Yes");
     }
 

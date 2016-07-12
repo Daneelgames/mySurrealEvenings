@@ -62,13 +62,13 @@ public class InventoryController : MonoBehaviour
         SetResourcesFeedback();
     }
 
-    public void TrashGet(int amount)
+    public void PillGet(int amount)
     {
         pills += amount;
         SetResourcesFeedback();
     }
 
-    public void TrashLose(int amount)
+    public void PillLose(int amount)
     {
         pills -= amount;
         SetResourcesFeedback();

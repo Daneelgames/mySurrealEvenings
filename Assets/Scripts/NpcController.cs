@@ -45,6 +45,18 @@ public class NpcController : MonoBehaviour
         }
     }
 
+    public void RemoveSkill(SkillController skillToRemove)
+    {
+        foreach (GameObject sk in skills)
+        {
+            if (sk.GetComponent<SkillController>().skillName == skillToRemove.skillName)
+            {
+                skills.Remove(sk);
+                break;
+            }
+        }
+    }
+
     public void ChooseAction()
     {
         if (agressiveTo == Target.none)
@@ -248,7 +260,7 @@ public class NpcController : MonoBehaviour
         }
         if (trashChance > 0.25f) // DROP RANDOM
         {
-            GameManager.Instance.inventoryController.TrashGet(trashValue);
+            GameManager.Instance.inventoryController.PillGet(trashValue);
         }
         if (skillChance > 0.5f)
         {

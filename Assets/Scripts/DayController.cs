@@ -120,7 +120,7 @@ public class DayController : MonoBehaviour
             float healAmount = Random.Range(0.75f, 1.25f);
             GameManager.Instance.player.Recover(healAmount);
 
-            GameManager.Instance.inventoryController.TrashLose(1);
+            GameManager.Instance.inventoryController.PillLose(1);
 
             UpdateToy();
             UpdateTrash();

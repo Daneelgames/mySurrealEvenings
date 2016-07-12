@@ -627,11 +627,11 @@ public class GameManager : MonoBehaviour
                 ChoiceActive(selectedObject, false, false, false, true);
                 specialDialog = true;
             }
-            else if (selectedObject.activeDialog == 6) // refused to trade
+            else if (selectedObject.activeDialog == 6) // refused to trade, agry
             {
                 specialDialog = true;
 
-                actionTextFeedback.text = objectsTurn._name + " doing nothing." + selectedObject._name + " is angry!";
+                actionTextFeedback.text = objectsTurn._name + " doing nothing. " + selectedObject._name + " is angry!";
                 actionTextFeedbackAnimator.SetBool("Active", true);
                 actionTextFeedbackAnimator.SetBool("Update", true);
                 StartCoroutine("AnimatorSetUpdateFalse");
@@ -641,6 +641,23 @@ public class GameManager : MonoBehaviour
                 mouseOverButton = false;
                 objInfoController.HideDialogBackground();
 
+                SetTurn();
+            }
+            else if (selectedObject.activeDialog == 7) // mob is happy
+            {
+                specialDialog = true;
+
+                actionTextFeedback.text = selectedObject._name + " walks away.";
+                actionTextFeedbackAnimator.SetBool("Active", true);
+                actionTextFeedbackAnimator.SetBool("Update", true);
+                StartCoroutine("AnimatorSetUpdateFalse");
+
+                objInfoController.HideWindows();
+
+                mouseOverButton = false;
+                objInfoController.HideDialogBackground();
+
+                selectedObject.WalkAway();
                 SetTurn();
             }
         }
@@ -687,17 +704,23 @@ public class GameManager : MonoBehaviour
 
         CheckSkipAndGo();
 
-        if (choice == ChoiceController.ChoiceType.sleep && yes)
+        if (choice == ChoiceController.ChoiceType.sleep && yes) // sleep in danger
         {
             StartCoroutine("LoadDay");
             goFurtherAnim.SetBool("Active", true);
             skipTurnAnim.SetBool("Active", true);
         }
 
-        if (!yes && choice == ChoiceController.ChoiceType.trade)
+        if (!yes && choice == ChoiceController.ChoiceType.trade) // refuse to trade
         {
             selectedObject = choiceNpc;
             choiceNpc.StartDialog("Angry");
+        }
+        if (yes && choice == ChoiceController.ChoiceType.trade) // accept trade
+        {
+            selectedObject = choiceNpc;
+            print(choiceNpc._name);
+            choiceNpc.StartDialog("Happy");
         }
     }
 
