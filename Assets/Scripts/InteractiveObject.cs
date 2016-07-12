@@ -140,6 +140,10 @@ public class InteractiveObject : MonoBehaviour
                     activeDialog = 5; //5 self dialog
                 }
             }
+            else if (theme == "Angry")
+            {
+                    activeDialog = 6; //5 angry dialog  
+            }
         }
         else if (inParty)
         {

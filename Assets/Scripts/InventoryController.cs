@@ -173,13 +173,16 @@ public class InventoryController : MonoBehaviour
 
     public void PointerEnterButton(int skill)
     {
-        if (skill >= 0 && slots[skill].itemInSlot != null && !GameManager.Instance.choiceActive)
+        if (skill >= 0 && slots[skill].itemInSlot != null)
         {
-            string sendDescription = "";
-            if (items.Count > 1)
-                slotAnimators[skill].SetBool("ShowTrash", true);
+            if (!GameManager.Instance.choiceActive)
+            {
+                if (items.Count > 1)
+                    slotAnimators[skill].SetBool("ShowTrash", true);
 
-            slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = trashIcon;
+                slots[skill].transform.FindChild("DeleteSkillIcon").GetComponent<Image>().sprite = trashIcon;
+            }
+            string sendDescription = "";
 
             sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
 

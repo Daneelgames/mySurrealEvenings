@@ -253,9 +253,9 @@ public class GameManager : MonoBehaviour
 
         // FRENZY FEEDBACK
     }
+
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
-
         camHolder.TargetFocus(target.transform.position);
 
         attackTarget = target;
@@ -627,27 +627,50 @@ public class GameManager : MonoBehaviour
                 ChoiceActive(selectedObject, false, false, false, true);
                 specialDialog = true;
             }
+            else if (selectedObject.activeDialog == 6) // refused to trade
+            {
+                specialDialog = true;
+
+                actionTextFeedback.text = objectsTurn._name + " doing nothing." + selectedObject._name + " is angry!";
+                actionTextFeedbackAnimator.SetBool("Active", true);
+                actionTextFeedbackAnimator.SetBool("Update", true);
+                StartCoroutine("AnimatorSetUpdateFalse");
+
+                objInfoController.HideWindows();
+
+                mouseOverButton = false;
+                objInfoController.HideDialogBackground();
+
+                SetTurn();
+            }
         }
 
         if (!specialDialog) //Clear selection if no repel or trade
         {
             ClearSelectedObject();
             CheckSkipAndGo();
+            InventoryActive();
+            HideTextManually();
         }
 
-        InventoryActive();
 
         objInfoController.HideWindows();
 
         mouseOverButton = false;
-        HideTextManually();
         objInfoController.HideDialogBackground();
     }
 
     void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy, bool outOfPills, bool trade, bool repel)
     {
-        InventoryClosed();
+        //InventoryClosed();
+
         ClearSelectedObject();
+
+        inventoryController.SetResourcesFeedback();
+        inventory.SetBool("Active", true);
+        inventoryActive = true;
+        inventoryController.SortSlots();
+
 
         choiceController.ShowWindow(npc, sleepNearEnemy, outOfPills, trade, repel);
         goFurtherAnim.SetBool("Active", false);
@@ -655,7 +678,7 @@ public class GameManager : MonoBehaviour
         choiceActive = true;
     }
 
-    public void ChoiceInactive(ChoiceController.ChoiceType choice, bool yes)
+    public void ChoiceInactive(ChoiceController.ChoiceType choice, bool yes, InteractiveObject choiceNpc)
     {
         choiceActive = false;
         InventoryToggle();
@@ -669,6 +692,12 @@ public class GameManager : MonoBehaviour
             StartCoroutine("LoadDay");
             goFurtherAnim.SetBool("Active", true);
             skipTurnAnim.SetBool("Active", true);
+        }
+
+        if (!yes && choice == ChoiceController.ChoiceType.trade)
+        {
+            selectedObject = choiceNpc;
+            choiceNpc.StartDialog("Angry");
         }
     }
 
