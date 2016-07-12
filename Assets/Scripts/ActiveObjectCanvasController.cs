@@ -19,11 +19,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
 
     [SerializeField]
     Animator _animator;
-    [SerializeField]
-    Animator aggressiveAnimator;
 
-    [SerializeField]
-    Image aggressiveIcon;
 
     public bool iconsVisible = false;
 
@@ -86,6 +82,21 @@ public class ActiveObjectCanvasController : MonoBehaviour
             string sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
         }
+        else if (skill == -1) // Trade
+        {
+            string sendDescription = "Trade with the monster.";
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
+        }
+        else if (skill == -2) // talk
+        {
+            string sendDescription = "Talk to the monster.";
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
+        }
+        else if (skill == -3) // repel
+        {
+            string sendDescription = "Repel the monster.";
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);  
+        }
         GameManager.Instance.mouseOverButton = true;
     }
 
@@ -95,23 +106,5 @@ public class ActiveObjectCanvasController : MonoBehaviour
 
         if (!GameManager.Instance.blockSkillIcons)
             GameManager.Instance.HideTextManually();
-    }
-
-    public void AggressiveStart()
-    {
-        aggressiveIcon.enabled = true;
-        aggressiveAnimator.SetBool("Active", true);
-    }
-
-    public void AggressiveOver()
-    {
-        StartCoroutine("DisableAggressiveIcon");
-        aggressiveAnimator.SetBool("Active", false);
-    }
-
-    IEnumerator DisableAggressiveIcon()
-    {
-        yield return new WaitForSeconds(0.5f);
-        aggressiveIcon.enabled = false;
     }
 }

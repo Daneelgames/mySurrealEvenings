@@ -4,35 +4,41 @@ using System.Collections;
 
 public class ChoiceController : MonoBehaviour
 {
-
+    public enum ChoiceType { trade, repel, sleep };
+    private ChoiceType choice = ChoiceType.sleep;
     private Animator _anim;
 
     public Text title;
     public Text description;
 
     private InteractiveObject npc;
-    private bool sleepChoice = false;
 
     void Start()
     {
         _anim = GetComponent<Animator>();
     }
 
-    public void ShowWindow(InteractiveObject _npc, bool sleepNearEnemy, bool outOfPills)
+    public void ShowWindow(InteractiveObject _npc, bool sleepNearEnemy, bool outOfPills, bool trade, bool repel)
     {
         if (!sleepNearEnemy && !outOfPills)
         {
-            sleepChoice = false;
             npc = _npc;
-            if (npc.activeDialog == 5) //CALM
+            if (trade) // trade RANDOM ITEMS HERE
             {
-                title.text = npc._name + " may calm down";
-                description.text = "In exchange of  " + npc.calmMoney + " candies and " + npc.calmItem.GetComponent<SkillController>().skillName;
+                choice = ChoiceType.trade;
+                title.text = npc._name + " offers a trade";
+                description.text = "Trade description";
+            }
+            else if (repel) //repel RIDDLE HERE
+            {
+                choice = ChoiceType.repel;
+                title.text = "Riddle title";
+                description.text = "Riddle description";
             }
         }
         else if (sleepNearEnemy && !outOfPills)
         {
-            sleepChoice = true;
+            choice = ChoiceType.sleep;
             npc = null;
 
             title.text = "Monsters around.";
@@ -40,7 +46,7 @@ public class ChoiceController : MonoBehaviour
         }
         else if (!sleepNearEnemy && outOfPills)
         {
-            sleepChoice = true;
+            choice = ChoiceType.sleep;
             npc = null;
 
             title.text = "No pills.";
@@ -48,7 +54,7 @@ public class ChoiceController : MonoBehaviour
         }
         else if (sleepNearEnemy && outOfPills)
         {
-            sleepChoice = true;
+            choice = ChoiceType.sleep;
             npc = null;
 
             title.text = "Monsters and no pills";
@@ -60,32 +66,38 @@ public class ChoiceController : MonoBehaviour
 
     public void Yes()
     {
-        if (!sleepChoice)
+        switch (choice)
         {
-            if (npc.activeDialog == 5) // calm down
-            {
+            case (ChoiceType.repel):
+                /* make repel
                 GameManager.Instance.inventoryController.CandyLose(npc.calmMoney);
                 GameManager.Instance.inventoryController.ItemLost(npc.calmItem.GetComponent<SkillController>());
                 npc.npcControl.agressiveTo = NpcController.Target.none;
                 npc.actionOnDialog = InteractiveObject.DialogAction.none;
-                npc.npcControl.RemoveAggressiveFeedback();
-            }
+                */
+                break;
+
+            case (ChoiceType.trade):
+                // make trade
+                break;
+
+            case (ChoiceType.sleep):
+                //sleep damage need to fix
+                GameManager.Instance.FrenzyDamage(25f);
+                GameManager.Instance.player.Damage(0.25f * GameManager.Instance.player.maxHealth, GameManager.Instance.player);
+                break;
+
+            default:
+                //something
+                break;
         }
-
-
-        if (sleepChoice)
-        {
-            GameManager.Instance.FrenzyDamage(25f);
-            GameManager.Instance.player.Damage(0.25f * GameManager.Instance.player.maxHealth, GameManager.Instance.player);
-        }
-
-        GameManager.Instance.ChoiceInactive(sleepChoice);
+        GameManager.Instance.ChoiceInactive(choice, true);
         _anim.SetTrigger("Yes");
     }
 
     public void No()
     {
-        GameManager.Instance.ChoiceInactive(false);
+        GameManager.Instance.ChoiceInactive(choice, false);
         _anim.SetTrigger("No");
     }
 }

@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public class InteractiveObject : MonoBehaviour
 {
-
     public string _name = "Npc";
 
     public Sprite facepic;
@@ -110,47 +109,41 @@ public class InteractiveObject : MonoBehaviour
     }
 
 
-    public void StartDialog()
+    public void StartDialog(string theme)
     {
         if (npcControl != null && !inParty)
         {
-            if (npcControl.agressiveTo != NpcController.Target.everyone)
+            if (theme == "Trade")
             {
-                activeDialog = 0; //default dialog
-
-                if (actionOnDialog == DialogAction.trade)
-                    activeDialog = 2; // TRADE DIALOG
-
-                else if (actionOnDialog == DialogAction.setAgressive)
-                {
-                    activeDialog = 3; // SETAGRESSIVE
-                    npcControl.agressiveTo = NpcController.Target.everyone;
-                    npcControl.SetAgressiveFeedback();
-                }
-
+                activeDialog = 0; //0 trade dialog
             }
-            else if (npcControl.agressiveTo == NpcController.Target.everyone)
+            else if (theme == "Repel")
             {
-                activeDialog = 4; // BASIC AGGRESSIVE DIALOG
-
-                // CHECK CALM ITEM
-                if (GameManager.Instance.inventoryController.candies >= calmMoney && calmItem != null)
+                activeDialog = 1; //1 repel dialog
+            }
+            else if (theme == "Talk")
+            {
+                if (npcControl.agressiveTo == NpcController.Target.none)
                 {
-                    foreach (GameObject item in GameManager.Instance.skillsCurrent)
-                    {
-                        if (item == calmItem)
-                        {
-                            activeDialog = 5; // CALM
-                            break;
-                        }
-                    }
+                    activeDialog = 2; //2 none dialog
                 }
-
+                else if (npcControl.agressiveTo == NpcController.Target.everyone)
+                {
+                    activeDialog = 3; //3 everyone dialog
+                }
+                else if (npcControl.agressiveTo == NpcController.Target.enemies)
+                {
+                    activeDialog = 4; //4 enemies dialog
+                }
+                else if (npcControl.agressiveTo == NpcController.Target.self)
+                {
+                    activeDialog = 5; //5 self dialog
+                }
             }
         }
         else if (inParty)
         {
-            activeDialog = 6;
+            activeDialog = 2;
         }
         activePhrase = 0;
         GameManager.Instance.DialogStart(this);
@@ -173,7 +166,6 @@ public class InteractiveObject : MonoBehaviour
                 else
                 {
                     npcControl.agressiveTo = NpcController.Target.everyone;
-                    npcControl.SetAgressiveFeedback();
                     //actionOnDialog = DialogAction.none;
                 }
             }

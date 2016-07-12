@@ -494,7 +494,7 @@ public class GameManager : MonoBehaviour
 
             if (haveEnemies || noPills)
             {
-                ChoiceActive(null, haveEnemies, noPills);
+                ChoiceActive(null, haveEnemies, noPills, false, false);
             }
             else
             {
@@ -570,7 +570,6 @@ public class GameManager : MonoBehaviour
 
     public void DialogStart(InteractiveObject speaker)
     {
-
         inDialog = true;
         mouseOverButton = false;
         HideTextManually();
@@ -616,25 +615,21 @@ public class GameManager : MonoBehaviour
 
         bool specialDialog = false;
 
-        if (selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo != NpcController.Target.everyone)
+        if (selectedObject.npcControl != null)
         {
-            if (selectedObject.activeDialog == 1) // CHECK FOR TEAM UP
+            if (selectedObject.activeDialog == 0) // CHECK FOR TRADE
             {
-                ChoiceActive(selectedObject, false, false);
+                ChoiceActive(selectedObject, false, false, true, false);
+                specialDialog = true;
+            }
+            else if (selectedObject.activeDialog == 1) // CHECK FOR REPEl
+            {
+                ChoiceActive(selectedObject, false, false, false, true);
                 specialDialog = true;
             }
         }
 
-        else if (selectedObject.npcControl != null && selectedObject.npcControl.agressiveTo == NpcController.Target.everyone)
-        {
-            if (selectedObject.activeDialog == 5 && selectedObject.npcControl.skills.Count < 5) // CHECK FOR CALM
-            {
-                ChoiceActive(selectedObject, false, false);
-                specialDialog = true;
-            }
-        }
-
-        if (!specialDialog) //Clear selection if no choise or trade
+        if (!specialDialog) //Clear selection if no repel or trade
         {
             ClearSelectedObject();
             CheckSkipAndGo();
@@ -649,18 +644,18 @@ public class GameManager : MonoBehaviour
         objInfoController.HideDialogBackground();
     }
 
-    void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy, bool outOfPills)
+    void ChoiceActive(InteractiveObject npc, bool sleepNearEnemy, bool outOfPills, bool trade, bool repel)
     {
         InventoryClosed();
         ClearSelectedObject();
 
-        choiceController.ShowWindow(npc, sleepNearEnemy, outOfPills);
+        choiceController.ShowWindow(npc, sleepNearEnemy, outOfPills, trade, repel);
         goFurtherAnim.SetBool("Active", false);
         skipTurnAnim.SetBool("Active", false);
         choiceActive = true;
     }
 
-    public void ChoiceInactive(bool sleep)
+    public void ChoiceInactive(ChoiceController.ChoiceType choice, bool yes)
     {
         choiceActive = false;
         InventoryToggle();
@@ -669,7 +664,7 @@ public class GameManager : MonoBehaviour
 
         CheckSkipAndGo();
 
-        if (sleep)
+        if (choice == ChoiceController.ChoiceType.sleep && yes)
         {
             StartCoroutine("LoadDay");
             goFurtherAnim.SetBool("Active", true);

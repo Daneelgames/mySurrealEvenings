@@ -72,7 +72,10 @@
     <Compile Include="Assets\Scripts\ActiveObjectCanvasController.cs" />
     <Compile Include="Assets\Scripts\AnimationRandomStartTime.cs" />
     <Compile Include="Assets\Scripts\BackgroundColliderController.cs" />
+    <Compile Include="Assets\Scripts\BattleBarController.cs" />
+    <Compile Include="Assets\Scripts\BattleBarTargetController.cs" />
     <Compile Include="Assets\Scripts\ButtonDescriptionFeedback.cs" />
+    <Compile Include="Assets\Scripts\CameraHolderController.cs" />
     <Compile Include="Assets\Scripts\ChoiceController.cs" />
     <Compile Include="Assets\Scripts\CursorController.cs" />
     <Compile Include="Assets\Scripts\DayController.cs" />
@@ -87,6 +90,7 @@
     <Compile Include="Assets\Scripts\NpcDropFeedbackController.cs" />
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
     <Compile Include="Assets\Scripts\SkillController.cs" />
+    <Compile Include="Assets\Scripts\SkillEffectController.cs" />
     <Compile Include="Assets\Scripts\SkillList.cs" />
     <Compile Include="Assets\Scripts\StageRandomController.cs" />
     <Compile Include="Assets\Scripts\TradeWindowController.cs" />

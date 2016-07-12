@@ -24,8 +24,25 @@ public class NpcController : MonoBehaviour
 
     void Start()
     {
-        if (agressiveTo == Target.everyone)
-            SetAgressiveFeedback();
+        int randomTarget = Random.Range(0, 4);
+        switch (randomTarget)
+        {
+            case 0:
+                agressiveTo = Target.none;
+                break;
+            case 1:
+                agressiveTo = Target.everyone;
+                break;
+            case 2:
+                agressiveTo = Target.enemies;
+                break;
+            case 3:
+                agressiveTo = Target.self;
+                break;
+            default:
+                agressiveTo = Target.everyone;
+                break;
+        }
     }
 
     public void ChooseAction()
@@ -215,21 +232,8 @@ public class NpcController : MonoBehaviour
             }
         }
     }
-
-    public void SetAgressiveFeedback()
-    {
-        objectController.localCanvas.AggressiveStart();
-    }
-
-    public void RemoveAggressiveFeedback()
-    {
-
-        objectController.localCanvas.AggressiveOver();
-    }
-
     public void DropOnDead()
     {
-        RemoveAggressiveFeedback();
 
         float candyChance = Random.Range(0f, 1f);
         float trashChance = Random.Range(0f, 1f);
