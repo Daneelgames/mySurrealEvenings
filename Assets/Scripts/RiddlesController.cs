@@ -51,8 +51,25 @@ public class RiddlesController : MonoBehaviour
         }
     }
 
-    public void UpdateCurrentRiddles()
+    public void UpdateCurrentRiddles(int riddleIndex) // call this on correct answer
     {
-		
+        rightAnswers[riddleIndex] += 1;
+
+        if (rightAnswers[riddleIndex] > 3)
+        {
+            
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            int randomIndex = Random.Range(0, riddlesDynamicList.Count);
+            riddlesCurrent.Add(riddlesDynamicList[randomIndex]);
+            answersCurrent.Add(answersDynamicList[randomIndex]);
+
+            riddlesDynamicList.RemoveAt(randomIndex);
+			answersDynamicList.RemoveAt(randomIndex);
+
+            rightAnswers.Add(0);
+        }
     }
 }
