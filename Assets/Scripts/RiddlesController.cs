@@ -5,12 +5,15 @@ using System.Collections.Generic;
 public class RiddlesController : MonoBehaviour
 {
 
+    public string activeRiddle = "";
+    public bool activeAnswer = true;
+
     public List<int> rightAnswers;
     public int riddlesCurrentAmount = 3;
     public List<string> riddlesCurrent;
     public List<bool> answersCurrent;
 
-    public int riddlesAllAmount = 10;
+    public int riddlesAllAmount = 0;
     public List<string> riddlesAll;
     public List<bool> answersAll;
 
@@ -19,6 +22,8 @@ public class RiddlesController : MonoBehaviour
 
     public void GenerateRiddles()
     {
+        riddlesAllAmount = riddlesAll.Count;
+
         for (int i = 0; i < riddlesAllAmount; i++)
         {
             float random = Random.value;
@@ -41,7 +46,7 @@ public class RiddlesController : MonoBehaviour
         answersCurrent.Clear();
         rightAnswers.Clear();
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < riddlesCurrentAmount; i++)
         {
             int randomIndex = Random.Range(0, riddlesDynamicList.Count);
             riddlesCurrent.Add(riddlesDynamicList[randomIndex]);
@@ -51,14 +56,6 @@ public class RiddlesController : MonoBehaviour
             answersDynamicList.RemoveAt(randomIndex);
 
             rightAnswers.Add(0);
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetButtonDown("Jump"))
-        {
-            UpdateCurrentRiddles(1);
         }
     }
 
@@ -73,7 +70,7 @@ public class RiddlesController : MonoBehaviour
 
             if (riddlesDynamicList.Count <= 0)
             {
-                print("Shuffle");
+                //print("Shuffle");
                 GenerateCurrentRiddles();
             }
             else
@@ -90,5 +87,12 @@ public class RiddlesController : MonoBehaviour
             }
             //print(riddlesDynamicList.Count);
         }
+    }
+
+    public void SetActiveRiddle()
+    {
+        int random = Random.Range(0, riddlesCurrent.Count);
+        activeRiddle = riddlesCurrent[random];
+        activeAnswer = answersCurrent[random];
     }
 }

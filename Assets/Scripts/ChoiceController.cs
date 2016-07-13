@@ -200,8 +200,8 @@ public class ChoiceController : MonoBehaviour
             else if (repel) //repel RIDDLE HERE
             {
                 choice = ChoiceType.repel;
-                title.text = "Riddle title";
-                description.text = "Riddle description";
+                title.text = "Yes or no?";
+                description.text = GameManager.Instance._riddleController.activeRiddle;
             }
         }
         else if (sleepNearEnemy && !outOfPills)

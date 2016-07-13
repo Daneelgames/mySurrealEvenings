@@ -693,7 +693,7 @@ public class GameManager : MonoBehaviour
         inventoryActive = true;
         inventoryController.SortSlots();
 
-
+        _riddleController.SetActiveRiddle();
         choiceController.ShowWindow(npc, sleepNearEnemy, outOfPills, trade, repel);
         goFurtherAnim.SetBool("Active", false);
         skipTurnAnim.SetBool("Active", false);
@@ -716,16 +716,44 @@ public class GameManager : MonoBehaviour
             skipTurnAnim.SetBool("Active", true);
         }
 
-        if (!yes && choice == ChoiceController.ChoiceType.trade) // refuse to trade
+        if (choice == ChoiceController.ChoiceType.trade)
         {
-            selectedObject = choiceNpc;
-            choiceNpc.StartDialog("Angry");
+            if (!yes) // refuse to trade
+            {
+                selectedObject = choiceNpc;
+                choiceNpc.StartDialog("Angry");
+            }
+            else  // accept trade
+            {
+                selectedObject = choiceNpc;
+                print(choiceNpc._name);
+                choiceNpc.StartDialog("Happy");
+            }
         }
-        if (yes && choice == ChoiceController.ChoiceType.trade) // accept trade
+        if (choice == ChoiceController.ChoiceType.repel)
         {
-            selectedObject = choiceNpc;
-            print(choiceNpc._name);
-            choiceNpc.StartDialog("Happy");
+            if (yes && _riddleController.activeAnswer == true)
+            {
+                selectedObject = choiceNpc;
+                print(choiceNpc._name);
+                choiceNpc.StartDialog("Happy");
+            }
+            else if (!yes && _riddleController.activeAnswer == false)
+            {
+                selectedObject = choiceNpc;
+                print(choiceNpc._name);
+                choiceNpc.StartDialog("Happy");
+            }
+            else if (yes && _riddleController.activeAnswer == false)
+            {
+                selectedObject = choiceNpc;
+                choiceNpc.StartDialog("Angry");
+            }
+            else if (!yes && _riddleController.activeAnswer == true)
+            {
+                selectedObject = choiceNpc;
+                choiceNpc.StartDialog("Angry");
+            }
         }
     }
 
