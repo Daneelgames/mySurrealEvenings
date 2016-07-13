@@ -48,7 +48,7 @@ public class ChoiceController : MonoBehaviour
             skillChanceRight = 0.2f;
             candyChanceRight = 0.2f;
         }
-        else if (GameManager.Instance.skillsCurrent.Count < GameManager.Instance.objectList.Count / 2)
+        else if (GameManager.Instance.skillsCurrent.Count < GameManager.Instance.objectList.Count / 2 && GameManager.Instance.skillsCurrent.Count < 8)
         {
             pillChanceRight = 0.2f;
             skillChanceRight = 0.6f;

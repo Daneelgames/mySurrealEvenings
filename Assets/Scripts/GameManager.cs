@@ -80,6 +80,9 @@ public class GameManager : MonoBehaviour
 
     public SkillController skillInAction;
     public CameraHolderController camHolder;
+
+    public RiddlesController _riddleController;
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -104,6 +107,8 @@ public class GameManager : MonoBehaviour
 
             GetRandomSkills(skills);
             skillsCurrent = skills;
+
+            _riddleController.GenerateRiddles();
         }
     }
 
