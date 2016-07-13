@@ -14,7 +14,7 @@ public class RiddlesController : MonoBehaviour
     public List<string> riddlesAll;
     public List<bool> answersAll;
 
-    private List<string> riddlesDynamicList;
+    public List<string> riddlesDynamicList;
     private List<bool> answersDynamicList;
 
     public void GenerateRiddles()
@@ -29,15 +29,18 @@ public class RiddlesController : MonoBehaviour
                 answersAll.Add(false);
         }
 
-        riddlesDynamicList = new List<string>(riddlesAll);
-        answersDynamicList = new List<bool>(answersAll);
-
         GenerateCurrentRiddles();
-
     }
 
     void GenerateCurrentRiddles()
     {
+        riddlesDynamicList = new List<string>(riddlesAll);
+        answersDynamicList = new List<bool>(answersAll);
+
+        riddlesCurrent.Clear();
+        answersCurrent.Clear();
+        rightAnswers.Clear();
+
         for (int i = 0; i < 3; i++)
         {
             int randomIndex = Random.Range(0, riddlesDynamicList.Count);
@@ -45,9 +48,17 @@ public class RiddlesController : MonoBehaviour
             answersCurrent.Add(answersDynamicList[randomIndex]);
 
             riddlesDynamicList.RemoveAt(randomIndex);
-			answersDynamicList.RemoveAt(randomIndex);
+            answersDynamicList.RemoveAt(randomIndex);
 
             rightAnswers.Add(0);
+        }
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            UpdateCurrentRiddles(1);
         }
     }
 
@@ -55,21 +66,29 @@ public class RiddlesController : MonoBehaviour
     {
         rightAnswers[riddleIndex] += 1;
 
-        if (rightAnswers[riddleIndex] > 3)
+        if (rightAnswers[riddleIndex] > 2) // if answered 3 times
         {
-            
-        }
+            riddlesCurrent.RemoveAt(riddleIndex);
+            answersCurrent.RemoveAt(riddleIndex);
 
-        for (int i = 0; i < 3; i++)
-        {
-            int randomIndex = Random.Range(0, riddlesDynamicList.Count);
-            riddlesCurrent.Add(riddlesDynamicList[randomIndex]);
-            answersCurrent.Add(answersDynamicList[randomIndex]);
+            if (riddlesDynamicList.Count <= 0)
+            {
+                print("Shuffle");
+                GenerateCurrentRiddles();
+            }
+            else
+            {
+                int randomIndex = Random.Range(0, riddlesDynamicList.Count);
 
-            riddlesDynamicList.RemoveAt(randomIndex);
-			answersDynamicList.RemoveAt(randomIndex);
+                riddlesCurrent.Add(riddlesDynamicList[randomIndex]);
+                answersCurrent.Add(answersDynamicList[randomIndex]);
 
-            rightAnswers.Add(0);
+                riddlesDynamicList.RemoveAt(randomIndex);
+                answersDynamicList.RemoveAt(randomIndex);
+
+                rightAnswers[riddleIndex] = 0;
+            }
+            //print(riddlesDynamicList.Count);
         }
     }
 }
