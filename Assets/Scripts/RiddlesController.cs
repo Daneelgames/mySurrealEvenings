@@ -24,9 +24,9 @@ public class RiddlesController : MonoBehaviour
             float random = Random.value;
 
             if (random > 0.5f)
-                answersAll[i] = true;
+                answersAll.Add(true);
             else
-                answersAll[i] = false;
+                answersAll.Add(false);
         }
 
         riddlesDynamicList = new List<string>(riddlesAll);
