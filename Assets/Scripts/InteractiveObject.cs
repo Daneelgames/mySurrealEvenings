@@ -6,43 +6,25 @@ using System.Collections.Generic;
 public class InteractiveObject : MonoBehaviour
 {
     public string _name = "Npc";
-
     public Sprite facepic;
-
     public float speed = 1;
 
-    public float health = 1;
-    public float maxHealth = 1;
-    public List<Effect> unitEffect = new List<Effect> { Effect.none };
+    public float health = 1;     // dynamic
+    public float curMaxHealth = 1;     // dynamic
+
+    public float maxHealth = 1;     // static
+    public float minHealth = 1;     // static
 
     public bool inParty = false;
-
-    //[SerializeField]
     public ActiveObjectCanvasController localCanvas;
-
     [SerializeField]
     private Animator turnFeedbackAnim;
-
     public NpcController npcControl;
-
     public Animator _anim;
-
-    public GameObject calmItem;
-    public int calmMoney = 5;
-
-    public enum DialogAction { none, setAgressive, trade }
-    public DialogAction actionOnDialog = DialogAction.none;
-
     public List<ListWrapper> dialogues = new List<ListWrapper>();
-
     public int activeDialog = 0;
     public int activePhrase = 0;
-
     public Animator healthbar;
-
-    [SerializeField]
-    private GameObject teleportParticles;
-
     [System.Serializable]
     public class ListWrapper
     {
@@ -51,9 +33,16 @@ public class InteractiveObject : MonoBehaviour
 
     public GameObject deathParticles;
 
+
+    public void GenerateDynamicStats()
+    {
+        curMaxHealth = Random.Range(minHealth, maxHealth);
+        health = curMaxHealth;
+        npcControl.GenerateNpcSkills();
+    }
+
     void Awake()
     {
-        maxHealth = health;
         GameManager.Instance.objectList.Add(this);
         ToggleSelectedFeedback();
     }

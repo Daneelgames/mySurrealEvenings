@@ -13,7 +13,11 @@ public class NpcController : MonoBehaviour
 
     public InteractiveObject objectController;
 
-    public List<GameObject> skills = new List<GameObject>();
+    public int skillsAmount = 3;
+    public List<GameObject> skillsStaticInclude;
+    public List<GameObject> skillsStaticAvoid;
+
+    public List<GameObject> skills = new List<GameObject>(); //dynamic skill list
 
     public int levelPreffered = 1;
 
@@ -21,6 +25,32 @@ public class NpcController : MonoBehaviour
     public int pillDrop = 2;
 
     public GameObject dropFeedback;
+
+    public void GenerateNpcSkills()
+    {
+        List<GameObject> allSkills = new List<GameObject>(GameManager.Instance.skillList.allSkills);
+        skills.Clear();
+
+        foreach (GameObject skill in skillsStaticInclude)   //remove included skills
+        {
+            skills.Add(skill);
+            allSkills.Remove(skill);
+        }
+        foreach (GameObject skill in skillsStaticAvoid) //remove unincluded skills
+        {
+            allSkills.Remove(skill);
+        }
+
+        for (int i = 0; i < skillsAmount - skillsStaticInclude.Count; i++) //fill empty slots with random skills
+        {
+            if (allSkills.Count > 0)
+            {
+                int random = Random.Range(0, allSkills.Count);
+                skills.Add(allSkills[random]);
+                allSkills.RemoveAt(random);
+            }
+        }
+    }
 
     void Start()
     {

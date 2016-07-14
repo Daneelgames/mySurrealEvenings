@@ -108,7 +108,12 @@ public class GameManager : MonoBehaviour
             GetRandomSkills(skills);
             skillsCurrent = skills;
 
-            _riddleController.GenerateRiddles();
+            _riddleController.GenerateRiddles(); 
+
+            foreach (NpcController mob in stageRandomController.npcList) // generate mobs stats on start of new game
+            {
+                mob.objectController.GenerateDynamicStats();
+            }
         }
     }
 

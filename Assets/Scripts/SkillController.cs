@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public enum Effect { none, poison, curse, insanity }
 
 public class SkillController : MonoBehaviour
 {
@@ -12,7 +11,6 @@ public class SkillController : MonoBehaviour
     public int priceTrash = 1;
 
     public enum Type { offensive, recover }
-    public enum Range { one, all, allParty, allAgressive }
 
     public Type skillType = Type.offensive;
 
@@ -26,16 +24,9 @@ public class SkillController : MonoBehaviour
 
     public float damageTarget = 0;
     public float recoverTarget = 0;
-    public Effect effectTarget = Effect.none;
 
     public float damageCaster = 0;
     public float recoverCaster = 0;
-    public Effect effectCaster = Effect.none;
-
-    public float missRate = 0; // from 0 to 1
-    public float critRate = 0; // from 0 to 1
-
-    public Range skillRange = Range.one;
 
     public GameObject AttackParticle;
 
@@ -45,48 +36,13 @@ public class SkillController : MonoBehaviour
     public void SetTargets(InteractiveObject caster, InteractiveObject target)
     {
         //print(caster.name);
-        if (skillRange == Range.one)
-        {
-            float targetRandom = Random.Range(0f, 1f);
-            if (targetRandom >= missRate)
-            {
-                target.Damage(damageTarget + targetRandom, caster);
-                target.Recover(recoverTarget + targetRandom);
+        float targetRandom = Random.Range(0f, 1f);
+        target.Damage(damageTarget + targetRandom, caster);
+        target.Recover(recoverTarget + targetRandom);
 
-
-                if (effectTarget != Effect.none)
-                {
-                    bool alreadyHasEffect = false;
-                    foreach (Effect j in target.unitEffect)
-                    {
-                        if (j == effectTarget)
-                            alreadyHasEffect = true;
-                    }
-                    if (!alreadyHasEffect)
-                        target.unitEffect.Add(effectCaster);
-                }
-            }
-
-            float casterRandom = Random.Range(0f, 1f);
-            if (casterRandom >= missRate)
-            {
-                caster.Damage(damageCaster + casterRandom, caster);
-                caster.Recover(recoverCaster + casterRandom);
-
-
-                if (effectCaster != Effect.none)
-                {
-                    bool alreadyHasEffect = false;
-                    foreach (Effect j in caster.unitEffect)
-                    {
-                        if (j == effectCaster)
-                            alreadyHasEffect = true;
-                    }
-                    if (!alreadyHasEffect)
-                        caster.unitEffect.Add(effectCaster);
-                }
-            }
-        }
+        float casterRandom = Random.Range(0f, 1f);
+        caster.Damage(damageCaster + casterRandom, caster);
+        caster.Recover(recoverCaster + casterRandom);
 
         // FRENZY DMG
         if (target == GameManager.Instance.player || caster == GameManager.Instance.player)

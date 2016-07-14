@@ -265,7 +265,6 @@ public class ChoiceController : MonoBehaviour
                 if (tradeItemLeft == "Skill" && leftSkillToSell != null) // lose skill
                 {
                     print(leftSkillToSell.skillName);
-                    GameManager.Instance.skills.Remove(leftSkillToSell.gameObject);
                     GameManager.Instance.inventoryController.ItemLost(leftSkillToSell);
                 }
                 else if (tradeItemLeft == "Pill")
