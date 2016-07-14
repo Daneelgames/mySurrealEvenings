@@ -15,6 +15,11 @@ public class InteractiveObject : MonoBehaviour
     public float maxHealth = 1;     // static
     public float minHealth = 1;     // static
 
+    public List<SkillController> weakToStatic;
+    public List<SkillController> invToStatic;
+    public List<SkillController> weakToDynamic;
+    public List<SkillController> invToDynamic;
+
     public bool inParty = false;
     public ActiveObjectCanvasController localCanvas;
     [SerializeField]
@@ -36,9 +41,44 @@ public class InteractiveObject : MonoBehaviour
 
     public void GenerateDynamicStats()
     {
-        curMaxHealth = Random.Range(minHealth, maxHealth);
-        health = curMaxHealth;
-        npcControl.GenerateNpcSkills();
+        if (!inParty)
+        {
+            List<GameObject> allSkills = new List<GameObject>(GameManager.Instance.skillList.allSkills);
+
+            weakToDynamic.Clear();
+            invToDynamic.Clear();
+
+            foreach (SkillController skill in weakToStatic)
+            {
+                weakToDynamic.Add(skill);
+                allSkills.Remove(skill.gameObject);
+            }
+
+            foreach (SkillController skill in invToStatic)
+            {
+                invToDynamic.Add(skill);
+                allSkills.Remove(skill.gameObject);
+            }
+
+            foreach (GameObject skill in allSkills)
+            {
+                float random = Random.value;
+
+                if (random < 0.5f)
+                {
+                    weakToDynamic.Add(skill.GetComponent<SkillController>());
+                }
+                else
+                {
+                    invToDynamic.Add(skill.GetComponent<SkillController>());
+                }
+            }
+            allSkills.Clear();
+
+            curMaxHealth = Random.Range(minHealth, maxHealth);
+            health = curMaxHealth;
+            npcControl.GenerateNpcSkills();
+        }
     }
 
     void Awake()

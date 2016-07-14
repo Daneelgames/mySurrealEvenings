@@ -300,7 +300,6 @@ public class NpcController : MonoBehaviour
                 Instantiate(skillDrop, transform.position, transform.rotation);
             }
         }
-
         GameObject newDropFeedback = Instantiate(dropFeedback.gameObject, transform.position, Quaternion.identity) as GameObject;
         newDropFeedback.GetComponent<NpcDropFeedbackController>().SetValues(candyValue, trashValue);
     }
