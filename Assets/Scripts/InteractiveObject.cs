@@ -15,6 +15,8 @@ public class InteractiveObject : MonoBehaviour
     public float maxHealth = 1;     // static
     public float minHealth = 1;     // static
 
+    public List<GameObject> foundSkillsRelations;
+
     public List<SkillController> weakToStatic;
     public List<SkillController> invToStatic;
     public List<SkillController> weakToDynamic;
@@ -38,9 +40,12 @@ public class InteractiveObject : MonoBehaviour
 
     public GameObject deathParticles;
 
+    bool sendWeak = false;
 
     public void GenerateDynamicStats()
     {
+        foundSkillsRelations.Clear();
+
         if (!inParty)
         {
             List<GameObject> allSkills = new List<GameObject>(GameManager.Instance.skillList.allSkills);
@@ -195,10 +200,6 @@ public class InteractiveObject : MonoBehaviour
         float DMG = 0;
         if (baseDmg > 0)
         {
-            //DMG = baseDmg * (100 / GameManager.Instance.curSanity);
-
-            DMG = baseDmg;
-
             if (!inParty && attacker != this)
             {
                 if (!attacker.inParty && npcControl.agressiveTo != NpcController.Target.everyone)
@@ -209,10 +210,39 @@ public class InteractiveObject : MonoBehaviour
                     //actionOnDialog = DialogAction.none;
                 }
             }
+
+            DMG = baseDmg;
+
+            // CHECK IF MOB IS INV/WEAK TO SKILL
+            SkillController activeSkill;
+            if (GameManager.Instance.activeSkill != null)
+            {
+                activeSkill = GameManager.Instance.activeSkill.GetComponent<SkillController>();
+
+                foreach (SkillController skill in weakToDynamic)
+                {
+                    if (skill == activeSkill)
+                    {
+                        DMG = baseDmg * 2;
+                        CheckSkillRelation();
+                        sendWeak = true;
+                        break;
+                    }
+                }
+
+                foreach (SkillController skill in invToDynamic)
+                {
+                    if (skill == activeSkill)
+                    {
+                        DMG = baseDmg / 2;
+                        CheckSkillRelation();
+                        sendWeak = false;
+                        break;
+                    }
+                }
+            }
         }
         attacker._anim.SetTrigger("Action");
-
-
 
         if (this != attacker)
             StartCoroutine("ActionTriggerDelay", DMG);
@@ -327,5 +357,37 @@ public class InteractiveObject : MonoBehaviour
         }
 
         gameObject.SetActive(false);
+    }
+
+    void CheckSkillRelation()
+    {
+        GameObject activeSkill = GameManager.Instance.activeSkill;
+
+        if (foundSkillsRelations.Count > 0)
+        {
+            bool alreadyFound = false;
+            foreach (GameObject skill in foundSkillsRelations)
+            {
+                if (activeSkill == skill)
+                {
+                    alreadyFound = true;
+                    break;
+                }
+            }
+
+            if (!alreadyFound)
+            {
+                StartCoroutine(SkillRelationDiscoveredFeedback(activeSkill));
+            }
+        }
+        else
+            StartCoroutine(SkillRelationDiscoveredFeedback(activeSkill));
+    }
+
+    IEnumerator SkillRelationDiscoveredFeedback(GameObject skill)
+    {
+        foundSkillsRelations.Add(skill);
+        yield return new WaitForSeconds(1.35f);
+        GameManager.Instance.SkillRelationDiscoverFeedback(skill, this, sendWeak);
     }
 }

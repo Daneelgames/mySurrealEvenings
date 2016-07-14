@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
 
     public InteractiveObject objectsTurn;
 
+    public GameObject activeSkill;
     public InteractiveObject selectedObject;
     public bool mouseOverButton = false;
     public bool turnOver = false;
@@ -108,7 +109,7 @@ public class GameManager : MonoBehaviour
             GetRandomSkills(skills);
             skillsCurrent = skills;
 
-            _riddleController.GenerateRiddles(); 
+            _riddleController.GenerateRiddles();
 
             foreach (NpcController mob in stageRandomController.npcList) // generate mobs stats on start of new game
             {
@@ -266,6 +267,9 @@ public class GameManager : MonoBehaviour
 
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
+        if (skill != null)
+            activeSkill = skill;
+
         camHolder.TargetFocus(target.transform.position);
 
         attackTarget = target;
@@ -397,6 +401,8 @@ public class GameManager : MonoBehaviour
         attackTarget = null;
         canSkipTurn = true;
         clickToSkip.raycastTarget = true;
+
+        activeSkill = null;
     }
 
     public void SkipTurn()
@@ -829,5 +835,19 @@ public class GameManager : MonoBehaviour
         cameraAnim.SetBool("Shake", true);
         yield return new WaitForSeconds(waitTime);
         cameraAnim.SetBool("Shake", false);
+    }
+
+    public void SkillRelationDiscoverFeedback(GameObject skillFound, InteractiveObject npcRelative, bool weak)
+    {
+        string skillName = skillFound.GetComponent<SkillController>().skillName;
+        string relationText = "";
+        if (weak)
+        {
+            relationText = npcRelative._name + " is weak against " + skillName + ".";
+        }
+        else
+        {
+            relationText = npcRelative._name + " is immune to " + skillName + ".";
+        }
     }
 }
