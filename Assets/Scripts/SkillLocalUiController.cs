@@ -12,16 +12,23 @@ public class SkillLocalUiController : MonoBehaviour
 
     void Start()
     {
-        childicon = GetComponentInChildren<Image>();
+        childicon = transform.Find("RelationIcon").GetComponentInChildren<Image>();
+    }
+
+    public void SetClear()
+    {
+        childicon.color = Color.clear;
     }
 
     public void SetWeak()
     {
         childicon.sprite = relationsIcons[0];
+        childicon.color = Color.white;
     }
+
     public void SetImmune()
     {
         childicon.sprite = relationsIcons[1];
+        childicon.color = Color.white;
     }
-
 }

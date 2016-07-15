@@ -102,6 +102,8 @@ public class GameManager : MonoBehaviour
             // Furthermore we make sure that we don't destroy between scenes (this is optional)
             DontDestroyOnLoad(gameObject);
 
+            NpcDatabase.ClearLists();
+
             transform.FindChild("Canvas").gameObject.SetActive(true);
 
             GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>().inParty = true;

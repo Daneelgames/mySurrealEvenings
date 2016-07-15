@@ -15,7 +15,6 @@ public class InteractiveObject : MonoBehaviour
     public float maxHealth = 1;     // static
     public float minHealth = 1;     // static
 
-    public List<GameObject> foundSkillsRelations;
 
     public List<SkillController> weakToStatic;
     public List<SkillController> invToStatic;
@@ -44,7 +43,6 @@ public class InteractiveObject : MonoBehaviour
 
     public void GenerateDynamicStats() // calls at session start
     {
-        foundSkillsRelations.Clear();
 
         if (!inParty)
         {
@@ -127,7 +125,7 @@ public class InteractiveObject : MonoBehaviour
     {
         if (GameManager.Instance.selectedObject == this)
         {
-            localCanvas.ShowIcons();
+            localCanvas.ShowIcons(this);
         }
         else
         {
@@ -231,7 +229,7 @@ public class InteractiveObject : MonoBehaviour
                             }
                             else
                             {
-                                CheckSkillRelation(attacker);
+                                NpcDatabase.CheckSkillRelation(true, this);
                                 sendWeak = true;
                                 break;
                             }
@@ -251,7 +249,7 @@ public class InteractiveObject : MonoBehaviour
                             }
                             else
                             {
-                                CheckSkillRelation(attacker);
+                                NpcDatabase.CheckSkillRelation(true, this);
                                 sendWeak = false;
                                 break;
                             }
@@ -377,35 +375,15 @@ public class InteractiveObject : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void CheckSkillRelation(InteractiveObject attacker)
+
+    public void StartRelationCoroutine()
     {
-        GameObject activeSkill = GameManager.Instance.activeSkill;
-
-        if (foundSkillsRelations.Count > 0)
-        {
-            bool alreadyFound = false;
-            foreach (GameObject skill in foundSkillsRelations)
-            {
-                if (activeSkill == skill)
-                {
-                    alreadyFound = true;
-                    break;
-                }
-            }
-
-            if (!alreadyFound)
-            {
-                StartCoroutine(SkillRelationDiscoveredFeedback(activeSkill));
-            }
-        }
-        else
-            StartCoroutine(SkillRelationDiscoveredFeedback(activeSkill));
+        StartCoroutine("SkillRelationDiscoveredFeedback");
     }
 
-    IEnumerator SkillRelationDiscoveredFeedback(GameObject skill)
+    IEnumerator SkillRelationDiscoveredFeedback()
     {
-        foundSkillsRelations.Add(skill);
         yield return new WaitForSeconds(1.35f);
-        GameManager.Instance.SkillRelationDiscoverFeedback(skill, this, sendWeak);
+        GameManager.Instance.SkillRelationDiscoverFeedback(GameManager.Instance.activeSkill, this, sendWeak);
     }
 }

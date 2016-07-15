@@ -33,7 +33,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
         HideIcons();
     }
 
-    public void ShowIcons()
+    public void ShowIcons(InteractiveObject selected)
     {
         if (!iconsVisible)
         {
@@ -44,6 +44,45 @@ public class ActiveObjectCanvasController : MonoBehaviour
 
             _animator.SetTrigger("Show");
             iconsVisible = true;
+
+            GetFoundedSkills(selected);
+        }
+    }
+
+    void GetFoundedSkills(InteractiveObject selected)
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            if (i < GameManager.Instance.skillsCurrent.Count)
+            {
+                bool found = false;
+                foreach (GameObject skill in NpcDatabase.GetSkillRelationsWeak(selected))
+                {
+                    if (GameManager.Instance.skillsCurrent[i] == skill)
+                    {
+                        skillIcons[i].GetComponent<SkillLocalUiController>().SetWeak();
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found)
+                {
+                    foreach (GameObject skill in NpcDatabase.GetSkillRelationsImmune(selected))
+                    {
+                        if (GameManager.Instance.skillsCurrent[i] == skill)
+                        {
+                            skillIcons[i].GetComponent<SkillLocalUiController>().SetImmune();
+                            found = true;
+                            break;
+                        }
+                    }
+                    skillIcons[i].GetComponent<SkillLocalUiController>().SetClear();
+                }
+            }
+            else
+            {
+                skillIcons[i].GetComponent<SkillLocalUiController>().SetClear();
+            }
         }
     }
 

@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\InventorySlotController.cs" />
     <Compile Include="Assets\Scripts\LookAtCamera.cs" />
     <Compile Include="Assets\Scripts\NpcController.cs" />
+    <Compile Include="Assets\Scripts\NpcDatabase.cs" />
     <Compile Include="Assets\Scripts\NpcDropFeedbackController.cs" />
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
     <Compile Include="Assets\Scripts\RiddlesController.cs" />
