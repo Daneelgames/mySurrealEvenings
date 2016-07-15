@@ -52,15 +52,18 @@ public class ActiveObjectCanvasController : MonoBehaviour
         for (int i = 0; i < 8; i++)
         {
             skillIcons[i].SetActive(true);
+            Image img = skillIcons[i].GetComponent<Image>();
+            SkillLocalUiController localSkill = skillIcons[i].GetComponent<SkillLocalUiController>();
+
             //if (GameManager.Instance.skillsCurrent[i] != null)
             if (GameManager.Instance.skillsCurrent.Count > i)
             {
-                skillIcons[i].GetComponent<Image>().enabled = true;
-                skillIcons[i].GetComponent<Image>().sprite = GameManager.Instance.skillsCurrent[i].GetComponent<SkillController>().skillSprite;
+                img.enabled = true;
+                img.sprite = GameManager.Instance.skillsCurrent[i].GetComponent<SkillController>().skillSprite;
             }
             else
             {
-                skillIcons[i].GetComponent<Image>().enabled = false;
+                img.enabled = false;
             }
         }
     }
@@ -95,7 +98,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
         else if (skill == -3) // repel
         {
             string sendDescription = "Repel the monster.";
-            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);  
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
         }
         GameManager.Instance.mouseOverButton = true;
     }

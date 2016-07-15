@@ -42,7 +42,7 @@ public class InteractiveObject : MonoBehaviour
 
     bool sendWeak = false;
 
-    public void GenerateDynamicStats()
+    public void GenerateDynamicStats() // calls at session start
     {
         foundSkillsRelations.Clear();
 
@@ -224,9 +224,18 @@ public class InteractiveObject : MonoBehaviour
                     if (skill == activeSkill)
                     {
                         DMG = baseDmg * 2;
-                        CheckSkillRelation();
-                        sendWeak = true;
-                        break;
+                        if (!inParty)
+                        {
+                            if (attacker == this && GameManager.Instance.attackTarget != this)
+                            {
+                            }
+                            else
+                            {
+                                CheckSkillRelation(attacker);
+                                sendWeak = true;
+                                break;
+                            }
+                        }
                     }
                 }
 
@@ -235,9 +244,18 @@ public class InteractiveObject : MonoBehaviour
                     if (skill == activeSkill)
                     {
                         DMG = baseDmg / 2;
-                        CheckSkillRelation();
-                        sendWeak = false;
-                        break;
+                        if (!inParty)
+                        {
+                            if (attacker == this && GameManager.Instance.attackTarget != this)
+                            {
+                            }
+                            else
+                            {
+                                CheckSkillRelation(attacker);
+                                sendWeak = false;
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -359,7 +377,7 @@ public class InteractiveObject : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void CheckSkillRelation()
+    void CheckSkillRelation(InteractiveObject attacker)
     {
         GameObject activeSkill = GameManager.Instance.activeSkill;
 

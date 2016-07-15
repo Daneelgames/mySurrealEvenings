@@ -93,6 +93,8 @@
     <Compile Include="Assets\Scripts\SkillController.cs" />
     <Compile Include="Assets\Scripts\SkillEffectController.cs" />
     <Compile Include="Assets\Scripts\SkillList.cs" />
+    <Compile Include="Assets\Scripts\SkillLocalUiController.cs" />
+    <Compile Include="Assets\Scripts\SkillRelationController.cs" />
     <Compile Include="Assets\Scripts\StageRandomController.cs" />
     <Compile Include="Assets\Scripts\TradeWindowController.cs" />
   </ItemGroup>

@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour
 
     public RiddlesController _riddleController;
 
+    public SkillRelationController _skillRelationcontroller;
+
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -843,11 +845,12 @@ public class GameManager : MonoBehaviour
         string relationText = "";
         if (weak)
         {
-            relationText = npcRelative._name + " is weak against " + skillName + ".";
+            relationText = npcRelative._name + " is weak against " + skillName + "!";
         }
         else
         {
-            relationText = npcRelative._name + " is immune to " + skillName + ".";
+            relationText = npcRelative._name + " is immune to " + skillName + "!";
         }
+        _skillRelationcontroller.SetFeedback(relationText);
     }
 }
