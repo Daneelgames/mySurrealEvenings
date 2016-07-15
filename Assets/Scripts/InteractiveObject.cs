@@ -249,7 +249,7 @@ public class InteractiveObject : MonoBehaviour
                             }
                             else
                             {
-                                NpcDatabase.CheckSkillRelation(true, this);
+                                NpcDatabase.CheckSkillRelation(false, this);
                                 sendWeak = false;
                                 break;
                             }

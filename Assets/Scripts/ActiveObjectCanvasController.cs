@@ -56,26 +56,31 @@ public class ActiveObjectCanvasController : MonoBehaviour
             if (i < GameManager.Instance.skillsCurrent.Count)
             {
                 bool found = false;
-                foreach (GameObject skill in NpcDatabase.GetSkillRelationsWeak(selected))
+                foreach (GameObject skill in NpcDatabase.GetSkillRelationsImmune(selected))
                 {
+                    print("foreach immune");
                     if (GameManager.Instance.skillsCurrent[i] == skill)
                     {
-                        skillIcons[i].GetComponent<SkillLocalUiController>().SetWeak();
+                        skillIcons[i].GetComponent<SkillLocalUiController>().SetImmune();
                         found = true;
                         break;
                     }
                 }
                 if (!found)
                 {
-                    foreach (GameObject skill in NpcDatabase.GetSkillRelationsImmune(selected))
+                    foreach (GameObject skill in NpcDatabase.GetSkillRelationsWeak(selected))
                     {
+                        print("foreach weak");
                         if (GameManager.Instance.skillsCurrent[i] == skill)
                         {
-                            skillIcons[i].GetComponent<SkillLocalUiController>().SetImmune();
+                            skillIcons[i].GetComponent<SkillLocalUiController>().SetWeak();
                             found = true;
                             break;
                         }
                     }
+                }
+                if (!found)
+                {
                     skillIcons[i].GetComponent<SkillLocalUiController>().SetClear();
                 }
             }
