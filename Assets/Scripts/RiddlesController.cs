@@ -5,11 +5,11 @@ using System.Collections.Generic;
 public class RiddlesController : MonoBehaviour
 {
 
-    public string activeRiddle = "";
+    public int activeRiddle = 0;
     public bool activeAnswer = true;
 
     public List<int> rightAnswers;
-    public int riddlesCurrentAmount = 3;
+    public int riddlesCurrentAmount = 5;
     public List<string> riddlesCurrent;
     public List<bool> answersCurrent;
 
@@ -59,14 +59,14 @@ public class RiddlesController : MonoBehaviour
         }
     }
 
-    public void UpdateCurrentRiddles(int riddleIndex) // call this on correct answer
+    public void UpdateCurrentRiddles() // call this on correct answer
     {
-        rightAnswers[riddleIndex] += 1;
+        rightAnswers[activeRiddle] += 1;
 
-        if (rightAnswers[riddleIndex] > 2) // if answered 3 times
+        if (rightAnswers[activeRiddle] > 4) // if answered 5 times
         {
-            riddlesCurrent.RemoveAt(riddleIndex);
-            answersCurrent.RemoveAt(riddleIndex);
+            riddlesCurrent.RemoveAt(activeRiddle);
+            answersCurrent.RemoveAt(activeRiddle);
 
             if (riddlesDynamicList.Count <= 0)
             {
@@ -83,7 +83,7 @@ public class RiddlesController : MonoBehaviour
                 riddlesDynamicList.RemoveAt(randomIndex);
                 answersDynamicList.RemoveAt(randomIndex);
 
-                rightAnswers[riddleIndex] = 0;
+                rightAnswers[activeRiddle] = 0;
             }
             //print(riddlesDynamicList.Count);
         }
@@ -92,7 +92,7 @@ public class RiddlesController : MonoBehaviour
     public void SetActiveRiddle()
     {
         int random = Random.Range(0, riddlesCurrent.Count);
-        activeRiddle = riddlesCurrent[random];
+        activeRiddle = random;
         activeAnswer = answersCurrent[random];
     }
 }

@@ -57,6 +57,10 @@ public class SkillController : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        GameManager.Instance.skillsOnGround.Add(this);
+    }
 
     void OnMouseDown()
     {
@@ -92,6 +96,8 @@ public class SkillController : MonoBehaviour
             }
             else
                 PrintNoSpace();
+
+            GameManager.Instance.ClearSelectedObject();
         }
     }
 

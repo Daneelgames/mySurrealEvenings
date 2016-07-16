@@ -1,13 +1,14 @@
 fileFormatVersion: 2
 guid: 94d73c6f6b15c9a47b43478b04623c9b
-timeCreated: 1468313968
-licenseType: Pro
+timeCreated: 1468675743
+licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: Trade_0
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -38,18 +39,37 @@ TextureImporter:
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 61, y: 54, z: 61, w: 70}
   spritePixelsToUnits: 100
   alphaIsTransparency: 1
   textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: Trade_0
+      rect:
+        serializedVersion: 2
+        x: 61
+        y: 54
+        width: 134
+        height: 132
+      alignment: 9
+      pivot: {x: 0.69203085, y: 0.08377589}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -78.73213, y: 120.94158}
+        - {x: -92.73213, y: 99.94158}
+        - {x: -92.73213, y: 21.941582}
+        - {x: -38.732132, y: -11.058418}
+        - {x: 22.267868, y: -11.058418}
+        - {x: 41.267868, y: 15.941582}
+        - {x: 41.267868, y: 97.94158}
+        - {x: 10.267868, y: 120.94158}
     outline: []
   spritePackingTag: 
   userData: 

@@ -24,6 +24,11 @@ public static class NpcDatabase
     public static List<GameObject> foundWeakRelationsBroccoli;
     public static List<GameObject> foundImmuneRelationsBroccoli;
 
+    // CROWD ////////////////////////
+    public static List<GameObject> foundSkillsRelationsCrowd;
+    public static List<GameObject> foundWeakRelationsCrowd;
+    public static List<GameObject> foundImmuneRelationsCrowd;
+
     public static void ClearLists() // CLEAR ALL LISTS ON START OF SESSION
     {
         // ONEYE ////////////////////////
@@ -42,6 +47,10 @@ public static class NpcDatabase
         foundSkillsRelationsBroccoli = new List<GameObject>();
         foundWeakRelationsBroccoli = new List<GameObject>();
         foundImmuneRelationsBroccoli = new List<GameObject>();
+        // CROWD ////////////////////////
+        foundSkillsRelationsCrowd = new List<GameObject>();
+        foundWeakRelationsCrowd = new List<GameObject>();
+        foundImmuneRelationsCrowd = new List<GameObject>();
     }
 
     public static List<GameObject> GetSkillRelations(InteractiveObject npc)
@@ -56,6 +65,8 @@ public static class NpcDatabase
                 return foundSkillsRelationsDadsWig;
             case "Broccoli":
                 return foundSkillsRelationsBroccoli;
+            case "Crowd":
+                return foundSkillsRelationsCrowd;
 
 
             default:
@@ -75,6 +86,8 @@ public static class NpcDatabase
                 return foundWeakRelationsDadsWig;
             case "Broccoli":
                 return foundWeakRelationsBroccoli;
+            case "Crowd":
+                return foundWeakRelationsCrowd;
 
 
             default:
@@ -93,6 +106,8 @@ public static class NpcDatabase
                 return foundImmuneRelationsDadsWig;
             case "Broccoli":
                 return foundImmuneRelationsBroccoli;
+            case "Crowd":
+                return foundImmuneRelationsCrowd;
 
 
             default:

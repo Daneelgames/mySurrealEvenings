@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: d14d46e814c351e4c8449bb5d1b2bd80
-timeCreated: 1466493416
+timeCreated: 1468675780
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -54,23 +54,22 @@ TextureImporter:
     - name: talk_00001_0
       rect:
         serializedVersion: 2
-        x: 26
-        y: 22
-        width: 77
-        height: 76
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 61
+        y: 54
+        width: 134
+        height: 132
+      alignment: 9
+      pivot: {x: 0.6816509, y: 0.09431319}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -24.5, y: 38}
-        - {x: -38.5, y: 26}
-        - {x: -38.5, y: -18}
-        - {x: -28.5, y: -30}
-        - {x: -3.5, y: -38}
-        - {x: 24.5, y: -38}
-        - {x: 38.5, y: -20}
-        - {x: 38.5, y: 25}
-        - {x: 24.5, y: 38}
+      - - {x: -77.34122, y: 119.55066}
+        - {x: -91.34122, y: 98.55066}
+        - {x: -91.34122, y: 20.55066}
+        - {x: -37.341217, y: -12.449341}
+        - {x: 23.658783, y: -12.449341}
+        - {x: 42.658783, y: 14.550659}
+        - {x: 42.658783, y: 96.55066}
+        - {x: 11.658783, y: 119.55066}
     outline: []
   spritePackingTag: Sprites
   userData: 

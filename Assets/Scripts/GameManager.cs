@@ -86,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     public SkillRelationController _skillRelationcontroller;
 
+    public List<SkillController> skillsOnGround;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -568,6 +569,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadNight()
     {
+        if (skillsOnGround.Count > 0)
+        {
+            foreach (SkillController skillOnGround in skillsOnGround)
+            {
+                Destroy(skillOnGround.gameObject);
+            }
+            skillsOnGround.Clear();
+        }
+
         changeScene = true;
         turnOver = true;
 
@@ -752,12 +762,14 @@ public class GameManager : MonoBehaviour
                 selectedObject = choiceNpc;
                 print(choiceNpc._name);
                 choiceNpc.StartDialog("Happy");
+                _riddleController.UpdateCurrentRiddles();
             }
             else if (!yes && _riddleController.activeAnswer == false)
             {
                 selectedObject = choiceNpc;
                 print(choiceNpc._name);
                 choiceNpc.StartDialog("Happy");
+                _riddleController.UpdateCurrentRiddles();
             }
             else if (yes && _riddleController.activeAnswer == false)
             {

@@ -80,24 +80,24 @@ public class ChoiceController : MonoBehaviour
         else // right item = candies
         {
             tradeItemRight = "Candy";
-            tradeItemRightAmount = Random.Range(1, 4);
+            tradeItemRightAmount = Random.Range(1, 3);
         }
 
         // LEFT ITEM
-        if (GameManager.Instance.inventoryController.candies > 3)
+        if (GameManager.Instance.inventoryController.candies > 4)
         {
             tradeItemLeft = "Candy";
-            tradeItemLeftAmount = Random.Range(1, 4);
+            tradeItemLeftAmount = Random.Range(3, 6);
         }
         else if (GameManager.Instance.skillsCurrent.Count > 1)
         {
             tradeItemLeft = "Skill";
             tradeItemLeftAmount = 1;
         }
-        else if (GameManager.Instance.inventoryController.pills > 2)
+        else if (GameManager.Instance.inventoryController.pills > 4)
         {
             tradeItemLeft = "Pill";
-            tradeItemLeftAmount = Random.Range(1, 3);
+            tradeItemLeftAmount = Random.Range(3, 6);
         }
         else
         {
@@ -201,7 +201,7 @@ public class ChoiceController : MonoBehaviour
             {
                 choice = ChoiceType.repel;
                 title.text = "Yes or no?";
-                description.text = GameManager.Instance._riddleController.activeRiddle;
+                description.text = GameManager.Instance._riddleController.riddlesCurrent[GameManager.Instance._riddleController.activeRiddle];
             }
         }
         else if (sleepNearEnemy && !outOfPills)
