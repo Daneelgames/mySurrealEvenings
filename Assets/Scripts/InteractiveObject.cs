@@ -95,7 +95,7 @@ public class InteractiveObject : MonoBehaviour
         // click on object
         if (!GameManager.Instance.mouseOverButton && !GameManager.Instance.turnOver && !GameManager.Instance.blockSkillIcons && !GameManager.Instance.inDialog && !GameManager.Instance.choiceActive)
         {
-            if (GameManager.Instance.objectsTurn == GameManager.Instance.player)
+            if (GameManager.Instance.objectsTurn == GameManager.Instance.player && GameManager.Instance.gameState == GameManager.State.Night)
             {
                 GameManager.Instance.SetSelectedObject(this);
             }
@@ -385,5 +385,19 @@ public class InteractiveObject : MonoBehaviour
     {
         yield return new WaitForSeconds(1.35f);
         GameManager.Instance.SkillRelationDiscoverFeedback(GameManager.Instance.activeSkill, this, sendWeak);
+    }
+
+    public void PlayerDay()
+    {
+        _anim.speed = 0;
+        healthbar.gameObject.SetActive(false);
+        turnFeedbackAnim.gameObject.SetActive(false);
+    }
+
+    public void PlayerNight()
+    {
+        _anim.speed = 1;
+        healthbar.gameObject.SetActive(true);
+        turnFeedbackAnim.gameObject.SetActive(true);
     }
 }

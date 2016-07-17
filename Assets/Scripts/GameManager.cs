@@ -7,6 +7,8 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+    public enum State { Night, Day };
+    public State gameState = State.Night;
 
     public static GameManager Instance { get; private set; }
 
@@ -71,9 +73,7 @@ public class GameManager : MonoBehaviour
     public Image fader;
     private bool fade = false;
 
-    public GameObject dayScreen;
 
-    public DayController crossesController;
     public Animator cameraAnim;
     public Animator clockAnim;
 
@@ -87,6 +87,12 @@ public class GameManager : MonoBehaviour
     public SkillRelationController _skillRelationcontroller;
 
     public List<SkillController> skillsOnGround;
+
+    public GameObject nightEnvironment;
+    public GameObject nightBorderParticles;
+    public GameObject dayEnvironment;
+    public GameObject childNight;
+    public GameObject childDay;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -126,7 +132,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         NewStage();
-        dayScreen.SetActive(false);
     }
 
     void Update()
@@ -143,6 +148,15 @@ public class GameManager : MonoBehaviour
 
     void NewStage()
     {
+        player.PlayerNight();
+
+        childDay.SetActive(false);
+        childNight.SetActive(true);
+
+        nightEnvironment.SetActive(true);
+        nightBorderParticles.SetActive(true);
+        dayEnvironment.SetActive(false);
+
         stageRandomController.BuildStage();
 
         SortObjects();
@@ -158,6 +172,8 @@ public class GameManager : MonoBehaviour
         CheckSkipAndGo();
 
         sanityMeterAnim.SetFloat("Sanity", curSanity);
+
+        gameState = State.Night;
     }
 
     void GetRandomSkills(List<GameObject> skills)
@@ -489,7 +505,7 @@ public class GameManager : MonoBehaviour
 
     void CheckSkipAndGo()
     {
-        if (objectsTurn.inParty && !inDialog && !inventoryActive && !choiceActive && !blockSkillIcons)
+        if (objectsTurn.inParty && !inDialog && !inventoryActive && !choiceActive && !blockSkillIcons && gameState == State.Night)
         {
             skipTurnAnim.SetBool("Active", true);
             goFurtherAnim.SetBool("Active", true);
@@ -503,7 +519,7 @@ public class GameManager : MonoBehaviour
 
     public void LeaveLevel(int enemyAmount)
     {
-        if (!changeScene)
+        if (!changeScene && gameState == State.Night)
         {
             bool noPills = false;
             if (inventoryController.pills < 1)
@@ -521,6 +537,10 @@ public class GameManager : MonoBehaviour
             {
                 StartCoroutine("LoadDay");
             }
+        }
+        else if (gameState == State.Day)
+        {
+            DayOver();
         }
     }
 
@@ -551,8 +571,7 @@ public class GameManager : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(10F);
-            dayScreen.SetActive(true);
-            crossesController.NightOver();
+            DayStarted();
             fade = false;
             yield return new WaitForSeconds(0.75F);
             fader.color = Color.clear;
@@ -589,7 +608,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.75F);
         //screen is black
         NewStage(); // generate new stage
-        dayScreen.SetActive(false);
         fade = false;
         yield return new WaitForSeconds(0.75F);
         fader.color = Color.clear;
@@ -597,6 +615,24 @@ public class GameManager : MonoBehaviour
         changeScene = false;
         turnOver = false;
     }
+
+    void DayStarted()
+    {
+        gameState = State.Day;
+
+        CheckSkipAndGo();
+        childDay.SetActive(true);
+        childNight.SetActive(false);
+
+        stageRandomController.ClearNpc();
+
+        nightEnvironment.SetActive(false);
+        nightBorderParticles.SetActive(false);
+        dayEnvironment.SetActive(true);
+
+        player.PlayerDay();
+    }
+
 
     public void DialogStart(InteractiveObject speaker)
     {

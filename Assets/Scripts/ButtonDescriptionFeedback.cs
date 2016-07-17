@@ -47,18 +47,23 @@ public class ButtonDescriptionFeedback : MonoBehaviour
                 enemyAmount = 0;
                 enemyLvlAmount = 0;
                 string escapeDescription = "";
-                foreach (InteractiveObject npc in GameManager.Instance.objectList)
+
+                if (GameManager.Instance.gameState == GameManager.State.Night)
                 {
-                    if (npc.npcControl != null && npc.npcControl.agressiveTo == NpcController.Target.everyone)
+                    foreach (InteractiveObject npc in GameManager.Instance.objectList)
                     {
-                        enemyAmount += 1;
-                        enemyLvlAmount += npc.npcControl.overallDifficulty;
+                        if (npc.npcControl != null)
+                        {
+                            enemyAmount += 1;
+                            enemyLvlAmount += npc.npcControl.overallDifficulty;
+                        }
                     }
+
+                    enemyAmount += Mathf.RoundToInt(enemyLvlAmount);
                 }
 
-                enemyAmount += Mathf.RoundToInt(enemyLvlAmount);
-
                 escapeDescription = "Take a pill and go to sleep.";
+
                 GameManager.Instance.PrintActionFeedback(null, escapeDescription, null, false, false, true);
             }
         }

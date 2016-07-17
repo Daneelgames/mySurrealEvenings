@@ -17,8 +17,6 @@ public class StageRandomController : MonoBehaviour {
 
     public void BuildStage()
     {
-        ClearNpc();
-
         curStageIndex += 1;
 
         SetDifficulty();
@@ -26,7 +24,7 @@ public class StageRandomController : MonoBehaviour {
         SpawnNpc();
     }
 
-    void ClearNpc()
+    public void ClearNpc()
     {
         if (GameManager.Instance.objectList.Count > 0)
         {

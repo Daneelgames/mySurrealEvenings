@@ -1,0 +1,290 @@
+fileFormatVersion: 2
+guid: 787ed7c4053ad6b4e9d298f79add0b4d
+timeCreated: 1468760623
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: head
+    21300002: right
+    21300004: handl
+    21300006: left
+    21300008: handr
+    21300010: handlL
+    21300012: kidDay_00001_6
+    21300014: kidDay_00001_7
+    21300016: kidDay_00001_8
+    21300018: kidDay_00001_9
+    21300020: handrR
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: head
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 282
+        width: 217
+        height: 213
+      alignment: 9
+      pivot: {x: 0.54486865, y: 0.18655181}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 98.763504, y: 97.264465}
+        - {x: 97.763504, y: 104.264465}
+        - {x: 64.763504, y: 136.26447}
+        - {x: 29.763504, y: 165.26447}
+        - {x: 0.763504, y: 173.26447}
+        - {x: -25.236496, y: 173.26447}
+        - {x: -81.236496, y: 132.26447}
+        - {x: -115.236496, y: 77.264465}
+        - {x: -118.236496, y: 43.264465}
+        - {x: -118.236496, y: -39.735535}
+        - {x: -106.236496, y: -39.735535}
+        - {x: -77.236496, y: -24.735535}
+        - {x: -65.236496, y: -15.735535}
+        - {x: 69.763504, y: -32.735535}
+        - {x: 98.763504, y: -6.7355347}
+    - name: right
+      rect:
+        serializedVersion: 2
+        x: 306
+        y: 281
+        width: 191
+        height: 202
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 84.5, y: -64}
+        - {x: 83.5, y: 25}
+        - {x: 95.5, y: 53}
+        - {x: 95.5, y: 77}
+        - {x: 73.5, y: 101}
+        - {x: -70.5, y: 101}
+        - {x: -95.5, y: 67}
+        - {x: -95.5, y: -82}
+        - {x: -89.5, y: -101}
+        - {x: -76.5, y: -101}
+        - {x: -46.5, y: -90}
+        - {x: 54.5, y: -101}
+        - {x: 72.5, y: -101}
+    - name: handl
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 137
+        width: 53
+        height: 46
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 16.5, y: 22}
+        - {x: 11.5, y: 23}
+        - {x: -9.5, y: 23}
+        - {x: -26.5, y: 9}
+        - {x: -26.5, y: -14}
+        - {x: -23.5, y: -22}
+        - {x: -15.5, y: -23}
+        - {x: 10.5, y: -23}
+        - {x: 26.5, y: -15}
+        - {x: 26.5, y: 8}
+        - {x: 21.5, y: 19}
+    - name: left
+      rect:
+        serializedVersion: 2
+        x: 139
+        y: 108
+        width: 271
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 135.5, y: 45}
+        - {x: 95.5, y: 75}
+        - {x: -23.5, y: 75}
+        - {x: -111.5, y: 56}
+        - {x: -135.5, y: -24}
+        - {x: -135.5, y: -39}
+        - {x: -71.5, y: -61}
+        - {x: -23.5, y: -75}
+        - {x: 2.5, y: -75}
+        - {x: 5.5, y: -73}
+        - {x: 9.5, y: -64}
+        - {x: 135.5, y: 27}
+    - name: handr
+      rect:
+        serializedVersion: 2
+        x: 456
+        y: 140
+        width: 54
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 9, y: 24}
+        - {x: -22, y: 24}
+        - {x: -27, y: 9}
+        - {x: -27, y: -17}
+        - {x: -13, y: -24}
+        - {x: 12, y: -24}
+        - {x: 27, y: -11}
+        - {x: 27, y: 4}
+        - {x: 17, y: 16}
+    - name: handlL
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 17
+        width: 81
+        height: 115
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -37.5, y: 57.5}
+        - {x: -40.5, y: 44.5}
+        - {x: -40.5, y: -23.5}
+        - {x: -14.5, y: -57.5}
+        - {x: 18.5, y: -57.5}
+        - {x: 40.5, y: -3.5}
+        - {x: 40.5, y: 40.5}
+        - {x: 14.5, y: 57.5}
+    - name: kidDay_00001_6
+      rect:
+        serializedVersion: 2
+        x: 125
+        y: 12
+        width: 54
+        height: 51
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18, y: 25.5}
+        - {x: -27, y: 14.5}
+        - {x: -27, y: -25.5}
+        - {x: 24, y: -25.5}
+        - {x: 27, y: -22.5}
+        - {x: 27, y: 11.5}
+        - {x: 15, y: 25.5}
+    - name: kidDay_00001_7
+      rect:
+        serializedVersion: 2
+        x: 193
+        y: 12
+        width: 98
+        height: 44
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 22}
+        - {x: -49, y: 17}
+        - {x: -49, y: -22}
+        - {x: 37, y: -22}
+        - {x: 49, y: -20}
+        - {x: 49, y: 11}
+        - {x: 23, y: 22}
+    - name: kidDay_00001_8
+      rect:
+        serializedVersion: 2
+        x: 305
+        y: 11
+        width: 41
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18.5, y: 20.5}
+        - {x: -20.5, y: 18.5}
+        - {x: -20.5, y: -15.5}
+        - {x: -18.5, y: -20.5}
+        - {x: 18.5, y: -20.5}
+        - {x: 20.5, y: -16.5}
+        - {x: 20.5, y: 20.5}
+    - name: kidDay_00001_9
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 10
+        width: 47
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -23.5, y: 21.5}
+        - {x: -23.5, y: -21.5}
+        - {x: 23.5, y: -21.5}
+        - {x: 23.5, y: 17.5}
+        - {x: 17.5, y: 21.5}
+    - name: handrR
+      rect:
+        serializedVersion: 2
+        x: 434
+        y: 14
+        width: 78
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -18, y: 60}
+        - {x: -39, y: 51}
+        - {x: -39, y: 10}
+        - {x: -10, y: -60}
+        - {x: 27, y: -60}
+        - {x: 39, y: -20}
+        - {x: 39, y: 60}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
