@@ -4,7 +4,7 @@ using System.Collections;
 public class ButtonDescriptionFeedback : MonoBehaviour
 {
 
-    public enum iconType { sanity, goToSleep, skipTurn }
+    public enum iconType { sanity, goToSleep, skipTurn, craft }
 
     public string desctiption = "This is a button.";
     public iconType type = iconType.sanity;
@@ -60,11 +60,19 @@ public class ButtonDescriptionFeedback : MonoBehaviour
                     }
 
                     enemyAmount += Mathf.RoundToInt(enemyLvlAmount);
+                    escapeDescription = "Take a pill and go to sleep.";
                 }
+                else
+                    escapeDescription = "Rest and recover mental health.";
 
-                escapeDescription = "Take a pill and go to sleep.";
+
 
                 GameManager.Instance.PrintActionFeedback(null, escapeDescription, null, false, false, true);
+            }
+            else if (type == iconType.craft)
+            {
+                string craftDescription = "Workshop.";
+                GameManager.Instance.PrintActionFeedback(null, craftDescription, null, false, false, true);
             }
         }
     }
@@ -74,6 +82,13 @@ public class ButtonDescriptionFeedback : MonoBehaviour
         if (type == iconType.goToSleep)
         {
             GameManager.Instance.LeaveLevel(enemyAmount);
+
+            if (GameManager.Instance.gameState == GameManager.State.Day)
+                GameManager.Instance.RecoverSanity(25);
+        }
+        else if (type == iconType.craft)
+        {
+            GameManager.Instance.ShowCraftWindow(); 
         }
     }
 

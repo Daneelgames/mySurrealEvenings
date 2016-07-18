@@ -93,6 +93,8 @@ public class GameManager : MonoBehaviour
     public GameObject dayEnvironment;
     public GameObject childNight;
     public GameObject childDay;
+    public GameObject daySleepButton;
+    public GameObject dayCraftButton;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -149,6 +151,9 @@ public class GameManager : MonoBehaviour
     void NewStage()
     {
         player.PlayerNight();
+        daySleepButton.SetActive(false);
+        dayCraftButton.SetActive(false);
+        
 
         childDay.SetActive(false);
         childNight.SetActive(true);
@@ -620,6 +625,9 @@ public class GameManager : MonoBehaviour
     {
         gameState = State.Day;
 
+        daySleepButton.SetActive(true);
+        dayCraftButton.SetActive(true);
+
         CheckSkipAndGo();
         childDay.SetActive(true);
         childNight.SetActive(false);
@@ -902,5 +910,10 @@ public class GameManager : MonoBehaviour
             relationText = npcRelative._name + " is immune to " + skillName + "!";
         }
         _skillRelationcontroller.SetFeedback(relationText);
+    }
+
+    public void ShowCraftWindow()
+    {
+        
     }
 }
