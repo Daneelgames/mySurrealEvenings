@@ -95,6 +95,8 @@ public class GameManager : MonoBehaviour
     public GameObject childDay;
     public GameObject daySleepButton;
     public GameObject dayCraftButton;
+    public CraftWindowController craftWindow;
+    public RecipesController recipes;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -576,6 +578,7 @@ public class GameManager : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(10F);
+            recipes.GenerateCurrentDecor();
             DayStarted();
             fade = false;
             yield return new WaitForSeconds(0.75F);
@@ -914,6 +917,7 @@ public class GameManager : MonoBehaviour
 
     public void ShowCraftWindow()
     {
-        
+        craftWindow.gameObject.SetActive(true);
+        craftWindow.ShowWindow();
     }
 }
