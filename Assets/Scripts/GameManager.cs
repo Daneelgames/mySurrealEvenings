@@ -112,6 +112,7 @@ public class GameManager : MonoBehaviour
 
             // Furthermore we make sure that we don't destroy between scenes (this is optional)
             DontDestroyOnLoad(gameObject);
+            recipes.InitialRecipes();
 
             NpcDatabase.ClearLists();
 
@@ -578,7 +579,7 @@ public class GameManager : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(10F);
-            recipes.GenerateCurrentDecor();
+            recipes.GenerateDayDecor();
             DayStarted();
             fade = false;
             yield return new WaitForSeconds(0.75F);

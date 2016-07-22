@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\ChoiceController.cs" />
     <Compile Include="Assets\Scripts\CraftWindowController.cs" />
     <Compile Include="Assets\Scripts\CursorController.cs" />
+    <Compile Include="Assets\Scripts\DecorationController.cs" />
     <Compile Include="Assets\Scripts\DestroyOnStart.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InteractiveObject.cs" />
