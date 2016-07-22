@@ -64,6 +64,7 @@ public class CraftWindowController : MonoBehaviour
 
     public void StartCraft()
     {
-
+        GameManager.Instance.recipes.sessionDecor.RemoveAt(activeRecipeIndex);
+        GameManager.Instance.HideDayIcons();
     }
 }

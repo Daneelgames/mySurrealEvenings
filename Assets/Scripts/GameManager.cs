@@ -97,6 +97,7 @@ public class GameManager : MonoBehaviour
     public GameObject dayCraftButton;
     public CraftWindowController craftWindow;
     public RecipesController recipes;
+    public List<DecorationController> decorInRoom;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -156,7 +157,7 @@ public class GameManager : MonoBehaviour
         player.PlayerNight();
         daySleepButton.SetActive(false);
         dayCraftButton.SetActive(false);
-        
+
 
         childDay.SetActive(false);
         childNight.SetActive(true);
@@ -581,6 +582,12 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(10F);
             recipes.GenerateDayDecor();
             DayStarted();
+
+            foreach (DecorationController dcr in decorInRoom)
+            {
+                dcr.ActionOnNight();
+            }
+
             fade = false;
             yield return new WaitForSeconds(0.75F);
             fader.color = Color.clear;
@@ -617,6 +624,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.75F);
         //screen is black
         NewStage(); // generate new stage
+
+        foreach (DecorationController dcr in decorInRoom)
+        {
+            dcr.ActionOnNight();
+        }
         fade = false;
         yield return new WaitForSeconds(0.75F);
         fader.color = Color.clear;
@@ -920,5 +932,27 @@ public class GameManager : MonoBehaviour
     {
         craftWindow.gameObject.SetActive(true);
         craftWindow.ShowWindow();
+    }
+
+    public void HideDayIcons()
+    {
+        dayCraftButton.GetComponent<Animator>().SetBool("Active", false);
+        daySleepButton.GetComponent<Animator>().SetBool("Active", false);
+    }
+
+    public void AddDecoration(DecorationController decor)
+    {
+        decorInRoom.Add(decor);
+    }
+    public void RemoveDecoration(DecorationController decor)
+    {
+        foreach (DecorationController dcr in decorInRoom)
+        {
+            if (dcr == decor)
+            {
+                decorInRoom.Remove(dcr);
+                break;
+            }
+        }
     }
 }

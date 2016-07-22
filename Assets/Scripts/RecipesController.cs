@@ -16,12 +16,13 @@ public class RecipesController : MonoBehaviour
     public void GenerateDayDecor() // called on start of day
     {
         dayDecor.Clear();
+        List<DecorationController> dayTempDecor = new List<DecorationController>(sessionDecor);
 
-        for (int i = sessionDecor.Count - 1; i >= 0; i--)
+        for (int i = dayTempDecor.Count - 1; i >= 0; i--)
         {
-            int randomDecor = Random.Range(0, sessionDecor.Count);
-            dayDecor.Add(sessionDecor[randomDecor]);
-            sessionDecor.RemoveAt(randomDecor);
+            int randomDecor = Random.Range(0, dayTempDecor.Count);
+            dayDecor.Add(dayTempDecor[randomDecor]);
+            dayTempDecor.RemoveAt(randomDecor);
         }
     }
 }
