@@ -77,7 +77,9 @@
     <Compile Include="Assets\Scripts\ButtonDescriptionFeedback.cs" />
     <Compile Include="Assets\Scripts\CameraHolderController.cs" />
     <Compile Include="Assets\Scripts\ChoiceController.cs" />
+    <Compile Include="Assets\Scripts\CraftWindowController.cs" />
     <Compile Include="Assets\Scripts\CursorController.cs" />
+    <Compile Include="Assets\Scripts\DecorationController.cs" />
     <Compile Include="Assets\Scripts\DestroyOnStart.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\InteractiveObject.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Assets\Scripts\NpcDatabase.cs" />
     <Compile Include="Assets\Scripts\NpcDropFeedbackController.cs" />
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
+    <Compile Include="Assets\Scripts\RecipesController.cs" />
     <Compile Include="Assets\Scripts\RiddlesController.cs" />
     <Compile Include="Assets\Scripts\SkillController.cs" />
     <Compile Include="Assets\Scripts\SkillEffectController.cs" />

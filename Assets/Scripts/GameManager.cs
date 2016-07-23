@@ -580,6 +580,16 @@ public class GameManager : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(10F);
+
+            if (skillsOnGround.Count > 0)
+            {
+                foreach (SkillController skillOnGround in skillsOnGround)
+                {
+                    Destroy(skillOnGround.gameObject);
+                }
+                skillsOnGround.Clear();
+            }
+
             recipes.GenerateDayDecor();
             DayStarted();
 
@@ -604,14 +614,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadNight()
     {
-        if (skillsOnGround.Count > 0)
-        {
-            foreach (SkillController skillOnGround in skillsOnGround)
-            {
-                Destroy(skillOnGround.gameObject);
-            }
-            skillsOnGround.Clear();
-        }
 
         changeScene = true;
         turnOver = true;

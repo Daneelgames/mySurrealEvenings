@@ -4,7 +4,7 @@ using System.Collections;
 public class ButtonDescriptionFeedback : MonoBehaviour
 {
 
-    public enum iconType { sanity, goToSleep, skipTurn, craft }
+    public enum iconType { sanity, goToSleep, skipTurn, craft, backpack }
 
     public string desctiption = "This is a button.";
     public iconType type = iconType.sanity;
@@ -19,6 +19,8 @@ public class ButtonDescriptionFeedback : MonoBehaviour
         {
             GameManager.Instance.mouseOverButton = true;
             if (type == iconType.skipTurn)
+                GameManager.Instance.PrintActionFeedback(null, desctiption, null, false, false, true);
+            else if (type == iconType.backpack)
                 GameManager.Instance.PrintActionFeedback(null, desctiption, null, false, false, true);
             else if (type == iconType.sanity)
             {
@@ -88,7 +90,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour
         }
         else if (type == iconType.craft)
         {
-            GameManager.Instance.ShowCraftWindow(); 
+            GameManager.Instance.ShowCraftWindow();
         }
     }
 
