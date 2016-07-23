@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
     public CraftWindowController craftWindow;
     public RecipesController recipes;
     public List<DecorationController> decorInRoom;
+    public MusicController _musicController;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -154,6 +155,7 @@ public class GameManager : MonoBehaviour
 
     void NewStage()
     {
+        _musicController.SetMusicTrack("night");
         player.PlayerNight();
         daySleepButton.SetActive(false);
         dayCraftButton.SetActive(false);
@@ -178,11 +180,9 @@ public class GameManager : MonoBehaviour
             //print(obj.name);
             obj.ToggleTurnFeedback();
         }
-        CheckSkipAndGo();
-
         sanityMeterAnim.SetFloat("Sanity", curSanity);
-
         gameState = State.Night;
+        CheckSkipAndGo();
     }
 
     void GetRandomSkills(List<GameObject> skills)
@@ -246,6 +246,8 @@ public class GameManager : MonoBehaviour
             if (obj != null)
                 obj.ToggleSelectedFeedback();
         }
+
+        CheckSkipAndGo();
 
         // UPDATE STATUS WINDOWS
         //objInfoController.ShowWindows(objectsTurn, curSelected, false);
@@ -514,7 +516,7 @@ public class GameManager : MonoBehaviour
 
     void CheckSkipAndGo()
     {
-        if (objectsTurn.inParty && !inDialog && !inventoryActive && !choiceActive && !blockSkillIcons && gameState == State.Night)
+        if (objectsTurn.inParty && !inDialog && !inventoryActive && !choiceActive && !blockSkillIcons && gameState == State.Night && selectedObject == null) // check trulala
         {
             skipTurnAnim.SetBool("Active", true);
             goFurtherAnim.SetBool("Active", true);
@@ -561,6 +563,7 @@ public class GameManager : MonoBehaviour
         fade = true;
 
         yield return new WaitForSeconds(0.75F);
+        _musicController.SetMusicFade();
         fader.color = Color.black;
         clockAnim.SetTrigger("ShowClock");
         //        print("Load Day");
@@ -570,16 +573,17 @@ public class GameManager : MonoBehaviour
             inventoryController.pills -= 1;
             GameManager.Instance.inventory.SetTrigger("Update");
         }
-
-        if (curSanity <= 0 || player.health <= 0)
+        /*
+        if (curSanity <= 0 || player.health <= 0) // SCREAMER
         {
             StartCoroutine("Screamer");
             float randomTime = Random.Range(1f, 9.75f);
             yield return new WaitForSeconds(randomTime);
         }
-        else
+        else */
         {
             yield return new WaitForSeconds(10F);
+            _musicController.SetMusicTrack("day");
 
             if (skillsOnGround.Count > 0)
             {
@@ -621,9 +625,10 @@ public class GameManager : MonoBehaviour
         fade = true;
 
         yield return new WaitForSeconds(0.75F);
+        _musicController.SetMusicFade();
         fader.color = Color.black;
         //        print("Load Night");
-        yield return new WaitForSeconds(0.75F);
+        yield return new WaitForSeconds(1F);
         //screen is black
         NewStage(); // generate new stage
 

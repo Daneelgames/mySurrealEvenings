@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\InventoryController.cs" />
     <Compile Include="Assets\Scripts\InventorySlotController.cs" />
     <Compile Include="Assets\Scripts\LookAtCamera.cs" />
+    <Compile Include="Assets\Scripts\MusicController.cs" />
     <Compile Include="Assets\Scripts\NpcController.cs" />
     <Compile Include="Assets\Scripts\NpcDatabase.cs" />
     <Compile Include="Assets\Scripts\NpcDropFeedbackController.cs" />

@@ -1,0 +1,329 @@
+fileFormatVersion: 2
+guid: 8e2e70d9276c17c46b5cf477967294b8
+timeCreated: 1469286975
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: finger2
+    21300002: finger3
+    21300004: finger4
+    21300006: finger5
+    21300008: razor1
+    21300010: finger1
+    21300012: razor2
+    21300014: razor3
+    21300016: razor4
+    21300018: razor5
+    21300020: hand
+    21300022: razor6
+    21300024: hole1
+    21300026: handPart1
+    21300028: handPart2
+    21300030: handPart3
+    21300032: hole2
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: finger2
+      rect:
+        serializedVersion: 2
+        x: 62
+        y: 411
+        width: 32
+        height: 82
+      alignment: 9
+      pivot: {x: 0.5475552, y: 0.11027862}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -17.521767, y: 72.95715}
+        - {x: -17.521767, y: -9.042847}
+        - {x: 14.478233, y: -9.042847}
+        - {x: 14.478233, y: 36.957153}
+        - {x: -4.5217667, y: 72.95715}
+    - name: finger3
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 386
+        width: 30
+        height: 106
+      alignment: 9
+      pivot: {x: 0.5253627, y: 0.04418715}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: finger4
+      rect:
+        serializedVersion: 2
+        x: 147
+        y: 421
+        width: 31
+        height: 70
+      alignment: 9
+      pivot: {x: 0.5981785, y: 0.10325317}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: finger5
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 376
+        width: 51
+        height: 113
+      alignment: 9
+      pivot: {x: 0.49254024, y: 0.19699286}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 25.880447, y: 52.739807}
+        - {x: 7.8804474, y: 90.73981}
+        - {x: -21.119553, y: 90.73981}
+        - {x: -25.119553, y: 37.739807}
+        - {x: -25.119553, y: -20.260193}
+        - {x: -19.119553, y: -22.260193}
+        - {x: 2.8804474, y: -22.260193}
+        - {x: 6.8804474, y: -21.260193}
+        - {x: 24.880447, y: -8.260193}
+        - {x: 25.880447, y: -4.260193}
+    - name: razor1
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 484
+        width: 133
+        height: 11
+      alignment: 9
+      pivot: {x: 0.036604345, y: 0.53458476}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: finger1
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 419
+        width: 28
+        height: 61
+      alignment: 9
+      pivot: {x: 0.56793606, y: 0.10084759}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: razor2
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 462
+        width: 150
+        height: 9
+      alignment: 9
+      pivot: {x: 0.01810669, y: 0.45772636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: razor3
+      rect:
+        serializedVersion: 2
+        x: 261
+        y: 439
+        width: 131
+        height: 9
+      alignment: 9
+      pivot: {x: 0.035337724, y: 0.45772636}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: razor4
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 410
+        width: 129
+        height: 21
+      alignment: 9
+      pivot: {x: 0.03403207, y: 0.1739066}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: razor5
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 382
+        width: 117
+        height: 16
+      alignment: 9
+      pivot: {x: 0.048021626, y: 0.64266586}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+    - name: hand
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 219
+        width: 111
+        height: 133
+      alignment: 9
+      pivot: {x: 0.47493812, y: 0.06598921}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -51.718132, y: 124.223434}
+        - {x: -52.718132, y: 119.223434}
+        - {x: -52.718132, y: 51.223434}
+        - {x: -33.718132, y: -8.776566}
+        - {x: 28.281868, y: -8.776566}
+        - {x: 58.281868, y: 68.223434}
+        - {x: 58.281868, y: 124.223434}
+    - name: razor6
+      rect:
+        serializedVersion: 2
+        x: 269
+        y: 339
+        width: 94
+        height: 32
+      alignment: 9
+      pivot: {x: 0.06289608, y: 0.69022083}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 11.087769, y: 9.912933}
+        - {x: -5.9122314, y: 7.9129333}
+        - {x: -5.9122314, y: -14.087067}
+        - {x: 11.087769, y: -22.087067}
+        - {x: 79.08777, y: -22.087067}
+        - {x: 88.08777, y: -11.087067}
+        - {x: 88.08777, y: 9.912933}
+    - name: hole1
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 72
+        width: 104
+        height: 301
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -40, y: 150.5}
+        - {x: -52, y: 138.5}
+        - {x: -52, y: -147.5}
+        - {x: -50, y: -150.5}
+        - {x: 52, y: -150.5}
+        - {x: 52, y: 119.5}
+        - {x: 26, y: 150.5}
+    - name: handPart1
+      rect:
+        serializedVersion: 2
+        x: 21
+        y: 62
+        width: 90
+        height: 137
+      alignment: 9
+      pivot: {x: 0.53863686, y: 0.043126404}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -48.477318, y: 131.09167}
+        - {x: -48.477318, y: 7.0916824}
+        - {x: -43.477318, y: -5.9083176}
+        - {x: 15.522682, y: -5.9083176}
+        - {x: 41.522682, y: 2.0916824}
+        - {x: 41.522682, y: 131.09167}
+    - name: handPart2
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 148
+        width: 85
+        height: 188
+      alignment: 9
+      pivot: {x: 0.52454585, y: 0.02279379}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -24.586395, y: 183.71477}
+        - {x: -31.586395, y: 182.71477}
+        - {x: -42.586395, y: 157.71477}
+        - {x: -44.586395, y: 152.71477}
+        - {x: -44.586395, y: -1.2852325}
+        - {x: -29.586395, y: -4.2852325}
+        - {x: 40.413605, y: -4.2852325}
+        - {x: 40.413605, y: 168.71477}
+        - {x: 18.413605, y: 183.71477}
+    - name: handPart3
+      rect:
+        serializedVersion: 2
+        x: 282
+        y: 151
+        width: 89
+        height: 160
+      alignment: 9
+      pivot: {x: 0.5546992, y: 0.026215743}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 37.631775, y: 138.80548}
+        - {x: 23.631775, y: 155.80548}
+        - {x: -31.368225, y: 155.80548}
+        - {x: -37.368225, y: 154.80548}
+        - {x: -49.368225, y: 137.80548}
+        - {x: -49.368225, y: -4.194519}
+        - {x: 21.631775, y: -4.194519}
+        - {x: 39.631775, y: 4.805481}
+        - {x: 39.631775, y: 91.80548}
+    - name: hole2
+      rect:
+        serializedVersion: 2
+        x: 124
+        y: 10
+        width: 268
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 41, y: 63}
+        - {x: -95, y: 63}
+        - {x: -134, y: 34}
+        - {x: -134, y: -50}
+        - {x: -99, y: -63}
+        - {x: 134, y: -63}
+        - {x: 134, y: -18}
+        - {x: 74, y: 46}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
