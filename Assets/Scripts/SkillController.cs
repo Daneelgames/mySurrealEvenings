@@ -112,7 +112,11 @@ public class SkillController : MonoBehaviour
         if (Vector3.Distance(transform.position, GameManager.Instance.player.transform.position) > 3f)
             transform.position = Vector3.Lerp(transform.position, GameManager.Instance.player.transform.position, 5f * Time.deltaTime);
         else
+        {
+
+            GameManager.Instance.skillsOnGround.Remove(this);
             Destroy(gameObject);
+        }
     }
 
     public void OnMouseEnter()
