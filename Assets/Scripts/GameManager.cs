@@ -82,7 +82,6 @@ public class GameManager : MonoBehaviour
     public SkillController skillInAction;
     public CameraHolderController camHolder;
 
-    public RiddlesController _riddleController;
 
     public SkillRelationController _skillRelationcontroller;
 
@@ -126,8 +125,6 @@ public class GameManager : MonoBehaviour
 
             GetRandomSkills(skills);
             skillsCurrent = skills;
-
-            _riddleController.GenerateRiddles();
 
             foreach (NpcController mob in stageRandomController.npcList) // generate mobs stats on start of new game
             {
@@ -785,7 +782,6 @@ public class GameManager : MonoBehaviour
         inventoryActive = true;
         inventoryController.SortSlots();
 
-        _riddleController.SetActiveRiddle();
         choiceController.ShowWindow(npc, sleepNearEnemy, outOfPills, trade, repel);
         goFurtherAnim.SetBool("Active", false);
         skipTurnAnim.SetBool("Active", false);
@@ -806,48 +802,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine("LoadDay");
             goFurtherAnim.SetBool("Active", true);
             skipTurnAnim.SetBool("Active", true);
-        }
-
-        if (choice == ChoiceController.ChoiceType.trade)
-        {
-            if (!yes) // refuse to trade
-            {
-                selectedObject = choiceNpc;
-                choiceNpc.StartDialog("Angry");
-            }
-            else  // accept trade
-            {
-                selectedObject = choiceNpc;
-                print(choiceNpc._name);
-                choiceNpc.StartDialog("Happy");
-            }
-        }
-        if (choice == ChoiceController.ChoiceType.repel)
-        {
-            if (yes && _riddleController.activeAnswer == true)
-            {
-                selectedObject = choiceNpc;
-                print(choiceNpc._name);
-                choiceNpc.StartDialog("Happy");
-                _riddleController.UpdateCurrentRiddles();
-            }
-            else if (!yes && _riddleController.activeAnswer == false)
-            {
-                selectedObject = choiceNpc;
-                print(choiceNpc._name);
-                choiceNpc.StartDialog("Happy");
-                _riddleController.UpdateCurrentRiddles();
-            }
-            else if (yes && _riddleController.activeAnswer == false)
-            {
-                selectedObject = choiceNpc;
-                choiceNpc.StartDialog("Angry");
-            }
-            else if (!yes && _riddleController.activeAnswer == true)
-            {
-                selectedObject = choiceNpc;
-                choiceNpc.StartDialog("Angry");
-            }
         }
     }
 

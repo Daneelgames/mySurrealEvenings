@@ -7,8 +7,6 @@ public class ActiveObjectCanvasController : MonoBehaviour
 {
 
     [SerializeField]
-    private GameObject[] buttonIcons;
-    [SerializeField]
     private GameObject[] skillIcons;
 
     [SerializeField]
@@ -37,8 +35,6 @@ public class ActiveObjectCanvasController : MonoBehaviour
     {
         if (!iconsVisible)
         {
-            foreach (GameObject go in buttonIcons)
-                go.SetActive(true);
 
             ShowSkills();
 

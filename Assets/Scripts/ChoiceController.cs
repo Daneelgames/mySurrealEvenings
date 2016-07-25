@@ -187,24 +187,7 @@ public class ChoiceController : MonoBehaviour
     {
         tradeArrows.SetActive(false);
 
-        if (!sleepNearEnemy && !outOfPills)
-        {
-            npc = _npc;
-            if (trade) // trade RANDOM ITEMS HERE
-            {
-                choice = ChoiceType.trade;
-                title.text = npc._name + " offers a trade:";
-                description.text = "";
-                GenerateTradeWindow();
-            }
-            else if (repel) //repel RIDDLE HERE
-            {
-                choice = ChoiceType.repel;
-                title.text = "Yes or no?";
-                description.text = GameManager.Instance._riddleController.riddlesCurrent[GameManager.Instance._riddleController.activeRiddle];
-            }
-        }
-        else if (sleepNearEnemy && !outOfPills)
+        if (sleepNearEnemy && !outOfPills)
         {
             choice = ChoiceType.sleep;
             npc = null;
@@ -237,7 +220,7 @@ public class ChoiceController : MonoBehaviour
         switch (choice)
         {
             case (ChoiceType.trade):
-                
+
                 // RIGHT
                 if (tradeItemRight == "Skill" && rightSkillToSell != null) // get skill
                 {
@@ -260,7 +243,7 @@ public class ChoiceController : MonoBehaviour
                 {
                     GameManager.Instance.inventoryController.CandyGet(tradeItemRightAmount);
                 }
-                
+
                 // LEFT
                 if (tradeItemLeft == "Skill" && leftSkillToSell != null) // lose skill
                 {

@@ -139,60 +139,7 @@ public class InteractiveObject : MonoBehaviour
         GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
         localCanvas.HideIcons();
     }
-
-
-    public void StartDialog(string theme)
-    {
-        if (npcControl != null && !inParty)
-        {
-            if (theme == "Trade")
-            {
-                activeDialog = 0; //0 trade dialog
-            }
-            else if (theme == "Repel")
-            {
-                activeDialog = 1; //1 repel dialog
-            }
-            else if (theme == "Talk")
-            {
-                if (npcControl.agressiveTo == NpcController.Target.none)
-                {
-                    activeDialog = 2; //2 none dialog
-                }
-                else if (npcControl.agressiveTo == NpcController.Target.everyone)
-                {
-                    activeDialog = 3; //3 everyone dialog
-                }
-                else if (npcControl.agressiveTo == NpcController.Target.enemies)
-                {
-                    activeDialog = 4; //4 enemies dialog
-                }
-                else if (npcControl.agressiveTo == NpcController.Target.self)
-                {
-                    activeDialog = 5; //5 self dialog
-                }
-            }
-            else if (theme == "Angry")
-            {
-                activeDialog = 6; //6 angry dialog  
-                if (npcControl != null)
-                    npcControl.agressiveTo = NpcController.Target.everyone;
-            }
-            else if (theme == "Happy")
-            {
-                activeDialog = 7; //7 happy dialog  
-                npcControl.agressiveTo = NpcController.Target.none;
-            }
-        }
-        else if (inParty)
-        {
-            activeDialog = 2;
-        }
-        activePhrase = 0;
-        GameManager.Instance.DialogStart(this);
-        localCanvas.HideIcons();
-    }
-
+    
     public void Damage(float baseDmg, InteractiveObject attacker)
     {
         float DMG = 0;

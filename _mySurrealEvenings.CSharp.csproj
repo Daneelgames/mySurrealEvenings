@@ -92,7 +92,6 @@
     <Compile Include="Assets\Scripts\NpcDropFeedbackController.cs" />
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
     <Compile Include="Assets\Scripts\RecipesController.cs" />
-    <Compile Include="Assets\Scripts\RiddlesController.cs" />
     <Compile Include="Assets\Scripts\SkillController.cs" />
     <Compile Include="Assets\Scripts\SkillEffectController.cs" />
     <Compile Include="Assets\Scripts\SkillList.cs" />
