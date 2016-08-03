@@ -98,6 +98,7 @@ public class GameManager : MonoBehaviour
     public RecipesController recipes;
     public List<DecorationController> decorInRoom;
     public MusicController _musicController;
+    public LevelMapGenerator _levelMapGenerator;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -130,6 +131,7 @@ public class GameManager : MonoBehaviour
             {
                 mob.objectController.GenerateDynamicStats();
             }
+            _levelMapGenerator.GenerateMap(6);
         }
     }
 

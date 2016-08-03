@@ -85,13 +85,15 @@
     <Compile Include="Assets\Scripts\InteractiveObject.cs" />
     <Compile Include="Assets\Scripts\InventoryController.cs" />
     <Compile Include="Assets\Scripts\InventorySlotController.cs" />
+    <Compile Include="Assets\Scripts\LevelMapGenerator.cs" />
     <Compile Include="Assets\Scripts\LookAtCamera.cs" />
+    <Compile Include="Assets\Scripts\MapRoomController.cs" />
+    <Compile Include="Assets\Scripts\MusicController.cs" />
     <Compile Include="Assets\Scripts\NpcController.cs" />
     <Compile Include="Assets\Scripts\NpcDatabase.cs" />
     <Compile Include="Assets\Scripts\NpcDropFeedbackController.cs" />
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
     <Compile Include="Assets\Scripts\RecipesController.cs" />
-    <Compile Include="Assets\Scripts\RiddlesController.cs" />
     <Compile Include="Assets\Scripts\SkillController.cs" />
     <Compile Include="Assets\Scripts\SkillEffectController.cs" />
     <Compile Include="Assets\Scripts\SkillList.cs" />
