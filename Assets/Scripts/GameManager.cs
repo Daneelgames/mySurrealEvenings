@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             {
                 mob.objectController.GenerateDynamicStats();
             }
-            _levelMapGenerator.GenerateMap(6);
+            _levelMapGenerator.GenerateMap(8);
         }
     }
 

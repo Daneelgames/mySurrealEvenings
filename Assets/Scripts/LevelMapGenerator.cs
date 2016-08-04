@@ -5,22 +5,15 @@ using System.Collections.Generic;
 public class LevelMapGenerator : MonoBehaviour
 {
 
-    public enum Direction { UR, DR, DL, UL };
-    public enum ExtraRoomsDirection { HOR, VER };
-    public Direction levelDirection = Direction.UR;
-    public ExtraRoomsDirection _extraRoomsDirection = ExtraRoomsDirection.HOR;
+    public enum Direction { Left, Up, Right, Down };
+    public Direction excludeDirecion = Direction.Left;
 
     public GameObject roomImage;
     public GameObject passageImage;
 
-    public List<Transform> startRoomPositions;
     public List<Transform> rooms;
     int roomsRemaining = 6;
 
-    public List<Vector3> suitableRoomPositive = new List<Vector3>();
-    public List<Vector3> suitableRoomNegative = new List<Vector3>();
-
-	public int maxRepeats = 1;
     public void GenerateMap(int rooms)
     {
         roomsRemaining = rooms;
@@ -32,24 +25,10 @@ public class LevelMapGenerator : MonoBehaviour
 
     void SpawnStartRoom()
     {
-        GameObject room = new GameObject();
-        switch (levelDirection)
-        {
-            case Direction.DL:
-                room = Instantiate(roomImage, startRoomPositions[0].position, Quaternion.identity) as GameObject;
-                break;
-            case Direction.UL:
-                room = Instantiate(roomImage, startRoomPositions[1].position, Quaternion.identity) as GameObject;
-                break;
-            case Direction.UR:
-                room = Instantiate(roomImage, startRoomPositions[2].position, Quaternion.identity) as GameObject;
-                break;
-            case Direction.DR:
-                room = Instantiate(roomImage, startRoomPositions[3].position, Quaternion.identity) as GameObject;
-                break;
-        }
+        GameObject room = Instantiate(roomImage, transform.position, Quaternion.identity) as GameObject;
+        room.name = "startRoom";
         room.transform.SetParent(transform);
-        room.transform.localScale = Vector3.one;
+        room.transform.localPosition = Vector3.zero;
         rooms.Add(room.transform);
         roomsRemaining -= 1;
     }
@@ -59,70 +38,86 @@ public class LevelMapGenerator : MonoBehaviour
 
         Vector3 newRoomPosOffset = Vector3.zero;
 
-        int repeated0 = 0;
-        int repeated1 = 0;
-        int lastDirection = -1;
         for (int i = roomsRemaining; i > 0; i--)
         {
-            GameObject room = new GameObject();
-            int random = Random.Range(0, 2);
+            List<Direction> newDirection = new List<Direction>();
 
-            switch (random)
+            switch (excludeDirecion)
             {
-                case 0:
-                    repeated0 += 1;
+                case Direction.Left:
+                    newDirection.Add(Direction.Down);
+                    newDirection.Add(Direction.Right);
+                    newDirection.Add(Direction.Up);
                     break;
-                case 1:
-                    repeated1 += 1;
+                case Direction.Up:
+                    newDirection.Add(Direction.Down);
+                    newDirection.Add(Direction.Right);
+                    newDirection.Add(Direction.Left);
                     break;
-            }
-            if (lastDirection == random)
-            {
-                print(random);
-                if (repeated0 > maxRepeats)
-                {
-                    random = 1;
-                    repeated0 = 0;
-                }
-                else if (repeated1 > maxRepeats)
-                {
-                    random = 0;
-                    repeated1 = 0;
-                }
-
-            }
-            lastDirection = random;
-
-            switch (levelDirection)
-            {
-                case Direction.UR:
-                    if (random == 0)
-                        newRoomPosOffset = new Vector3(0, 72, 0);
-                    else
-                        newRoomPosOffset = new Vector3(128, 0, 0);
+                case Direction.Right:
+                    newDirection.Add(Direction.Down);
+                    newDirection.Add(Direction.Left);
+                    newDirection.Add(Direction.Up);
                     break;
-                case Direction.DR:
-                    if (random == 0)
-                        newRoomPosOffset = new Vector3(0, -72, 0);
-                    else
-                        newRoomPosOffset = new Vector3(128, 0, 0);
-                    break;
-                case Direction.DL:
-                    if (random == 0)
-                        newRoomPosOffset = new Vector3(0, -72, 0);
-                    else
-                        newRoomPosOffset = new Vector3(-128, 0, 0);
-                    break;
-                case Direction.UL:
-                    if (random == 0)
-                        newRoomPosOffset = new Vector3(0, 72, 0);
-                    else
-                        newRoomPosOffset = new Vector3(-128, 0, 0);
+                case Direction.Down:
+                    newDirection.Add(Direction.Left);
+                    newDirection.Add(Direction.Right);
+                    newDirection.Add(Direction.Up);
                     break;
             }
 
-            room = Instantiate(roomImage, lastRoomPosition, Quaternion.identity) as GameObject;
 
+            RaycastHit2D hitLeft = Physics2D.Raycast(lastRoomPosition, Vector2.left, 1.28f);
+            if (hitLeft.collider != null && excludeDirecion != Direction.Left)
+            {
+                if (hitLeft.collider.tag == "MapRoom")
+                    newDirection.Remove(Direction.Left);
+            }
+
+            RaycastHit2D hitUp = Physics2D.Raycast(lastRoomPosition, Vector2.up, 0.72f);
+            if (hitUp.collider != null && excludeDirecion != Direction.Up)
+            {
+                if (hitLeft.collider.tag == "MapRoom")
+                    newDirection.Remove(Direction.Up);
+            }
+
+            RaycastHit2D hitRight = Physics2D.Raycast(lastRoomPosition, Vector2.right, 1.28f);
+            if (hitRight.collider != null && excludeDirecion != Direction.Right)
+            {
+                if (hitLeft.collider.tag == "MapRoom")
+                    newDirection.Remove(Direction.Right);
+            }
+
+            RaycastHit2D hitDown = Physics2D.Raycast(lastRoomPosition, Vector2.down, 0.72f);
+            if (hitDown.collider != null && excludeDirecion != Direction.Down)
+            {
+                if (hitLeft.collider.tag == "MapRoom")
+                    newDirection.Remove(Direction.Down);
+            }
+            newDirection.Sort();
+            print(newDirection.Count);
+
+            int random = Random.Range(0, newDirection.Count);
+
+            switch (newDirection[random])
+            {
+                case Direction.Left:
+                    newRoomPosOffset = new Vector3(-1.28f, 0, 0);
+                    break;
+                case Direction.Up:
+                    newRoomPosOffset = new Vector3(0, 0.72f, 0);
+                    break;
+                case Direction.Right:
+                    newRoomPosOffset = new Vector3(1.28f, 0, 0);
+                    break;
+                case Direction.Down:
+                    newRoomPosOffset = new Vector3(0, -0.72f, 0);
+                    break;
+            }
+
+            GameObject room = Instantiate(roomImage, lastRoomPosition, Quaternion.identity) as GameObject;
+
+            room.name = "mainRoom";
             room.transform.SetParent(transform);
             room.transform.localScale = Vector3.one;
             room.transform.localPosition += newRoomPosOffset;
@@ -133,40 +128,7 @@ public class LevelMapGenerator : MonoBehaviour
     }
     void SpawnExtraRooms()
     {
-        // get suitable rooms
-        switch (_extraRoomsDirection)
-        {
-            case ExtraRoomsDirection.HOR:
-                for (int i = 1; i < rooms.Count - 1; i++)
-                {
-                    if (rooms[i].localPosition.x + 128 != rooms[i + 1].localPosition.x && rooms[i].localPosition.x + 128 != rooms[i - 1].localPosition.x)
-                    {
-                        suitableRoomPositive.Add(rooms[i].position);
-                        print(rooms[i - 1].localPosition.x + " " + rooms[i].localPosition.x + " " + rooms[i + 1].localPosition.x);
-                    }
-                    if (rooms[i].localPosition.x - 128 != rooms[i + 1].localPosition.x && rooms[i].localPosition.x - 128 != rooms[i - 1].localPosition.x)
-                    {
-                        suitableRoomNegative.Add(rooms[i].position);
-                        print(rooms[i - 1].localPosition.x + " " + rooms[i].localPosition.x + " " + rooms[i + 1].localPosition.x);
-                    }
-                }
-                break;
-            case ExtraRoomsDirection.VER:
-                for (int i = 1; i < rooms.Count - 1; i++)
-                {
-                    if (rooms[i].localPosition.y + 72 != rooms[i + 1].localPosition.y && rooms[i].localPosition.y + 72 != rooms[i - 1].localPosition.y)
-                    {
-                        suitableRoomPositive.Add(rooms[i].position);
-                        print(rooms[i - 1].localPosition.y + " " + rooms[i].localPosition.y + " " + rooms[i + 1].localPosition.y);
-                    }
-                    if (rooms[i].localPosition.y - 72 != rooms[i + 1].localPosition.y && rooms[i].localPosition.y - 72 != rooms[i - 1].localPosition.y)
-                    {
-                        suitableRoomNegative.Add(rooms[i].position);
-                        print(rooms[i - 1].localPosition.y + " " + rooms[i].localPosition.y + " " + rooms[i + 1].localPosition.y);
-                    }
-                }
-                break;
-        }
+
     }
     void PickLevelDirection()
     {
@@ -174,28 +136,18 @@ public class LevelMapGenerator : MonoBehaviour
         switch (random)
         {
             case 0:
-                levelDirection = Direction.UR;
+                excludeDirecion = Direction.Left;
                 break;
             case 1:
-                levelDirection = Direction.DR;
+                excludeDirecion = Direction.Up;
                 break;
             case 2:
-                levelDirection = Direction.DL;
+                excludeDirecion = Direction.Right;
                 break;
             case 3:
-                levelDirection = Direction.UL;
+                excludeDirecion = Direction.Down;
                 break;
         }
 
-        int random2 = Random.Range(0, 2);
-        switch (random2)
-        {
-            case 0:
-                _extraRoomsDirection = ExtraRoomsDirection.HOR;
-                break;
-            case 1:
-                _extraRoomsDirection = ExtraRoomsDirection.VER;
-                break;
-        }
     }
 }
