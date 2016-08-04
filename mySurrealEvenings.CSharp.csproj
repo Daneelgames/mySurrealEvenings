@@ -87,6 +87,7 @@
     <Compile Include="Assets\Scripts\InventorySlotController.cs" />
     <Compile Include="Assets\Scripts\LevelMapGenerator.cs" />
     <Compile Include="Assets\Scripts\LookAtCamera.cs" />
+    <Compile Include="Assets\Scripts\MapPassageController.cs" />
     <Compile Include="Assets\Scripts\MapRoomController.cs" />
     <Compile Include="Assets\Scripts\MusicController.cs" />
     <Compile Include="Assets\Scripts\NpcController.cs" />

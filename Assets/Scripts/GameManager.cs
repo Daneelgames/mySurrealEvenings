@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public State gameState = State.Night;
 
     public static GameManager Instance { get; private set; }
+    public int roomsMinimum = 10;
 
     public float curSanity = 100f;
 
@@ -131,7 +132,7 @@ public class GameManager : MonoBehaviour
             {
                 mob.objectController.GenerateDynamicStats();
             }
-            _levelMapGenerator.GenerateMap(8);
+            _levelMapGenerator.GenerateMap(roomsMinimum);
         }
     }
 
