@@ -24,6 +24,8 @@ public class LevelMapGenerator : MonoBehaviour
         SpawnStartRoom();
         SpawnMainRooms();
         SpawnExtraRooms();
+
+        MakePassages();
     }
 
     void SpawnStartRoom()
@@ -154,39 +156,23 @@ public class LevelMapGenerator : MonoBehaviour
                 repeats = 0;
             }
 
-            /*
-            // ADD PASSAGE HERE
-            GameObject pass = Instantiate(passageImage, lastRoomPosition, Quaternion.Euler(0, 0, 0)) as GameObject;
-            pass.GetComponent<MapPassageController>().SetType("Passage");
-            pass.transform.SetParent(transform);
-            pass.name = "Passage_" + i;
-            */
-
             switch (newDirection[random])
             {
                 case Direction.Left:
                     lastDirection = Direction.Left;
                     newRoomPosOffset = new Vector3(-1.28f, 0, 0);
-             //       pass.transform.position = new Vector3(lastRoomPosition.x - 0.64f, lastRoomPosition.y, 0);
-             //       pass.transform.rotation = Quaternion.Euler(0, 0, 0);
                     break;
                 case Direction.Up:
                     lastDirection = Direction.Up;
                     newRoomPosOffset = new Vector3(0, 0.72f, 0);
-             //       pass.transform.position = new Vector3(lastRoomPosition.x, lastRoomPosition.y + 0.36f, 0);
-             //       pass.transform.rotation = Quaternion.Euler(0, 0, 90);
                     break;
                 case Direction.Right:
                     lastDirection = Direction.Right;
                     newRoomPosOffset = new Vector3(1.28f, 0, 0);
-             //       pass.transform.position = new Vector3(lastRoomPosition.x + 0.64f, lastRoomPosition.y, 0);
-             //       pass.transform.rotation = Quaternion.Euler(0, 0, 0);
                     break;
                 case Direction.Down:
                     lastDirection = Direction.Down;
                     newRoomPosOffset = new Vector3(0, -0.72f, 0);
-             //       pass.transform.position = new Vector3(lastRoomPosition.x, lastRoomPosition.y - 0.36f, 0);
-             //       pass.transform.rotation = Quaternion.Euler(0, 0, 90);
                     break;
             }
 
@@ -241,7 +227,6 @@ public class LevelMapGenerator : MonoBehaviour
         SetExtraRoomType(secretRoom, "Secret");
         secretRooms.Add(placesForSecretRooms[secretIndex]);
         placesForSecretRooms.RemoveAt(secretIndex);
-        //placesForSecretRooms.Sort();
 
         int treasureIndex = Random.Range(0, placesForSecretRooms.Count);
         GameObject treasureRoom = Instantiate(roomImage, placesForSecretRooms[treasureIndex], Quaternion.identity) as GameObject;
@@ -250,7 +235,6 @@ public class LevelMapGenerator : MonoBehaviour
         SetExtraRoomType(treasureRoom, "Treasure");
         secretRooms.Add(placesForSecretRooms[treasureIndex]);
         placesForSecretRooms.RemoveAt(treasureIndex);
-        //placesForSecretRooms.Sort();
 
         // EXTRA ROOMS
         AddRoomsToList(secretRooms, placesForSecretRooms);
@@ -383,100 +367,10 @@ public class LevelMapGenerator : MonoBehaviour
     void SetExtraRoomType(GameObject room, string roomType)
     {
         room.GetComponent<MapRoomController>().SetRoomType(roomType);
-
-        float random = Random.value;
-        switch (roomType)
-        {
-            case "Treasure":
-                SpawnPass(room, true);
-                break;
-            case "Npc":
-                if (random > 0 && random <= 0.33f)
-                    SpawnPass(room, true);
-                else if (random > 0.33f && random < 0.66f)
-                    SpawnPass(room, false);
-                break;
-            case "Default":
-                if (random > 0.1f && random <= 0.3f)
-                    SpawnPass(room, true);
-                else if (random > 0.3f)
-                    SpawnPass(room, false);
-                break;
-            case "Secret":
-                break;
-        }
     }
 
-
-    void SpawnPass(GameObject room, bool door)
+    void MakePassages() // COMON LETS DO SOM PASAGES
     {
-        /*
-        RaycastHit2D hitLeft = Physics2D.Raycast(room.transform.position, Vector2.left, 1.28f, 1 << 9);
-        RaycastHit2D hitUp = Physics2D.Raycast(room.transform.position, Vector2.up, 0.72f, 1 << 9);
-        RaycastHit2D hitRight = Physics2D.Raycast(room.transform.position, Vector2.right, 1.28f, 1 << 9);
-        RaycastHit2D hitDown = Physics2D.Raycast(room.transform.position, Vector2.down, 0.72f, 1 << 9);
 
-        Vector3 passageOffset = Vector3.zero;
-        Quaternion passageRotation = Quaternion.Euler(Vector3.zero);
-
-        List<Vector3> positions = new List<Vector3>();
-
-        if (hitLeft.collider != null && hitLeft.collider.gameObject.tag == "MapRoom")
-        {
-            MapRoomController roomController = hitLeft.collider.gameObject.GetComponent<MapRoomController>() as MapRoomController;
-            if (roomController.roomIndex > 0)
-            {
-                positions.Add(new Vector3(-0.64f, 0, 0));
-                passageRotation = Quaternion.Euler(new Vector3(0, 0, 90));
-            }
-        }
-        if (hitUp.collider != null && hitUp.collider.gameObject.tag == "MapRoom")
-        {
-            MapRoomController roomController = hitUp.collider.gameObject.GetComponent<MapRoomController>() as MapRoomController;
-            if (roomController.roomIndex > 0)
-            {
-                positions.Add(new Vector3(0, 0.36f, 0));
-                passageRotation = Quaternion.Euler(Vector3.zero);
-            }
-        }
-        if (hitRight.collider != null && hitRight.collider.gameObject.tag == "MapRoom")
-        {
-            MapRoomController roomController = hitRight.collider.gameObject.GetComponent<MapRoomController>() as MapRoomController;
-            if (roomController.roomIndex > 0)
-            {
-                positions.Add(new Vector3(0.64f, 0, 0));
-                passageRotation = Quaternion.Euler(new Vector3(0, 0, 90));
-            }
-        }
-        if (hitDown.collider != null && hitDown.collider.gameObject.tag == "MapRoom")
-        {
-            MapRoomController roomController = hitDown.collider.gameObject.GetComponent<MapRoomController>() as MapRoomController;
-            if (roomController.roomIndex > 0)
-            {
-                positions.Add(new Vector3(0, -0.36f, 0));
-                passageRotation = Quaternion.Euler(Vector3.zero);
-            }
-        }
-        int randomIndex = Random.Range(0, positions.Count);
-
-        Vector3 passagePos = Vector3.zero;
-        if (positions.Count > randomIndex)
-            passagePos = room.transform.position + positions[randomIndex];
-
-        if (positions.Count > 0)
-        {
-            GameObject passage = Instantiate(passageImage, passagePos, Quaternion.identity) as GameObject;
-            passage.transform.rotation = passageRotation;
-            passage.name = "passage";
-            passage.transform.SetParent(transform);
-
-            if (door)
-                passage.GetComponent<MapPassageController>().SetType("Door");
-            else
-                passage.GetComponent<MapPassageController>().SetType("Passage");
-
-            // NEED TO SEND DOOR INFO TO NEIGHBOUR ROOM
-        }
-        */
     }
 }
