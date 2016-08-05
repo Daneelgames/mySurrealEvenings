@@ -8,7 +8,6 @@ public class MapPassageController : MonoBehaviour
 
     public void SetType(MapRoomController.Wall passType)
     {
-        print(passType);
         switch (passType)
         {
             case MapRoomController.Wall.Passage:

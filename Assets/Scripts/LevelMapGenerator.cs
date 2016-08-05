@@ -17,15 +17,18 @@ public class LevelMapGenerator : MonoBehaviour
     public List<Direction> newDirection = new List<Direction>();
     public int npcAmount = 0;
     public List<GameObject> rooms;
-    public void GenerateMap(int rooms)
+    public LevelMovementController _levelMovementController;
+    public void GenerateMap(int _rooms)
     {
-        roomsRemaining = rooms;
+        roomsRemaining = _rooms;
         PickLevelDirection();
         SpawnStartRoom();
         SpawnMainRooms();
         SpawnExtraRooms();
 
         MakePassages();
+
+        _levelMovementController.SetStartRoom(rooms[0]);
     }
 
     void SpawnStartRoom()
