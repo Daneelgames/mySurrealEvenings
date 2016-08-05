@@ -11,12 +11,12 @@ public class LevelMapGenerator : MonoBehaviour
     public GameObject roomImage;
     public GameObject passageImage;
 
-    public List<Vector3> rooms;
+    public List<Vector3> roomsPositions;
     public List<Vector3> placesForSecretRooms;
     int roomsRemaining = 6;
     public List<Direction> newDirection = new List<Direction>();
     public int npcAmount = 0;
-
+    public List<GameObject> rooms;
     public void GenerateMap(int rooms)
     {
         roomsRemaining = rooms;
@@ -37,12 +37,13 @@ public class LevelMapGenerator : MonoBehaviour
         MapRoomController roomController = room.GetComponent<MapRoomController>();
         roomController.SetRoomType("Start");
         roomController.SetRoomIndex(0);
-        rooms.Add(room.transform.position);
+        roomController.SetCoreRoom(true);
+        roomsPositions.Add(room.transform.position);
         roomsRemaining -= 1;
     }
     void SpawnMainRooms()
     {
-        Vector3 lastRoomPosition = rooms[0];
+        Vector3 lastRoomPosition = roomsPositions[0];
 
         Vector3 newRoomPosOffset = Vector3.zero;
         Direction lastDirection = Direction.No;
@@ -81,7 +82,7 @@ public class LevelMapGenerator : MonoBehaviour
             RaycastHit2D hitLeft = Physics2D.Raycast(lastRoomPosition, Vector2.left, 1.28f, 1 << 9);
             if (hitLeft.collider != null)
             {
-                print(hitLeft.collider.name);
+                //                print(hitLeft.collider.name);
                 if (hitLeft.collider.gameObject.tag == "MapRoom" && excludeDirecion != Direction.Left)
                     newDirection.Remove(Direction.Left);
             }
@@ -89,7 +90,7 @@ public class LevelMapGenerator : MonoBehaviour
             RaycastHit2D hitUp = Physics2D.Raycast(lastRoomPosition, Vector2.up, 0.72f, 1 << 9);
             if (hitUp.collider != null)
             {
-                print(hitUp.collider.name);
+                //              print(hitUp.collider.name);
                 if (hitUp.collider.gameObject.tag == "MapRoom" && excludeDirecion != Direction.Up)
                     newDirection.Remove(Direction.Up);
             }
@@ -97,7 +98,7 @@ public class LevelMapGenerator : MonoBehaviour
             RaycastHit2D hitRight = Physics2D.Raycast(lastRoomPosition, Vector2.right, 1.28f, 1 << 9);
             if (hitRight.collider != null)
             {
-                print(hitRight.collider.name);
+                //               print(hitRight.collider.name);
                 if (hitRight.collider.gameObject.tag == "MapRoom" && excludeDirecion != Direction.Right)
                     newDirection.Remove(Direction.Right);
             }
@@ -105,12 +106,12 @@ public class LevelMapGenerator : MonoBehaviour
             RaycastHit2D hitDown = Physics2D.Raycast(lastRoomPosition, Vector2.down, 0.72f, 1 << 9);
             if (hitDown.collider != null)
             {
-                print(hitDown.collider.name);
+                //              print(hitDown.collider.name);
                 if (hitDown.collider.gameObject.tag == "MapRoom" && excludeDirecion != Direction.Down)
                     newDirection.Remove(Direction.Down);
             }
             newDirection.Sort();
-            print(newDirection.Count);
+            //           print(newDirection.Count);
 
             int random = Random.Range(0, newDirection.Count);
 
@@ -197,14 +198,16 @@ public class LevelMapGenerator : MonoBehaviour
             }
             else
             {
-                room.name = "bossRoom";
+                room.name = "mainRoom_1_bossRoom";
                 room.GetComponent<MapRoomController>().SetRoomType("Boss");
             }
             room.transform.SetParent(transform);
             room.transform.localScale = Vector3.one;
             room.transform.localPosition += newRoomPosOffset;
-            room.GetComponent<MapRoomController>().SetRoomIndex(i);
-            rooms.Add(room.transform.position);
+            MapRoomController roomController = room.GetComponent<MapRoomController>();
+            roomController.SetRoomIndex(i);
+            roomController.SetCoreRoom(true);
+            roomsPositions.Add(room.transform.position);
 
 
             lastRoomPosition = room.transform.position;
@@ -217,7 +220,7 @@ public class LevelMapGenerator : MonoBehaviour
         //check every room except bossRoom
         placesForSecretRooms = new List<Vector3>();
 
-        AddRoomsToList(rooms, placesForSecretRooms);
+        AddRoomsToList(roomsPositions, placesForSecretRooms);
         List<Vector3> secretRooms = new List<Vector3>();
 
         int secretIndex = Random.Range(0, placesForSecretRooms.Count);
@@ -227,6 +230,8 @@ public class LevelMapGenerator : MonoBehaviour
         SetExtraRoomType(secretRoom, "Secret");
         secretRooms.Add(placesForSecretRooms[secretIndex]);
         placesForSecretRooms.RemoveAt(secretIndex);
+
+        AddRoomsToList(secretRooms, placesForSecretRooms);
 
         int treasureIndex = Random.Range(0, placesForSecretRooms.Count);
         GameObject treasureRoom = Instantiate(roomImage, placesForSecretRooms[treasureIndex], Quaternion.identity) as GameObject;
@@ -249,7 +254,7 @@ public class LevelMapGenerator : MonoBehaviour
                 room.transform.SetParent(transform);
                 extraRoomsCount += 1;
                 float randomChance = Random.value;
-                print("extra room chance is " + randomChance);
+                //print("extra room chance is " + randomChance);
 
                 // SET ROOM TYPE
                 SetExtraRoomType(room, "Default");
@@ -294,7 +299,7 @@ public class LevelMapGenerator : MonoBehaviour
             }
             if (!hitUp)
             {
-                Vector3 secretRoomPlace = new Vector3(rooms[i].x, rooms[i].y + 0.72f, 0);
+                Vector3 secretRoomPlace = new Vector3(roomsPositions[i].x, roomsPositions[i].y + 0.72f, 0);
                 bool noDouble = true;
                 if (toList.Count > 0)
                 {
@@ -310,7 +315,7 @@ public class LevelMapGenerator : MonoBehaviour
             }
             if (!hitRight)
             {
-                Vector3 secretRoomPlace = new Vector3(rooms[i].x + 1.28f, rooms[i].y, 0);
+                Vector3 secretRoomPlace = new Vector3(roomsPositions[i].x + 1.28f, roomsPositions[i].y, 0);
                 bool noDouble = true;
                 if (toList.Count > 0)
                 {
@@ -326,7 +331,7 @@ public class LevelMapGenerator : MonoBehaviour
             }
             if (!hitDown)
             {
-                Vector3 secretRoomPlace = new Vector3(rooms[i].x, rooms[i].y - 0.72f, 0);
+                Vector3 secretRoomPlace = new Vector3(roomsPositions[i].x, roomsPositions[i].y - 0.72f, 0);
                 bool noDouble = true;
                 if (toList.Count > 0)
                 {
@@ -366,11 +371,167 @@ public class LevelMapGenerator : MonoBehaviour
 
     void SetExtraRoomType(GameObject room, string roomType)
     {
-        room.GetComponent<MapRoomController>().SetRoomType(roomType);
+        MapRoomController roomController = room.GetComponent<MapRoomController>();
+        roomController.SetRoomType(roomType);
+        roomController.SetCoreRoom(false);
     }
 
     void MakePassages() // COMON LETS DO SOM PASAGES
     {
+        rooms = new List<GameObject>(GameObject.FindGameObjectsWithTag("MapRoom"));
 
+        List<GameObject> roomsTempList = new List<GameObject>(rooms);
+        for (int i = roomsTempList.Count - 1; i > 0; i--)
+        {
+            MapRoomController roomController = roomsTempList[i].GetComponent<MapRoomController>();
+
+            if (roomController.roomType != MapRoomController.Type.Secret)
+            {
+                RaycastHit2D hitLeft = Physics2D.Raycast(roomsTempList[i].transform.position, Vector2.left, 1.28f, 1 << 9);
+                GeneratePass(roomsTempList, hitLeft, roomController, "Left", "Right");
+
+                RaycastHit2D hitUp = Physics2D.Raycast(roomsTempList[i].transform.position, Vector2.up, 0.72f, 1 << 9);
+                GeneratePass(roomsTempList, hitUp, roomController, "Up", "Down");
+
+                RaycastHit2D hitRight = Physics2D.Raycast(roomsTempList[i].transform.position, Vector2.right, 1.28f, 1 << 9);
+                GeneratePass(roomsTempList, hitRight, roomController, "Right", "Left");
+
+                RaycastHit2D hitDown = Physics2D.Raycast(roomsTempList[i].transform.position, Vector2.down, 0.72f, 1 << 9);
+                GeneratePass(roomsTempList, hitDown, roomController, "Down", "Up");
+            }
+
+            //REMOVE ROOM FROM LIST
+            roomsTempList.RemoveAt(i);
+        }
+    }
+    void GeneratePass(List<GameObject> roomsTempList, RaycastHit2D hit, MapRoomController roomController, string roomWall_1, string roomWall_2)
+    {
+        if (hit.collider != null && hit.collider.gameObject.tag == "MapRoom")
+        {
+            foreach (GameObject rm in roomsTempList)
+            {
+                if (rm == hit.collider.gameObject)
+                {
+                    MapRoomController neighbourRoomController = hit.collider.gameObject.GetComponent<MapRoomController>();
+
+                    // TYPES //////////////////////////
+                    if (roomController.roomType == MapRoomController.Type.Start) // START ROOM
+                    {
+                        if (neighbourRoomController.roomType == MapRoomController.Type.Default || neighbourRoomController.roomType == MapRoomController.Type.Npc) // DEFAULT OR NPC
+                        {
+                            if (neighbourRoomController.coreRoom) // CORE ROOM
+                            {
+                                roomController.SetWallType(roomWall_1, MapRoomController.Wall.Passage);
+                                neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Passage);
+                            }
+                            else // NOT CORE ROOM
+                            {
+                                float random = Random.value;
+                                if (random > 0.3f) //  passage
+                                {
+                                    roomController.SetWallType(roomWall_1, MapRoomController.Wall.Passage);
+                                    neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Passage);
+                                }
+                                else if (random > 0.6f) //  locker
+                                {
+                                    roomController.SetWallType(roomWall_1, MapRoomController.Wall.DoorLocked);
+                                    neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.DoorLocked);
+                                }
+                                else //  SOLID WALL
+                                {
+                                    roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                                    neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                                }
+                            }
+                        }
+                        else if (neighbourRoomController.roomType == MapRoomController.Type.Secret || neighbourRoomController.roomType == MapRoomController.Type.Boss) // SECRET OR BOSS
+                        {
+                            roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                            neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                        }
+                        else if (neighbourRoomController.roomType == MapRoomController.Type.Treasure) // TREASURE
+                        {
+                            roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                            neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                        }
+                    }
+                    else if (roomController.roomType == MapRoomController.Type.Boss) // BOSS ROOM
+                    {
+                        if (neighbourRoomController.roomIndex == 2 && neighbourRoomController.coreRoom) // BOSS ENTRANCE PASSAGE
+                        {
+                            roomController.SetWallType(roomWall_1, MapRoomController.Wall.Passage);
+                            neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Passage);
+                        }
+                        else // OTHER - SOLID WALL
+                        {
+                            roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                            neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                        }
+                    }
+                    else if (roomController.roomType == MapRoomController.Type.Default || roomController.roomType == MapRoomController.Type.Npc) // DEFAULT OR NPC
+                    {
+                        if (neighbourRoomController.coreRoom) // CORE PASSAGE
+                        {
+                            int roomIndexesOdds = Mathf.Abs(neighbourRoomController.roomIndex - roomController.roomIndex);
+
+                            if (roomIndexesOdds == 1 || neighbourRoomController.roomType == MapRoomController.Type.Start)
+                            {
+                                roomController.SetWallType(roomWall_1, MapRoomController.Wall.Passage);
+                                neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Passage);
+                            }
+                            else if (neighbourRoomController.roomType == MapRoomController.Type.Boss || roomIndexesOdds != 1)
+                            {
+                                if (neighbourRoomController.roomType != MapRoomController.Type.Start)
+                                {
+                                    roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                                    neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                                }
+                            }
+                        }
+                        else // OTHER
+                        {
+                            float random = Random.value;
+                            if (random > 0.3f) //  passage
+                            {
+                                roomController.SetWallType(roomWall_1, MapRoomController.Wall.Passage);
+                                neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Passage);
+                            }
+                            else if (random > 0.6f) //  locker
+                            {
+                                roomController.SetWallType(roomWall_1, MapRoomController.Wall.DoorLocked);
+                                neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.DoorLocked);
+                            }
+                            else //  SOLID WALL
+                            {
+                                roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                                neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                            }
+                        }
+                    }
+                    else if (roomController.roomType == MapRoomController.Type.Treasure) // TREASURE
+                    {
+                        if (neighbourRoomController.roomType == MapRoomController.Type.Boss)
+                        {
+                            roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                            neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                        }
+                        else
+                        {
+                            float random = Random.value;
+                            if (random > 0.3f) // locker
+                            {
+                                roomController.SetWallType(roomWall_1, MapRoomController.Wall.DoorLocked);
+                                neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.DoorLocked);
+                            }
+                            else // SOLID WALL
+                            {
+                                roomController.SetWallType(roomWall_1, MapRoomController.Wall.Solid);
+                                neighbourRoomController.SetWallType(roomWall_2, MapRoomController.Wall.Solid);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
