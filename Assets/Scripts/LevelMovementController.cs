@@ -17,19 +17,16 @@ public class LevelMovementController : MonoBehaviour
 
     void SetActiveRoom(GameObject room)
     {
+        MapRoomController roomController = room.GetComponent<MapRoomController>();
         foreach (GameObject _room in rooms)
         {
-            MapRoomController roomController = room.GetComponent<MapRoomController>();
-            roomController.ActiveRoom(false);
-            /*if (_room == room)
+            MapRoomController _roomController = _room.GetComponent<MapRoomController>();
+            _roomController.ActiveRoom(false);
+            if (_roomController == roomController)
             {
-                activeRoom = roomController;
-                roomController.ActiveRoom(true);
-            }
-            else
-            {
-                roomController.ActiveRoom(false);
-            }*/
+                activeRoom = _roomController;
+                _roomController.ActiveRoom(true);
+            } 
         }
     }
 

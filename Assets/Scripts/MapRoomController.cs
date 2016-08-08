@@ -78,7 +78,6 @@ public class MapRoomController : MonoBehaviour
     }
     public void ActiveRoom(bool active)
     {
-        print(active);
         playerMark.SetActive(active);
     }
 }

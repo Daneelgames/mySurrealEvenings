@@ -9,7 +9,6 @@ public class LevelMapGenerator : MonoBehaviour
     public Direction excludeDirecion = Direction.Left;
     public int maxRepeats = 3;
     public GameObject roomImage;
-    public GameObject passageImage;
 
     public List<Vector3> roomsPositions;
     public List<Vector3> placesForSecretRooms;
