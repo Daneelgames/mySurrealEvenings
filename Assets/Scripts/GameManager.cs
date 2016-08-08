@@ -129,11 +129,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void Start()
-    {
-        NewStage();
-    }
-
     void Update()
     {
         if (fade)
@@ -146,9 +141,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void NewStage()
+    public void NewStage()
     {
-        _musicController.SetMusicTrack("night");
         player.PlayerNight();
 
         childNight.SetActive(true);
@@ -500,6 +494,29 @@ public class GameManager : MonoBehaviour
         blockSkillIcons = false;
 
         CheckSkipAndGo();
+
+        CheckRemainingMonsters();
+    }
+
+    void CheckRemainingMonsters()
+    {
+        bool monsters = false;
+
+        foreach (InteractiveObject i in objectList)
+        {
+            if (!i.inParty)
+            {
+                monsters = true;
+                break;
+            }
+        }
+
+        if (!monsters && !levelMovementController.activeRoom.roomCleared && !levelMovementController.activeRoom.safeRoom) // REDUCE ROOM DIFF AND SPAWN RATE IF MONSTERS ARE DEAD
+        {
+            levelMovementController.activeRoom.SetSpawnRate(0.33f);
+            levelMovementController.activeRoom.SetRoomDiffuculty(levelMovementController.activeRoom.roomDifficulty / 2);
+            levelMovementController.activeRoom.SetRoomCleared(true);
+        }
     }
 
     void CheckSkipAndGo()
@@ -526,7 +543,7 @@ public class GameManager : MonoBehaviour
             {
                 skipTurnAnim.SetBool("Active", false);
                 goFurtherAnim.SetBool("Active", false);
-                
+
                 levelMovementController.ToggleMapTraverseIcons(true);
             }
         }
@@ -537,6 +554,10 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void ChangeRoom()
+    {
+        StartCoroutine("LoadNight");
+    }
 
     IEnumerator LoadNight()
     {
@@ -547,7 +568,6 @@ public class GameManager : MonoBehaviour
         fade = true;
 
         yield return new WaitForSeconds(0.75F);
-        _musicController.SetMusicFade();
         fader.color = Color.black;
         //        print("Load Night");
         yield return new WaitForSeconds(1F);

@@ -147,6 +147,7 @@ public class LevelMovementController : MonoBehaviour
     void EnterRoom(GameObject room)
     {
         SetActiveRoom(room);
+        GameManager.Instance.ChangeRoom();
     }
     
     public void ToggleMapTraverseIcons(bool active)

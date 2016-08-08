@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 public class LevelMapGenerator : MonoBehaviour
 {
-
     public enum Direction { Left, Up, Right, Down, No };
     public Direction excludeDirecion = Direction.Left;
     public int maxRepeats = 3;
@@ -17,6 +16,7 @@ public class LevelMapGenerator : MonoBehaviour
     public int npcAmount = 0;
     public List<GameObject> rooms;
     public LevelMovementController _levelMovementController;
+    public int dungeonLevel = 1;
     public void GenerateMap(int _rooms)
     {
         roomsRemaining = _rooms;
@@ -27,7 +27,22 @@ public class LevelMapGenerator : MonoBehaviour
 
         MakePassages();
 
+        MakeDifficulties();
+
         _levelMovementController.SetStartRoom(rooms[0]);
+
+        GameManager.Instance.NewStage();
+    }
+
+    void MakeDifficulties()
+    {
+        float lastDiff = dungeonLevel;
+        foreach (GameObject rm in rooms)
+        {
+            float newDiff = lastDiff + Random.Range(0.05f, 0.25f);
+            rm.GetComponent<MapRoomController>().SetRoomDiffuculty(newDiff);
+            lastDiff = newDiff;
+        }
     }
 
     void SpawnStartRoom()

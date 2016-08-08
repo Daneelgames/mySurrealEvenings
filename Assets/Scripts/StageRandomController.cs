@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public class StageRandomController : MonoBehaviour {
+public class StageRandomController : MonoBehaviour
+{
 
     public int curStageIndex = 0;
-    
+
     public float stageDifficulty = 0;
 
     public List<NpcController> npcList;
@@ -17,10 +18,10 @@ public class StageRandomController : MonoBehaviour {
 
     public void BuildStage()
     {
-        curStageIndex += 1;
+        curStageIndex = GameManager.Instance.levelMovementController.activeRoom.roomIndex;
 
         SetDifficulty();
-        
+
         SpawnNpc();
     }
 
@@ -32,7 +33,7 @@ public class StageRandomController : MonoBehaviour {
             {
                 if (!GameManager.Instance.objectList[i].inParty)
                 {
-//                    print(GameManager.Instance.objectList[i].name);
+                    //                    print(GameManager.Instance.objectList[i].name);
                     Destroy(GameManager.Instance.objectList[i].gameObject);
                     GameManager.Instance.objectList.RemoveAt(i);
                 }
@@ -42,62 +43,16 @@ public class StageRandomController : MonoBehaviour {
 
     void SetDifficulty() // based on levelIndex + random
     {
-        switch (curStageIndex)
+        if (!GameManager.Instance.levelMovementController.activeRoom.safeRoom)
         {
-            // I ACT
-            case 1:
-                stageDifficulty = 1;
-                break;
-            case 2:
-                stageDifficulty = Random.Range(1f, 2f);
-                break;
-            case 3:
-                stageDifficulty = Random.Range(2f, 4f);
-                break;
-            case 4:
-                stageDifficulty = Random.Range(3f, 4f);
-                break;
-            case 5:
-                print("BOSS 1 STAGE");
-                stageDifficulty = 5;
-                break;
-
-            // II ACT
-            case 6:
-                stageDifficulty = Random.Range(3f, 5f);
-                break;
-            case 7:
-                stageDifficulty = Random.Range(4f, 6f);
-                break;
-            case 8:
-                stageDifficulty = Random.Range(5f, 7f);
-                break;
-            case 9:
-                stageDifficulty = Random.Range(6f, 7f);
-                break;
-            case 10:
-                print("BOSS 2 STAGE");
-                stageDifficulty = 8;
-                break;
-
-            // III ACT
-            case 11:
-                stageDifficulty = Random.Range(5f, 7f);
-                break;
-            case 12:
-                stageDifficulty = Random.Range(6f, 8f);
-                break;
-            case 13:
-                stageDifficulty = Random.Range(7f, 9f);
-                break;
-            case 14:
-                stageDifficulty = Random.Range(8f, 9f);
-                break;
-            case 15:
-                print("BOSS 3 STAGE");
-                stageDifficulty = 10;
-                break;
+            float random = Random.value;
+            if (GameManager.Instance.levelMovementController.activeRoom.spawnRate >= random)
+                stageDifficulty = GameManager.Instance.levelMovementController.activeRoom.roomDifficulty;
+            else
+                stageDifficulty = 0;
         }
+        else
+            stageDifficulty = 0;
     }
 
     void SpawnNpc()
@@ -118,7 +73,7 @@ public class StageRandomController : MonoBehaviour {
 
                 Transform randomCell = newCellsList[Random.Range(0, newCellsList.Count)];
 
-                GameObject go =  Instantiate(newNpcList[randomNpc].gameObject, randomCell.position, newNpcList[randomNpc].transform.rotation) as GameObject;
+                GameObject go = Instantiate(newNpcList[randomNpc].gameObject, randomCell.position, newNpcList[randomNpc].transform.rotation) as GameObject;
 
                 npcOnStage.Add(go.GetComponent<NpcController>());
 
@@ -130,12 +85,12 @@ public class StageRandomController : MonoBehaviour {
         {
             npcOnStage = npcOnStage.OrderByDescending(w => w.overallDifficulty).ToList(); //sort by diff. lowlevels at the end
 
-            for (int i = npcOnStage.Count - 1; i >= 0; i --)
+            for (int i = npcOnStage.Count - 1; i >= 0; i--)
             {
                 int randomNpc = Random.Range(0, newNpcList.Count);
 
-  //              print("randomNpc " + randomNpc);
-//                print( "npconstage " + i);
+                //              print("randomNpc " + randomNpc);
+                //                print( "npconstage " + i);
                 if (npcOnStage[i].overallDifficulty < newNpcList[randomNpc].overallDifficulty)
                 {
                     curDif -= npcOnStage[i].overallDifficulty;

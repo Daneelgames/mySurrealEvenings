@@ -14,16 +14,39 @@ public class MapRoomController : MonoBehaviour
     public Type roomType = Type.Default;
     public int roomIndex = -1000;
     public bool coreRoom = false;
+    public bool safeRoom = false;
     public List<MapPassageController> passages;
 
     public GameObject playerMark;
 
+    public float roomDifficulty = 1;
+    public float spawnRate = 1;
+    public bool roomCleared = false;
+    public void SetRoomDiffuculty(float diff)
+    {
+        roomDifficulty = diff;
+    }
+
+    public void SetSpawnRate(float rate)
+    {
+        spawnRate = rate;
+    }
     public void SetRoomIndex(int index)
     {
         roomIndex = index;
     }
+    public void SetRoomCleared(bool cleared)
+    {
+        roomCleared = cleared;
+    }
+    public void SetCoreRoom(bool core)
+    {
+        coreRoom = core;
+    }
     public void SetRoomType(string stringType)
     {
+        float random = Random.value;
+
         switch (stringType)
         {
             case "Default":
@@ -31,27 +54,29 @@ public class MapRoomController : MonoBehaviour
                 break;
             case "Start":
                 roomType = Type.Start;
+                safeRoom = true;
                 break;
             case "Boss":
                 roomType = Type.Boss;
                 break;
             case "Npc":
                 roomType = Type.Npc;
+                safeRoom = true;
                 break;
             case "Treasure":
+                if (random > 0.66)
+                    safeRoom = true;
                 roomType = Type.Treasure;
                 break;
             case "Secret":
+                if (random > 0.15)
+                    safeRoom = true;
                 roomType = Type.Secret;
                 break;
             default:
                 roomType = Type.Default;
                 break;
         }
-    }
-    public void SetCoreRoom(bool core)
-    {
-        coreRoom = core;
     }
 
     public void SetWallType(string wallType, Wall passageType)
