@@ -148,4 +148,16 @@ public class LevelMovementController : MonoBehaviour
     {
         SetActiveRoom(room);
     }
+    
+    public void ToggleMapTraverseIcons(bool active)
+    {
+        foreach(Image img in buttons)
+        {
+            img.gameObject.SetActive(active);
+        }
+        foreach(GameObject room in rooms)
+        {
+            room.gameObject.SetActive(active);
+        }
+    }
 }

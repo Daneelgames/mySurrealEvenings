@@ -93,6 +93,7 @@ public class GameManager : MonoBehaviour
     public GameObject childNight;
     public MusicController _musicController;
     public LevelMapGenerator _levelMapGenerator;
+    public LevelMovementController levelMovementController;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -505,8 +506,29 @@ public class GameManager : MonoBehaviour
     {
         if (objectsTurn.inParty && !inDialog && !inventoryActive && !choiceActive && !blockSkillIcons && gameState == State.Night && selectedObject == null) // check trulala
         {
-            skipTurnAnim.SetBool("Active", true);
-            goFurtherAnim.SetBool("Active", true);
+            bool monsters = false;
+            foreach (InteractiveObject character in objectList)
+            {
+                if (!character.inParty)
+                {
+                    monsters = true;
+                    break;
+                }
+            }
+            if (monsters)
+            {
+                skipTurnAnim.SetBool("Active", true);
+                goFurtherAnim.SetBool("Active", true);
+
+                levelMovementController.ToggleMapTraverseIcons(false);
+            }
+            else
+            {
+                skipTurnAnim.SetBool("Active", false);
+                goFurtherAnim.SetBool("Active", false);
+                
+                levelMovementController.ToggleMapTraverseIcons(true);
+            }
         }
         else
         {
@@ -514,6 +536,7 @@ public class GameManager : MonoBehaviour
             goFurtherAnim.SetBool("Active", false);
         }
     }
+
 
     IEnumerator LoadNight()
     {
