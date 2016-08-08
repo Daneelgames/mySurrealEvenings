@@ -90,8 +90,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject nightEnvironment;
     public GameObject nightBorderParticles;
-    public GameObject childNight;
-    public MusicController _musicController;
     public LevelMapGenerator _levelMapGenerator;
     public LevelMovementController levelMovementController;
     void Awake()
@@ -144,8 +142,6 @@ public class GameManager : MonoBehaviour
     public void NewStage()
     {
         player.PlayerNight();
-
-        childNight.SetActive(true);
 
         nightEnvironment.SetActive(true);
         nightBorderParticles.SetActive(true);
@@ -561,7 +557,6 @@ public class GameManager : MonoBehaviour
 
     IEnumerator LoadNight()
     {
-
         changeScene = true;
         turnOver = true;
 
