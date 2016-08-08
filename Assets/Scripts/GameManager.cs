@@ -90,14 +90,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject nightEnvironment;
     public GameObject nightBorderParticles;
-    public GameObject dayEnvironment;
     public GameObject childNight;
-    public GameObject childDay;
-    public GameObject daySleepButton;
-    public GameObject dayCraftButton;
-    public CraftWindowController craftWindow;
-    public RecipesController recipes;
-    public List<DecorationController> decorInRoom;
     public MusicController _musicController;
     public LevelMapGenerator _levelMapGenerator;
     void Awake()
@@ -115,7 +108,6 @@ public class GameManager : MonoBehaviour
 
             // Furthermore we make sure that we don't destroy between scenes (this is optional)
             DontDestroyOnLoad(gameObject);
-            recipes.InitialRecipes();
 
             NpcDatabase.ClearLists();
 
@@ -157,16 +149,11 @@ public class GameManager : MonoBehaviour
     {
         _musicController.SetMusicTrack("night");
         player.PlayerNight();
-        daySleepButton.SetActive(false);
-        dayCraftButton.SetActive(false);
 
-
-        childDay.SetActive(false);
         childNight.SetActive(true);
 
         nightEnvironment.SetActive(true);
         nightBorderParticles.SetActive(true);
-        dayEnvironment.SetActive(false);
 
         stageRandomController.BuildStage();
 
@@ -528,94 +515,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void LeaveLevel(int enemyAmount)
-    {
-        if (!changeScene && gameState == State.Night)
-        {
-            bool noPills = false;
-            if (inventoryController.pills < 1)
-                noPills = true;
-
-            bool haveEnemies = false;
-            if (enemyAmount > 0)
-                haveEnemies = true;
-
-            if (haveEnemies || noPills)
-            {
-                ChoiceActive(null, haveEnemies, noPills, false, false);
-            }
-            else
-            {
-                StartCoroutine("LoadDay");
-            }
-        }
-        else if (gameState == State.Day)
-        {
-            DayOver();
-        }
-    }
-
-    IEnumerator LoadDay()
-    {
-        changeScene = true;
-        turnOver = true;
-
-        fade = true;
-
-        yield return new WaitForSeconds(0.75F);
-        _musicController.SetMusicFade();
-        fader.color = Color.black;
-        clockAnim.SetTrigger("ShowClock");
-        //        print("Load Day");
-
-        if (inventoryController.pills > 0)
-        {
-            inventoryController.pills -= 1;
-            GameManager.Instance.inventory.SetTrigger("Update");
-        }
-        /*
-        if (curSanity <= 0 || player.health <= 0) // SCREAMER
-        {
-            StartCoroutine("Screamer");
-            float randomTime = Random.Range(1f, 9.75f);
-            yield return new WaitForSeconds(randomTime);
-        }
-        else */
-        {
-            yield return new WaitForSeconds(10F);
-            _musicController.SetMusicTrack("day");
-
-            if (skillsOnGround.Count > 0)
-            {
-                foreach (SkillController skillOnGround in skillsOnGround)
-                {
-                    Destroy(skillOnGround.gameObject);
-                }
-                skillsOnGround.Clear();
-            }
-
-            recipes.GenerateDayDecor();
-            DayStarted();
-
-            foreach (DecorationController dcr in decorInRoom)
-            {
-                dcr.ActionOnNight();
-            }
-
-            fade = false;
-            yield return new WaitForSeconds(0.75F);
-            fader.color = Color.clear;
-
-            changeScene = false;
-            turnOver = false;
-        }
-    }
-    public void DayOver()
-    {
-        if (!changeScene)
-            StartCoroutine("LoadNight");
-    }
-
     IEnumerator LoadNight()
     {
 
@@ -632,10 +531,6 @@ public class GameManager : MonoBehaviour
         //screen is black
         NewStage(); // generate new stage
 
-        foreach (DecorationController dcr in decorInRoom)
-        {
-            dcr.ActionOnNight();
-        }
         fade = false;
         yield return new WaitForSeconds(0.75F);
         fader.color = Color.clear;
@@ -643,27 +538,6 @@ public class GameManager : MonoBehaviour
         changeScene = false;
         turnOver = false;
     }
-
-    void DayStarted()
-    {
-        gameState = State.Day;
-
-        daySleepButton.SetActive(true);
-        dayCraftButton.SetActive(true);
-
-        CheckSkipAndGo();
-        childDay.SetActive(true);
-        childNight.SetActive(false);
-
-        stageRandomController.ClearNpc();
-
-        nightEnvironment.SetActive(false);
-        nightBorderParticles.SetActive(false);
-        dayEnvironment.SetActive(true);
-
-        player.PlayerDay();
-    }
-
 
     public void DialogStart(InteractiveObject speaker)
     {
@@ -799,13 +673,6 @@ public class GameManager : MonoBehaviour
         ClearSelectedObject();
 
         CheckSkipAndGo();
-
-        if (choice == ChoiceController.ChoiceType.sleep && yes) // sleep in danger
-        {
-            StartCoroutine("LoadDay");
-            goFurtherAnim.SetBool("Active", true);
-            skipTurnAnim.SetBool("Active", true);
-        }
     }
 
     public void InventoryToggle()
@@ -890,33 +757,5 @@ public class GameManager : MonoBehaviour
             relationText = npcRelative._name + " is immune to " + skillName + "!";
         }
         _skillRelationcontroller.SetFeedback(relationText);
-    }
-
-    public void ShowCraftWindow()
-    {
-        craftWindow.gameObject.SetActive(true);
-        craftWindow.ShowWindow();
-    }
-
-    public void HideDayIcons()
-    {
-        dayCraftButton.GetComponent<Animator>().SetBool("Active", false);
-        daySleepButton.GetComponent<Animator>().SetBool("Active", false);
-    }
-
-    public void AddDecoration(DecorationController decor)
-    {
-        decorInRoom.Add(decor);
-    }
-    public void RemoveDecoration(DecorationController decor)
-    {
-        foreach (DecorationController dcr in decorInRoom)
-        {
-            if (dcr == decor)
-            {
-                decorInRoom.Remove(dcr);
-                break;
-            }
-        }
     }
 }

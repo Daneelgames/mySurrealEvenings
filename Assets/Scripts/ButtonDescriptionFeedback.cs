@@ -83,14 +83,9 @@ public class ButtonDescriptionFeedback : MonoBehaviour
     {
         if (type == iconType.goToSleep)
         {
-            GameManager.Instance.LeaveLevel(enemyAmount);
-
-            if (GameManager.Instance.gameState == GameManager.State.Day)
-                GameManager.Instance.RecoverSanity(25);
         }
         else if (type == iconType.craft)
         {
-            GameManager.Instance.ShowCraftWindow();
         }
     }
 
