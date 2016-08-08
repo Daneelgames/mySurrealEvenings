@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class LevelMovementController : MonoBehaviour
 {
-
     public MapRoomController activeRoom;
     public List<GameObject> rooms;
+    public List<Image> buttons; // 0 - left
+    public List<Sprite> buttonIcons; // 0 move, 1 punch, 2 key, 3 none
 
     public void SetStartRoom(GameObject startRoom)
     {
@@ -26,7 +28,61 @@ public class LevelMovementController : MonoBehaviour
             {
                 activeRoom = _roomController;
                 _roomController.ActiveRoom(true);
-            } 
+            }
+        }
+        //set buttons types
+        SetButtonsTypes();
+    }
+
+    void SetButtonsTypes()
+    {
+        switch (activeRoom.wallLeft)
+        {
+            case MapRoomController.Wall.Passage:
+                buttons[0].sprite = buttonIcons[0];
+                break;
+            case MapRoomController.Wall.Solid:
+                buttons[0].sprite = buttonIcons[1];
+                break;
+            case MapRoomController.Wall.DoorLocked:
+                buttons[0].sprite = buttonIcons[2];
+                break;
+        }
+        switch (activeRoom.wallUp)
+        {
+            case MapRoomController.Wall.Passage:
+                buttons[1].sprite = buttonIcons[0];
+                break;
+            case MapRoomController.Wall.Solid:
+                buttons[1].sprite = buttonIcons[1];
+                break;
+            case MapRoomController.Wall.DoorLocked:
+                buttons[1].sprite = buttonIcons[2];
+                break;
+        }
+        switch (activeRoom.wallRight)
+        {
+            case MapRoomController.Wall.Passage:
+                buttons[2].sprite = buttonIcons[0];
+                break;
+            case MapRoomController.Wall.Solid:
+                buttons[2].sprite = buttonIcons[1];
+                break;
+            case MapRoomController.Wall.DoorLocked:
+                buttons[2].sprite = buttonIcons[2];
+                break;
+        }
+        switch (activeRoom.wallDown)
+        {
+            case MapRoomController.Wall.Passage:
+                buttons[3].sprite = buttonIcons[0];
+                break;
+            case MapRoomController.Wall.Solid:
+                buttons[3].sprite = buttonIcons[1];
+                break;
+            case MapRoomController.Wall.DoorLocked:
+                buttons[3].sprite = buttonIcons[2];
+                break;
         }
     }
 
