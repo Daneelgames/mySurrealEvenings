@@ -14,7 +14,6 @@ public class InventoryController : MonoBehaviour
     public List<GameObject> uniqueItemsDropped = new List<GameObject>();
 
     public int candies = 0;
-    public int pills = 0;
 
     public Text candyCounter;
     public Text pillsCounter;
@@ -62,22 +61,9 @@ public class InventoryController : MonoBehaviour
         SetResourcesFeedback();
     }
 
-    public void PillGet(int amount)
-    {
-        pills += amount;
-        SetResourcesFeedback();
-    }
-
-    public void PillLose(int amount)
-    {
-        pills -= amount;
-        SetResourcesFeedback();
-    }
-
     public void SetResourcesFeedback()
     {
         candyCounter.text = "" + candies;
-        pillsCounter.text = "" + pills;
     }
 
     public void ItemGet(SkillController skill)

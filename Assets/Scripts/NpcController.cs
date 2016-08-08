@@ -288,10 +288,6 @@ public class NpcController : MonoBehaviour
         {
             GameManager.Instance.inventoryController.CandyGet(candyValue);
         }
-        if (trashChance > 0.25f) // DROP RANDOM
-        {
-            GameManager.Instance.inventoryController.PillGet(trashValue);
-        }
         if (skillChance > 0.5f)
         {
             if (skills.Count > 0)

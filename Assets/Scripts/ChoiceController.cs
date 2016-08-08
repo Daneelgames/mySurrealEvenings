@@ -42,13 +42,7 @@ public class ChoiceController : MonoBehaviour
         float candyChanceRight = 0;
 
         // check players needs. gets right item
-        if (GameManager.Instance.inventoryController.pills < 4)
-        {
-            pillChanceRight = 0.6f;
-            skillChanceRight = 0.2f;
-            candyChanceRight = 0.2f;
-        }
-        else if (GameManager.Instance.skillsCurrent.Count < GameManager.Instance.objectList.Count / 2 && GameManager.Instance.skillsCurrent.Count < 8)
+        if (GameManager.Instance.skillsCurrent.Count < GameManager.Instance.objectList.Count / 2 && GameManager.Instance.skillsCurrent.Count < 8)
         {
             pillChanceRight = 0.2f;
             skillChanceRight = 0.6f;
@@ -93,11 +87,6 @@ public class ChoiceController : MonoBehaviour
         {
             tradeItemLeft = "Skill";
             tradeItemLeftAmount = 1;
-        }
-        else if (GameManager.Instance.inventoryController.pills > 4)
-        {
-            tradeItemLeft = "Pill";
-            tradeItemLeftAmount = Random.Range(3, 6);
         }
         else
         {
@@ -235,10 +224,6 @@ public class ChoiceController : MonoBehaviour
                     }
                     npc.npcControl.RemoveSkill(rightSkillToSell);
                 }
-                else if (tradeItemRight == "Pill")
-                {
-                    GameManager.Instance.inventoryController.PillGet(tradeItemRightAmount);
-                }
                 else if (tradeItemRight == "Candy")
                 {
                     GameManager.Instance.inventoryController.CandyGet(tradeItemRightAmount);
@@ -249,10 +234,6 @@ public class ChoiceController : MonoBehaviour
                 {
                     //print(leftSkillToSell.skillName);
                     GameManager.Instance.inventoryController.ItemLost(leftSkillToSell);
-                }
-                else if (tradeItemLeft == "Pill")
-                {
-                    GameManager.Instance.inventoryController.PillLose(tradeItemLeftAmount);
                 }
                 else if (tradeItemLeft == "Candy")
                 {
