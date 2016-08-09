@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager Instance { get; private set; }
     public int roomsMinimum = 10;
-
+    public float escapeChance = 0.75f;
     public float curSanity = 100f;
 
     public InteractiveObject objectsTurn;
@@ -796,5 +796,35 @@ public class GameManager : MonoBehaviour
             relationText = npcRelative._name + " is immune to " + skillName + "!";
         }
         _skillRelationcontroller.SetFeedback(relationText);
+    }
+
+    public void AddEscapeChance(float amount)
+    {
+        escapeChance += amount;
+
+        if (escapeChance > 0.75)
+            escapeChance = 0.75f;
+        else if (escapeChance < 0.25)
+            escapeChance = 0.25f;
+    }
+
+    public void EscapeFromBattle()
+    {
+        float random = Random.value;
+
+        if (escapeChance >= random)
+        {
+            AddEscapeChance(-0.25f);
+
+            levelMovementController.RunFromBattle();
+        }
+        else // escape failed
+        {
+            actionTextFeedback.text = "Escape failed!";
+            actionTextFeedbackAnimator.SetBool("Active", true);
+            actionTextFeedbackAnimator.SetBool("Update", true);
+            StartCoroutine("AnimatorSetUpdateFalse");
+            SetTurn();
+        }
     }
 }

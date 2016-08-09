@@ -45,6 +45,8 @@ public class MapRoomController : MonoBehaviour
     public void SetRoomCleared(bool cleared)
     {
         roomCleared = cleared;
+
+        GameManager.Instance.AddEscapeChance(0.25f);
     }
     public void SetCoreRoom(bool core)
     {
@@ -159,5 +161,11 @@ public class MapRoomController : MonoBehaviour
         {
             neighbourDown.ShowRoom(true);
         }
+    }
+
+    public void EscapedFromRoom()
+    {
+        if (!roomCleared && !safeRoom && spawnRate != 0)
+            spawnRate = 0.5f;
     }
 }

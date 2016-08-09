@@ -19,7 +19,8 @@ public class StageRandomController : MonoBehaviour
     public void BuildStage()
     {
         curStageIndex = GameManager.Instance.levelMovementController.activeRoom.roomIndex;
-
+        
+        ClearNpc();
         SetDifficulty();
 
         SpawnNpc();

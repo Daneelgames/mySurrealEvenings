@@ -4,7 +4,7 @@ using System.Collections;
 public class ButtonDescriptionFeedback : MonoBehaviour
 {
 
-    public enum iconType { sanity, goToSleep, skipTurn, craft, backpack }
+    public enum iconType { sanity, escape, skipTurn, backpack }
 
     public string desctiption = "This is a button.";
     public iconType type = iconType.sanity;
@@ -40,54 +40,26 @@ public class ButtonDescriptionFeedback : MonoBehaviour
                 else if (curSanity < 10)
                     sanityDescription = "I AM TERRIFIED";
 
-
                 GameManager.Instance.PrintActionFeedback(null, sanityDescription, null, false, false, true);
             }
 
-            else if (type == iconType.goToSleep)
+            else if (type == iconType.escape)
             {
-                enemyAmount = 0;
-                enemyLvlAmount = 0;
-                string escapeDescription = "";
+                float curChance = GameManager.Instance.escapeChance * 100;
+                string text = "";
 
-                if (GameManager.Instance.gameState == GameManager.State.Night)
-                {
-                    foreach (InteractiveObject npc in GameManager.Instance.objectList)
-                    {
-                        if (npc.npcControl != null)
-                        {
-                            enemyAmount += 1;
-                            enemyLvlAmount += npc.npcControl.overallDifficulty;
-                        }
-                    }
+                if (curChance > 50)
+                    text = "75% chance to escape";
+                else if (curChance <= 50 && curChance > 25)
+                    text = "50% chance to escape";
+                else if (curChance <= 25)
+                    text = "25% chance to escape";
 
-                    enemyAmount += Mathf.RoundToInt(enemyLvlAmount);
-                    escapeDescription = "Take a pill and go to sleep.";
-                }
-                else
-                    escapeDescription = "Rest and recover mental health.";
-
-
-
-                GameManager.Instance.PrintActionFeedback(null, escapeDescription, null, false, false, true);
-            }
-            else if (type == iconType.craft)
-            {
-                string craftDescription = "Workshop.";
-                GameManager.Instance.PrintActionFeedback(null, craftDescription, null, false, false, true);
+                GameManager.Instance.PrintActionFeedback(null, text, null, false, false, true);
             }
         }
     }
 
-    public void MouseClick()
-    {
-        if (type == iconType.goToSleep)
-        {
-        }
-        else if (type == iconType.craft)
-        {
-        }
-    }
 
     public void MouseExit()
     {

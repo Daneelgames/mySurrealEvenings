@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class LevelMovementController : MonoBehaviour
 {
     public MapRoomController activeRoom;
+    public MapRoomController lastRoom;
     public List<GameObject> rooms;
     public List<Image> buttons; // 0 - left
     public List<Sprite> buttonIcons; // 0 move, 1 punch, 2 key, 3 none
@@ -15,6 +16,7 @@ public class LevelMovementController : MonoBehaviour
         rooms = new List<GameObject>(GameObject.FindGameObjectsWithTag("MapRoom"));
 
         SetActiveRoom(startRoom);
+        lastRoom = activeRoom;
     }
 
     void SetActiveRoom(GameObject room)
@@ -179,8 +181,15 @@ public class LevelMovementController : MonoBehaviour
 
     void EnterRoom(GameObject room)
     {
+        lastRoom = activeRoom;
         SetActiveRoom(room);
         GameManager.Instance.ChangeRoom();
+    }
+
+    public void RunFromBattle()
+    {
+        activeRoom.EscapedFromRoom(); // change rooms spawn rate
+        EnterRoom(lastRoom.gameObject);
     }
 
     public void ToggleMapTraverseIcons(bool active)
