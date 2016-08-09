@@ -32,8 +32,41 @@ public class LevelMovementController : MonoBehaviour
         }
         //set buttons types
         SetButtonsTypes();
+        roomController.ShowRoom(true);
+        roomController.ShowPassages(true);
+        GetRoomNeighbours(roomController);
+        roomController.UpdateNeighbours();
+
     }
 
+    void GetRoomNeighbours(MapRoomController room)
+    {
+        RaycastHit2D hitL = Physics2D.Raycast(activeRoom.transform.position, Vector2.left, 1.28f, 1 << 9);
+        if (hitL.collider != null)
+        {
+            if (hitL.collider.gameObject.tag == "MapRoom")
+                room.AddNeighbourLeft(hitL.collider.gameObject.GetComponent<MapRoomController>());
+        }
+        RaycastHit2D hitU = Physics2D.Raycast(activeRoom.transform.position, Vector2.up, 0.72f, 1 << 9);
+        if (hitU.collider != null)
+        {
+            if (hitU.collider.gameObject.tag == "MapRoom")
+                room.AddNeighbourUp(hitU.collider.gameObject.GetComponent<MapRoomController>());
+        }
+        RaycastHit2D hitR = Physics2D.Raycast(activeRoom.transform.position, Vector2.right, 1.28f, 1 << 9);
+        if (hitR.collider != null)
+        {
+            if (hitR.collider.gameObject.tag == "MapRoom")
+                room.AddNeighbourRight(hitR.collider.gameObject.GetComponent<MapRoomController>());
+        }
+        RaycastHit2D hitD = Physics2D.Raycast(activeRoom.transform.position, Vector2.down, 0.72f, 1 << 9);
+        if (hitD.collider != null)
+        {
+            if (hitD.collider.gameObject.tag == "MapRoom")
+                room.AddNeighbourDown(hitD.collider.gameObject.GetComponent<MapRoomController>());
+        }
+
+    }
     void SetButtonsTypes()
     {
         switch (activeRoom.wallLeft)
@@ -149,14 +182,14 @@ public class LevelMovementController : MonoBehaviour
         SetActiveRoom(room);
         GameManager.Instance.ChangeRoom();
     }
-    
+
     public void ToggleMapTraverseIcons(bool active)
     {
-        foreach(Image img in buttons)
+        foreach (Image img in buttons)
         {
             img.gameObject.SetActive(active);
         }
-        foreach(GameObject room in rooms)
+        foreach (GameObject room in rooms)
         {
             room.gameObject.SetActive(active);
         }

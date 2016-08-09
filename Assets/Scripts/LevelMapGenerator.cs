@@ -34,14 +34,22 @@ public class LevelMapGenerator : MonoBehaviour
         GameManager.Instance.NewStage();
     }
 
+
     void MakeDifficulties()
     {
         float lastDiff = dungeonLevel;
         foreach (GameObject rm in rooms)
         {
             float newDiff = lastDiff + Random.Range(0.05f, 0.25f);
-            rm.GetComponent<MapRoomController>().SetRoomDiffuculty(newDiff);
+            MapRoomController rmCntrl = rm.GetComponent<MapRoomController>(); 
+            rmCntrl.SetRoomDiffuculty(newDiff);
             lastDiff = newDiff;
+
+            if (rmCntrl.roomIndex != 0)
+            {
+                rmCntrl.ShowRoom(false);
+                rmCntrl.ShowPassages(false);
+            }
         }
     }
 

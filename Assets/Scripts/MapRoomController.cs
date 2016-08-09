@@ -16,12 +16,19 @@ public class MapRoomController : MonoBehaviour
     public bool coreRoom = false;
     public bool safeRoom = false;
     public List<MapPassageController> passages;
+    public MapRoomController neighbourLeft;
+    public MapRoomController neighbourUp;
+    public MapRoomController neighbourRight;
+    public MapRoomController neighbourDown;
 
     public GameObject playerMark;
 
     public float roomDifficulty = 1;
     public float spawnRate = 1;
     public bool roomCleared = false;
+
+    public SpriteRenderer roomSprite;
+    public List<SpriteRenderer> passageSprites;
     public void SetRoomDiffuculty(float diff)
     {
         roomDifficulty = diff;
@@ -104,5 +111,53 @@ public class MapRoomController : MonoBehaviour
     public void ActiveRoom(bool active)
     {
         playerMark.SetActive(active);
+    }
+
+    public void ShowRoom(bool active)
+    {
+        roomSprite.enabled = active;
+
+    }
+    public void ShowPassages(bool active)
+    {
+        foreach (SpriteRenderer spr in passageSprites)
+        {
+            spr.enabled = active;
+        }
+    }
+    public void AddNeighbourLeft(MapRoomController room)
+    {
+        neighbourLeft = room;
+    }
+    public void AddNeighbourUp(MapRoomController room)
+    {
+        neighbourUp = room;
+    }
+    public void AddNeighbourRight(MapRoomController room)
+    {
+        neighbourRight = room;
+    }
+    public void AddNeighbourDown(MapRoomController room)
+    {
+        neighbourDown = room;
+    }
+    public void UpdateNeighbours()
+    {
+        if (neighbourLeft != null && wallLeft != Wall.Solid)
+        {
+            neighbourLeft.ShowRoom(true);
+        }
+        if (neighbourUp != null && wallUp != Wall.Solid)
+        {
+            neighbourUp.ShowRoom(true);
+        }
+        if (neighbourRight != null && wallRight != Wall.Solid)
+        {
+            neighbourRight.ShowRoom(true);
+        }
+        if (neighbourDown != null && wallDown != Wall.Solid)
+        {
+            neighbourDown.ShowRoom(true);
+        }
     }
 }
