@@ -413,6 +413,7 @@ public class GameManager : MonoBehaviour
         clickToSkip.raycastTarget = true;
 
         activeSkill = null;
+        SkipTurn();
     }
 
     public void SkipTurn()

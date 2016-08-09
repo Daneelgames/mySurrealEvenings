@@ -139,7 +139,7 @@ public class InteractiveObject : MonoBehaviour
         GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
         localCanvas.HideIcons();
     }
-    
+
     public void Damage(float baseDmg, InteractiveObject attacker)
     {
         float DMG = 0;
@@ -319,7 +319,12 @@ public class InteractiveObject : MonoBehaviour
             inParty = false;
         }
 
-        gameObject.SetActive(false);
+        Instantiate(deathParticles, transform.position, Quaternion.identity);
+        _anim.SetTrigger("Damage");
+        healthbar.gameObject.SetActive(false);
+        turnFeedbackAnim.gameObject.SetActive(false);
+        StartCoroutine("SetAnimInactive");
+        //gameObject.SetActive(false);
     }
 
 
