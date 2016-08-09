@@ -10,7 +10,13 @@ public class LevelMovementController : MonoBehaviour
     public List<GameObject> rooms;
     public List<Image> buttons; // 0 - left
     public List<Sprite> buttonIcons; // 0 move, 1 punch, 2 key, 3 none
+    public float buttonCooldown = 0.5f;
 
+    void Update()
+    {
+        if (buttonCooldown > 0)
+            buttonCooldown -= 1 * Time.deltaTime;
+    }
     public void SetStartRoom(GameObject startRoom)
     {
         rooms = new List<GameObject>(GameObject.FindGameObjectsWithTag("MapRoom"));
@@ -121,17 +127,66 @@ public class LevelMovementController : MonoBehaviour
         }
     }
 
+    void HitWall(MapRoomController room, string direction)
+    {
+        if (buttonCooldown <= 0)
+        {
+            buttonCooldown = 0.5f;
+            GameManager.Instance.CameraShake(0.3f);
+            if (room == null)
+            {
+                GameManager.Instance.HitWall(false);
+            }
+            else
+            {
+                switch (direction)
+                {
+                    case "Left":
+                        activeRoom.SetWallType("Left", MapRoomController.Wall.Passage);
+                        room.SetWallType("Right", MapRoomController.Wall.Passage);
+                        break;
+                    case "Up":
+                        activeRoom.SetWallType("Up", MapRoomController.Wall.Passage);
+                        room.SetWallType("Down", MapRoomController.Wall.Passage);
+                        break;
+                    case "Right":
+                        activeRoom.SetWallType("Right", MapRoomController.Wall.Passage);
+                        room.SetWallType("Left", MapRoomController.Wall.Passage);
+                        break;
+                    case "Down":
+                        activeRoom.SetWallType("Down", MapRoomController.Wall.Passage);
+                        room.SetWallType("Up", MapRoomController.Wall.Passage);
+                        break;
+                }
+                GameManager.Instance.HitWall(true);
+                activeRoom.UpdateNeighbours();
+                SetButtonsTypes();
+            }
+        }
+    }
     public void ButtonLeft()
     {
         switch (activeRoom.wallLeft)
         {
             case MapRoomController.Wall.Passage:
-                RaycastHit2D hit = Physics2D.Raycast(activeRoom.transform.position, Vector2.left, 1.28f, 1 << 9);
-                if (hit.collider != null)
+                RaycastHit2D hitPassage = Physics2D.Raycast(activeRoom.transform.position, Vector2.left, 1.28f, 1 << 9);
+                if (hitPassage.collider != null)
                 {
-                    if (hit.collider.gameObject.tag == "MapRoom")
-                        EnterRoom(hit.collider.gameObject);
+                    if (hitPassage.collider.gameObject.tag == "MapRoom")
+                        EnterRoom(hitPassage.collider.gameObject);
                 }
+                break;
+            case MapRoomController.Wall.Solid:
+                RaycastHit2D hitSolid = Physics2D.Raycast(activeRoom.transform.position, Vector2.left, 1.28f, 1 << 9);
+                if (hitSolid.collider != null)
+                {
+                    if (hitSolid.collider.gameObject.tag == "MapRoom")
+                        HitWall(hitSolid.collider.GetComponent<MapRoomController>(), "Left");
+                    else
+                        HitWall(null, "Left");
+                }
+                else
+                    HitWall(null, "Left");
                 break;
         }
 
@@ -148,6 +203,18 @@ public class LevelMovementController : MonoBehaviour
                         EnterRoom(hit.collider.gameObject);
                 }
                 break;
+            case MapRoomController.Wall.Solid:
+                RaycastHit2D hitSolid = Physics2D.Raycast(activeRoom.transform.position, Vector2.up, 0.72f, 1 << 9);
+                if (hitSolid.collider != null)
+                {
+                    if (hitSolid.collider.gameObject.tag == "MapRoom")
+                        HitWall(hitSolid.collider.GetComponent<MapRoomController>(), "Up");
+                    else
+                        HitWall(null, "Up");
+                }
+                else
+                    HitWall(null, "Up");
+                break;
         }
     }
     public void ButtonRight()
@@ -161,6 +228,18 @@ public class LevelMovementController : MonoBehaviour
                     if (hit.collider.gameObject.tag == "MapRoom")
                         EnterRoom(hit.collider.gameObject);
                 }
+                break;
+            case MapRoomController.Wall.Solid:
+                RaycastHit2D hitSolid = Physics2D.Raycast(activeRoom.transform.position, Vector2.right, 1.28f, 1 << 9);
+                if (hitSolid.collider != null)
+                {
+                    if (hitSolid.collider.gameObject.tag == "MapRoom")
+                        HitWall(hitSolid.collider.GetComponent<MapRoomController>(), "Right");
+                    else
+                        HitWall(null, "Right");
+                }
+                else
+                    HitWall(null, "Right");
                 break;
         }
     }
@@ -176,14 +255,30 @@ public class LevelMovementController : MonoBehaviour
                         EnterRoom(hit.collider.gameObject);
                 }
                 break;
+            case MapRoomController.Wall.Solid:
+                RaycastHit2D hitSolid = Physics2D.Raycast(activeRoom.transform.position, Vector2.down, 0.72f, 1 << 9);
+                if (hitSolid.collider != null)
+                {
+                    if (hitSolid.collider.gameObject.tag == "MapRoom")
+                        HitWall(hitSolid.collider.GetComponent<MapRoomController>(), "Down");
+                    else
+                        HitWall(null, "Down");
+                }
+                else
+                    HitWall(null, "Down");
+                break;
         }
     }
 
     void EnterRoom(GameObject room)
     {
-        lastRoom = activeRoom;
-        SetActiveRoom(room);
-        GameManager.Instance.ChangeRoom();
+        if (buttonCooldown <= 0)
+        {
+            buttonCooldown = 0.5f;
+            lastRoom = activeRoom;
+            SetActiveRoom(room);
+            GameManager.Instance.ChangeRoom();
+        }
     }
 
     public void RunFromBattle()

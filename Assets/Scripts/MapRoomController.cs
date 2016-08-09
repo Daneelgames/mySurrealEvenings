@@ -162,7 +162,6 @@ public class MapRoomController : MonoBehaviour
             neighbourDown.ShowRoom(true);
         }
     }
-
     public void EscapedFromRoom()
     {
         if (!roomCleared && !safeRoom && spawnRate != 0)

@@ -827,4 +827,17 @@ public class GameManager : MonoBehaviour
             SetTurn();
         }
     }
+
+    public void HitWall(bool breakWall)
+    {
+        if (!breakWall)
+        {
+            _skillRelationcontroller.SetFeedback("You hit the wall and got damaged!");
+            player.health -= player.maxHealth / 10;
+        }
+        else
+        {
+            _skillRelationcontroller.SetFeedback("You found a room behind a false wall!");
+        }
+    }
 }
