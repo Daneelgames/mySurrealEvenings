@@ -29,6 +29,7 @@ public class MapRoomController : MonoBehaviour
 
     public SpriteRenderer roomSprite;
     public List<SpriteRenderer> passageSprites;
+    public GameObject treasureChest;
     public void SetRoomDiffuculty(float diff)
     {
         roomDifficulty = diff;
@@ -42,12 +43,78 @@ public class MapRoomController : MonoBehaviour
     {
         roomIndex = index;
     }
-    public void SetRoomCleared(bool cleared)
+    public void SetRoomCleared(bool cleared) // GIVE REWARD FOR CLEAINING ROOM
     {
         roomCleared = cleared;
 
         GameManager.Instance.AddEscapeChance(0.25f);
+        print("Room cleared");
+        GiveReward();
     }
+    public void GiveReward()
+    {
+        int moneyReward = 0;
+        bool key = false;
+        GameObject treasure = null;
+        print("Give reward");
+        switch (roomType)
+        {
+            case Type.Default:
+                float random = Random.value;
+                if (random > 0.33f) // GIVE MONEY
+                {
+                    // GENERATE MONEY
+                    int randomMoney = 1;
+                    if (random > 0.5f)
+                        randomMoney = 2;
+                    if (random > 0.75f)
+                        randomMoney = 3;
+                    if (random > 0.85f)
+                        randomMoney = 4;
+                    if (random > 0.95f)
+                        randomMoney = 5;
+                    moneyReward = randomMoney;
+                }
+                switch (GameManager.Instance.inventoryController.keys)
+                {
+                    case 0:
+                        if (random > 0.1f)
+                        {
+                            // GENERATE Key
+                            key = true;
+                        }
+                        break;
+                    case 1:
+                        if (random > 0.5f)
+                        {
+                            // GENERATE Key
+                            key = true;
+                        }
+                        break;
+                    default:
+                        if (random > 0.9f)
+                        {
+                            // GENERATE Key
+                            key = true;
+                        }
+                        break;
+                }
+                break;
+        }
+
+        if (moneyReward != 0 || key || treasure != null)
+        {
+            // Instantiate treasure chest
+            GameObject chest = Instantiate(treasureChest, Vector3.zero, Quaternion.identity) as GameObject;
+            TreasureChestController chestController = chest.GetComponent<TreasureChestController>();
+
+            chestController.moneyDrop = moneyReward;
+            chestController.keyDrop = key;
+            if (treasure != null)
+                chestController.treasure = treasure;
+        }
+    }
+
     public void SetCoreRoom(bool core)
     {
         coreRoom = core;

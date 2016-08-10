@@ -58,12 +58,6 @@
     <Reference Include="UnityEngine.Networking">
       <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>Library\UnityAssemblies\UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>Library\UnityAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
@@ -99,6 +93,7 @@
     <Compile Include="Assets\Scripts\NpcDatabase.cs" />
     <Compile Include="Assets\Scripts\NpcDropFeedbackController.cs" />
     <Compile Include="Assets\Scripts\ObjectsInfoController.cs" />
+    <Compile Include="Assets\Scripts\RewardWindowController.cs" />
     <Compile Include="Assets\Scripts\SkillController.cs" />
     <Compile Include="Assets\Scripts\SkillEffectController.cs" />
     <Compile Include="Assets\Scripts\SkillList.cs" />
@@ -106,6 +101,7 @@
     <Compile Include="Assets\Scripts\SkillRelationController.cs" />
     <Compile Include="Assets\Scripts\StageRandomController.cs" />
     <Compile Include="Assets\Scripts\TradeWindowController.cs" />
+    <Compile Include="Assets\Scripts\TreasureChestController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Standard Assets\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />

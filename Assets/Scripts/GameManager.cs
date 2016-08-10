@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
     public GameObject nightBorderParticles;
     public LevelMapGenerator _levelMapGenerator;
     public LevelMovementController levelMovementController;
+    public RewardWindowController rewardController;
     void Awake()
     {
         // First we check if there are any other instances conflicting
@@ -507,12 +508,15 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-
         if (!monsters && !levelMovementController.activeRoom.roomCleared && !levelMovementController.activeRoom.safeRoom) // REDUCE ROOM DIFF AND SPAWN RATE IF MONSTERS ARE DEAD
         {
             levelMovementController.activeRoom.SetSpawnRate(0.33f);
             levelMovementController.activeRoom.SetRoomDiffuculty(levelMovementController.activeRoom.roomDifficulty / 2);
             levelMovementController.activeRoom.SetRoomCleared(true);
+        }
+        else if (levelMovementController.activeRoom.safeRoom)
+        {
+            levelMovementController.activeRoom.GiveReward();
         }
     }
 
@@ -572,6 +576,7 @@ public class GameManager : MonoBehaviour
 
         fade = false;
         yield return new WaitForSeconds(0.75F);
+        CheckRemainingMonsters();
         fader.color = Color.clear;
 
         changeScene = false;
@@ -839,5 +844,10 @@ public class GameManager : MonoBehaviour
         {
             _skillRelationcontroller.SetFeedback("You found a room behind a false wall!");
         }
+    }
+    public void ShowRewardWindow(int moneyDrop, bool keyDrop, GameObject treasure)
+    {
+        rewardController.SetReward(moneyDrop, keyDrop, treasure);
+        rewardController.ToggleWindow(true);
     }
 }
