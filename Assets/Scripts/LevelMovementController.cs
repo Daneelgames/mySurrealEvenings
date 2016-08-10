@@ -164,6 +164,42 @@ public class LevelMovementController : MonoBehaviour
             }
         }
     }
+    void OpenDoor(MapRoomController room, string direction)
+    {
+        if (buttonCooldown <= 0)
+        {
+            buttonCooldown = 0.5f;
+            if (GameManager.Instance.inventoryController.keys > 0)
+            {
+                switch (direction)
+                {
+                    case "Left":
+                        activeRoom.SetWallType("Left", MapRoomController.Wall.Passage);
+                        room.SetWallType("Right", MapRoomController.Wall.Passage);
+                        break;
+                    case "Up":
+                        activeRoom.SetWallType("Up", MapRoomController.Wall.Passage);
+                        room.SetWallType("Down", MapRoomController.Wall.Passage);
+                        break;
+                    case "Right":
+                        activeRoom.SetWallType("Right", MapRoomController.Wall.Passage);
+                        room.SetWallType("Left", MapRoomController.Wall.Passage);
+                        break;
+                    case "Down":
+                        activeRoom.SetWallType("Down", MapRoomController.Wall.Passage);
+                        room.SetWallType("Up", MapRoomController.Wall.Passage);
+                        break;
+                }
+                GameManager.Instance.inventoryController.KeyLose();
+                GameManager.Instance._skillRelationcontroller.SetFeedback("You used the key and opened the door.");
+            }
+            else
+            {
+                GameManager.Instance._skillRelationcontroller.SetFeedback("You have no keys!");
+            }
+            SetButtonsTypes();
+        }
+    }
     public void ButtonLeft()
     {
         switch (activeRoom.wallLeft)
@@ -187,6 +223,16 @@ public class LevelMovementController : MonoBehaviour
                 }
                 else
                     HitWall(null, "Left");
+                break;
+            case MapRoomController.Wall.DoorLocked:
+                RaycastHit2D hitDoor = Physics2D.Raycast(activeRoom.transform.position, Vector2.left, 1.28f, 1 << 9);
+                if (hitDoor.collider != null)
+                {
+                    if (hitDoor.collider.gameObject.tag == "MapRoom")
+                        OpenDoor(hitDoor.collider.GetComponent<MapRoomController>(), "Left");
+                    else
+                        OpenDoor(null, "Left");
+                }
                 break;
         }
 
