@@ -78,7 +78,7 @@ public class MapRoomController : MonoBehaviour
                 switch (GameManager.Instance.inventoryController.keys)
                 {
                     case 0:
-                        if (random > 0.1f)
+                        if (random > 0.25f)
                         {
                             // GENERATE Key
                             key = true;
@@ -92,7 +92,7 @@ public class MapRoomController : MonoBehaviour
                         }
                         break;
                     default:
-                        if (random > 0.9f)
+                        if (random > 0.75f)
                         {
                             // GENERATE Key
                             key = true;
