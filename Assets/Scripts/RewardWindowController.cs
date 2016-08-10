@@ -11,7 +11,11 @@ public class RewardWindowController : MonoBehaviour
 
     public Sprite moneySprite;
     public Sprite keySprite;
-    public void SetReward(int moneyDrop, bool keyDrop, GameObject treasure)
+
+    public int money = 0;
+    public bool key = false;
+    public GameObject treasure = null;
+    public void SetReward(int moneyDrop, bool keyDrop, GameObject treasureDrop)
     {
         foreach (Text tx in rewardCounters) // CLEAR COUNTERS
         {
@@ -24,11 +28,20 @@ public class RewardWindowController : MonoBehaviour
 
         int rewardsAmount = 0;
         if (moneyDrop > 0)
+        {
+            money = moneyDrop;
             rewardsAmount += 1;
+        }
         if (keyDrop)
+        {
+            key = true;
             rewardsAmount += 1;
-        if (treasure != null)
+        }
+        if (treasureDrop != null)
+        {
+            treasure = treasureDrop;
             rewardsAmount += 1;
+        }
 
         switch (rewardsAmount)
         {
@@ -42,9 +55,9 @@ public class RewardWindowController : MonoBehaviour
                 {
                     rewardPlaces[2].sprite = keySprite;
                 }
-                else if (treasure != null)
+                else if (treasureDrop != null)
                 {
-                    rewardPlaces[2].sprite = treasure.GetComponent<SpriteRenderer>().sprite;
+                    rewardPlaces[2].sprite = treasureDrop.GetComponent<SpriteRenderer>().sprite;
                 }
                 break;
             case 2:
@@ -55,18 +68,18 @@ public class RewardWindowController : MonoBehaviour
 
                     rewardPlaces[3].sprite = keySprite;
                 }
-                else if (moneyDrop > 0 && treasure != null)
+                else if (moneyDrop > 0 && treasureDrop != null)
                 {
                     rewardPlaces[1].sprite = moneySprite;
                     rewardCounters[1].text = "" + moneyDrop;
 
-                    rewardPlaces[3].sprite = treasure.GetComponent<SpriteRenderer>().sprite;
+                    rewardPlaces[3].sprite = treasureDrop.GetComponent<SpriteRenderer>().sprite;
                 }
-                else if (keyDrop && treasure != null)
+                else if (keyDrop && treasureDrop != null)
                 {
                     rewardPlaces[1].sprite = keySprite;
 
-                    rewardPlaces[3].sprite = treasure.GetComponent<SpriteRenderer>().sprite;
+                    rewardPlaces[3].sprite = treasureDrop.GetComponent<SpriteRenderer>().sprite;
                 }
                 break;
             case 3:
@@ -75,12 +88,19 @@ public class RewardWindowController : MonoBehaviour
 
                 rewardPlaces[2].sprite = keySprite;
 
-                rewardPlaces[4].sprite = treasure.GetComponent<SpriteRenderer>().sprite;
+                rewardPlaces[4].sprite = treasureDrop.GetComponent<SpriteRenderer>().sprite;
                 break;
         }
     }
     public void ToggleWindow(bool active)
     {
         anim.SetBool("Active", active);
+
+        if (active == false) // Window closed, get reward
+        {
+            GameManager.Instance.inventoryController.KeyGet();
+			GameManager.Instance.inventoryController.CandyGet(money);
+			// TREASURE GET
+        }
     }
 }

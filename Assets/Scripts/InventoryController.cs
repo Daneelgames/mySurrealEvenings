@@ -61,15 +61,15 @@ public class InventoryController : MonoBehaviour
         candies -= amount;
         SetResourcesFeedback();
     }
-    public void KeyGet(int amount)
+    public void KeyGet()
     {
-        candies += amount;
+        keys += 1;
         SetResourcesFeedback();
     }
 
-    public void KeyLose(int amount)
+    public void KeyLose()
     {
-        candies -= amount;
+        keys -= 1;
         SetResourcesFeedback();
     }
 
