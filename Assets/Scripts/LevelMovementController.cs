@@ -73,7 +73,6 @@ public class LevelMovementController : MonoBehaviour
             if (hitD.collider.gameObject.tag == "MapRoom")
                 room.AddNeighbourDown(hitD.collider.gameObject.GetComponent<MapRoomController>());
         }
-
     }
     void SetButtonsTypes()
     {
@@ -261,6 +260,16 @@ public class LevelMovementController : MonoBehaviour
                 else
                     HitWall(null, "Up");
                 break;
+            case MapRoomController.Wall.DoorLocked:
+                RaycastHit2D hitDoor = Physics2D.Raycast(activeRoom.transform.position, Vector2.up, 0.72f, 1 << 9);
+                if (hitDoor.collider != null)
+                {
+                    if (hitDoor.collider.gameObject.tag == "MapRoom")
+                        OpenDoor(hitDoor.collider.GetComponent<MapRoomController>(), "Up");
+                    else
+                        OpenDoor(null, "Up");
+                }
+                break;
         }
     }
     public void ButtonRight()
@@ -287,6 +296,16 @@ public class LevelMovementController : MonoBehaviour
                 else
                     HitWall(null, "Right");
                 break;
+            case MapRoomController.Wall.DoorLocked:
+                RaycastHit2D hitDoor = Physics2D.Raycast(activeRoom.transform.position, Vector2.right, 1.28f, 1 << 9);
+                if (hitDoor.collider != null)
+                {
+                    if (hitDoor.collider.gameObject.tag == "MapRoom")
+                        OpenDoor(hitDoor.collider.GetComponent<MapRoomController>(), "Right");
+                    else
+                        OpenDoor(null, "Right");
+                }
+                break;
         }
     }
     public void ButtonDown()
@@ -312,6 +331,16 @@ public class LevelMovementController : MonoBehaviour
                 }
                 else
                     HitWall(null, "Down");
+                break;
+            case MapRoomController.Wall.DoorLocked:
+                RaycastHit2D hitDoor = Physics2D.Raycast(activeRoom.transform.position, Vector2.down, 0.72f, 1 << 9);
+                if (hitDoor.collider != null)
+                {
+                    if (hitDoor.collider.gameObject.tag == "MapRoom")
+                        OpenDoor(hitDoor.collider.GetComponent<MapRoomController>(), "Down");
+                    else
+                        OpenDoor(null, "Down");
+                }
                 break;
         }
     }

@@ -304,6 +304,8 @@ public class InteractiveObject : MonoBehaviour
     {
         yield return new WaitForSeconds(0.3f);
         _anim.gameObject.SetActive(false);
+        yield return new WaitForSeconds(0.3f);
+        Destroy(gameObject);
     }
     public void Death()
     {
