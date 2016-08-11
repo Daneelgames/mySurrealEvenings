@@ -25,6 +25,11 @@ public class GameManager : MonoBehaviour
     public InteractiveObject attackTarget;
 
     public List<InteractiveObject> objectList = new List<InteractiveObject>();
+    public List<InteractiveObject> allyList;
+    public List<InteractiveObject> enemyList;
+    public List<InteractiveObject> activeTeamList;
+
+    public int pressTurns = 0;
 
     public List<Transform> npcCells;
     public List<Transform> partyCells;
@@ -149,7 +154,23 @@ public class GameManager : MonoBehaviour
 
         stageRandomController.BuildStage();
 
+        foreach (InteractiveObject obj in objectList)
+        {
+            switch (obj.tag)
+            {
+                case "Ally":
+                    allyList.Add(obj);
+                    print("ally");
+                    break;
+                case "Enemy":
+                    enemyList.Add(obj);
+                    break;
+            }
+        }
+
         SortObjects();
+
+        SetActiveTeamList(allyList);
 
         objectsTurn = player;
         clickToSkip.raycastTarget = false;
@@ -164,6 +185,13 @@ public class GameManager : MonoBehaviour
         CheckSkipAndGo();
     }
 
+    void SetActiveTeamList(List<InteractiveObject> list)
+    {
+        activeTeamList.Clear();
+        activeTeamList = new List<InteractiveObject>(list);
+
+        pressTurns = activeTeamList.Count;
+    }
     void GetRandomSkills(List<GameObject> skills)
     {
         List<GameObject> tempList = new List<GameObject>(skillList.allSkills);
@@ -212,6 +240,8 @@ public class GameManager : MonoBehaviour
     void SortObjects()
     {
         objectList = objectList.OrderByDescending(w => w.speed).ToList();
+        allyList = allyList.OrderByDescending(w => w.speed).ToList();
+        enemyList = enemyList.OrderByDescending(w => w.speed).ToList();
         //SetTurn();
     }
 
@@ -487,6 +517,9 @@ public class GameManager : MonoBehaviour
         if (objectsTurn.inParty)
             InventoryActive();
 
+        // CHECK PRESS TURNS HERE 
+        // IF <=, CHANGE ACTIVE TEAM
+
         SetPartySkills();
 
         blockSkillIcons = false;
@@ -572,6 +605,9 @@ public class GameManager : MonoBehaviour
         //        print("Load Night");
         yield return new WaitForSeconds(1F);
         //screen is black
+        allyList.Clear();
+        enemyList.Clear();
+
         NewStage(); // generate new stage
 
         fade = false;

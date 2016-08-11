@@ -19,7 +19,7 @@ public class StageRandomController : MonoBehaviour
     public void BuildStage()
     {
         curStageIndex = GameManager.Instance.levelMovementController.activeRoom.roomIndex;
-        
+
         ClearNpc();
         SetDifficulty();
 
@@ -75,7 +75,7 @@ public class StageRandomController : MonoBehaviour
                 Transform randomCell = newCellsList[Random.Range(0, newCellsList.Count)];
 
                 GameObject go = Instantiate(newNpcList[randomNpc].gameObject, randomCell.position, newNpcList[randomNpc].transform.rotation) as GameObject;
-
+                go.tag = "Enemy";
                 npcOnStage.Add(go.GetComponent<NpcController>());
 
                 newCellsList.Remove(randomCell);
@@ -104,6 +104,7 @@ public class StageRandomController : MonoBehaviour
                     npcOnStage.Remove(npcOnStage[i]);
 
                     npcOnStage.Add(go.GetComponent<NpcController>());
+                    go.tag = "Enemy";
                 }
 
                 if (curDif >= stageDifficulty)
