@@ -195,7 +195,7 @@ public class GameManager : MonoBehaviour
         UpdatePressTurns(activeTeamList.Count);
     }
 
-    void UpdatePressTurns(int newAmount)
+    public void UpdatePressTurns(int newAmount)
     {
         pressTurns = newAmount;
         pressTurnsCounter.text = "" + pressTurns;
@@ -260,6 +260,7 @@ public class GameManager : MonoBehaviour
         objectList = objectList.OrderByDescending(w => w.speed).ToList();
         allyList = allyList.OrderByDescending(w => w.speed).ToList();
         enemyList = enemyList.OrderByDescending(w => w.speed).ToList();
+        activeTeamList = enemyList.OrderByDescending(w => w.speed).ToList();
         //SetTurn();
     }
 
@@ -303,6 +304,7 @@ public class GameManager : MonoBehaviour
     public void UnitSkipsTurn()
     {
         PrintActionFeedback(objectsTurn._name, null, null, false, false, false);
+        UpdatePressTurns(pressTurns - 1);
         SetTurn();
     }
 
@@ -375,7 +377,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        UpdatePressTurns(pressTurns - 1);
 
         //if (objectsTurn.inParty)
         //    inventoryController.DeleteItem(skillIndex);
@@ -495,13 +496,15 @@ public class GameManager : MonoBehaviour
                     objectList[i].Death();
             }
         }
-
+        SortObjects();
         // CHECK PRESS TURNS HERE 
         // IF <=, CHANGE ACTIVE TEAM
+//        UpdatePressTurns(activeTeamList.Count);
         CheckPressTurns();
 
         if (objectsTurn != null)
         {
+            bool foundNewObj = false;
             foreach (InteractiveObject obj in activeTeamList)
             {
 
@@ -512,15 +515,19 @@ public class GameManager : MonoBehaviour
                     if (objInt < activeTeamList.Count - 1)
                     {
                         objectsTurn = activeTeamList[objInt + 1];
+                        foundNewObj = true;
                         break;
                     }
                     else
                     {
                         objectsTurn = activeTeamList[0];
+                        foundNewObj = true;
                         break;
                     }
                 }
             }
+            if (!foundNewObj)// if team hasn't objectsTurn member
+                objectsTurn = activeTeamList[0];
         }
         else
         {
@@ -554,6 +561,7 @@ public class GameManager : MonoBehaviour
     {
         if (pressTurns <= 0)
         {
+            SortObjects();
             switch (allyTurn)
             {
                 case true:
@@ -566,6 +574,7 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        UpdatePressTurns(pressTurns);
     }
 
     void CheckRemainingMonsters()
@@ -870,8 +879,6 @@ public class GameManager : MonoBehaviour
         if (weak)
         {
             relationText = npcRelative._name + " is weak against " + skillName + "!";
-            // ADD PRESS TURNS
-            UpdatePressTurns(pressTurns + 1);
         }
         else
         {
@@ -902,6 +909,7 @@ public class GameManager : MonoBehaviour
         }
         else // escape failed
         {
+            UpdatePressTurns(0);
             actionTextFeedback.text = "Escape failed!";
             actionTextFeedbackAnimator.SetBool("Active", true);
             actionTextFeedbackAnimator.SetBool("Update", true);

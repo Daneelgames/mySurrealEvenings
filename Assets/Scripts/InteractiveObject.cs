@@ -178,6 +178,7 @@ public class InteractiveObject : MonoBehaviour
                             {
                                 NpcDatabase.CheckSkillRelation(true, this);
                                 sendWeak = true;
+                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
                                 break;
                             }
                         }
@@ -198,6 +199,7 @@ public class InteractiveObject : MonoBehaviour
                             {
                                 NpcDatabase.CheckSkillRelation(false, this);
                                 sendWeak = false;
+                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
                                 break;
                             }
                         }
@@ -310,6 +312,9 @@ public class InteractiveObject : MonoBehaviour
     public void Death()
     {
         GameManager.Instance.objectList.Remove(this);
+        GameManager.Instance.allyList.Remove(this);
+        GameManager.Instance.enemyList.Remove(this);
+        GameManager.Instance.activeTeamList.Remove(this);
 
         if (GameManager.Instance.objectsTurn == this)
         {
