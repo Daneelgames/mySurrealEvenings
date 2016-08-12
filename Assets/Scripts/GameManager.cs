@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour
     public List<InteractiveObject> allyList;
     public List<InteractiveObject> enemyList;
     public List<InteractiveObject> activeTeamList;
+    public bool allyTurn = true;
 
     public int pressTurns = 0;
 
@@ -357,8 +358,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (objectsTurn.inParty)
-            inventoryController.DeleteItem(skillIndex);
+        pressTurns -= 1;
+
+        //if (objectsTurn.inParty)
+        //    inventoryController.DeleteItem(skillIndex);
     }
 
     public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf, bool offensive, bool iconDescription)
@@ -476,23 +479,27 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        // CHECK PRESS TURNS HERE 
+        // IF <=, CHANGE ACTIVE TEAM
+        CheckPressTurns();
+
         if (objectsTurn != null)
         {
-            foreach (InteractiveObject obj in objectList)
+            foreach (InteractiveObject obj in activeTeamList)
             {
 
                 if (obj == objectsTurn)
                 {
-                    int objInt = objectList.IndexOf(obj);
+                    int objInt = activeTeamList.IndexOf(obj);
 
-                    if (objInt < objectList.Count - 1)
+                    if (objInt < activeTeamList.Count - 1)
                     {
-                        objectsTurn = objectList[objInt + 1];
+                        objectsTurn = activeTeamList[objInt + 1];
                         break;
                     }
                     else
                     {
-                        objectsTurn = objectList[0];
+                        objectsTurn = activeTeamList[0];
                         break;
                     }
                 }
@@ -501,24 +508,21 @@ public class GameManager : MonoBehaviour
         else
         {
 
-            if (objectList.Count > 1)
-                objectsTurn = objectList[objectsTurnIndex];
+            if (activeTeamList.Count > 1)
+                objectsTurn = activeTeamList[objectsTurnIndex];
             else
-                objectsTurn = objectList[0];
+                objectsTurn = activeTeamList[0];
         }
 
         yield return new WaitForSeconds(0.1f);
 
-        foreach (InteractiveObject obj in objectList)
+        foreach (InteractiveObject obj in activeTeamList)
         {
             obj.ToggleTurnFeedback();
         }
 
         if (objectsTurn.inParty)
             InventoryActive();
-
-        // CHECK PRESS TURNS HERE 
-        // IF <=, CHANGE ACTIVE TEAM
 
         SetPartySkills();
 
@@ -527,6 +531,24 @@ public class GameManager : MonoBehaviour
         CheckSkipAndGo();
 
         CheckRemainingMonsters();
+    }
+
+    void CheckPressTurns()
+    {
+        if (pressTurns <= 0)
+        {
+            switch (allyTurn)
+            {
+                case true:
+                    SetActiveTeamList(enemyList);
+                    allyTurn = false;
+                    break;
+                case false:
+                    SetActiveTeamList(allyList);
+                    allyTurn = true;
+                    break;
+            }
+        }
     }
 
     void CheckRemainingMonsters()
@@ -831,6 +853,8 @@ public class GameManager : MonoBehaviour
         if (weak)
         {
             relationText = npcRelative._name + " is weak against " + skillName + "!";
+            // ADD PRESS TURNS
+            pressTurns += 1;
         }
         else
         {
