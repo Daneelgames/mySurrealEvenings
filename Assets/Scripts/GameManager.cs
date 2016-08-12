@@ -29,8 +29,9 @@ public class GameManager : MonoBehaviour
     public List<InteractiveObject> enemyList;
     public List<InteractiveObject> activeTeamList;
     public bool allyTurn = true;
-
     public int pressTurns = 0;
+    public Text pressTurnsCounter;
+    public Image pressTurnsBack;
 
     public List<Transform> npcCells;
     public List<Transform> partyCells;
@@ -191,7 +192,23 @@ public class GameManager : MonoBehaviour
         activeTeamList.Clear();
         activeTeamList = new List<InteractiveObject>(list);
 
-        pressTurns = activeTeamList.Count;
+        UpdatePressTurns(activeTeamList.Count);
+    }
+
+    void UpdatePressTurns(int newAmount)
+    {
+        pressTurns = newAmount;
+        pressTurnsCounter.text = "" + pressTurns;
+
+        switch (allyTurn)
+        {
+            case true: // SET ALLY TEAM STEP TURNS
+                pressTurnsBack.color = Color.green;
+                break;
+            case false: // SET ENEMY TEAM STEP TURNS
+                pressTurnsBack.color = Color.red;
+                break;
+        }
     }
     void GetRandomSkills(List<GameObject> skills)
     {
@@ -358,7 +375,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        pressTurns -= 1;
+        UpdatePressTurns(pressTurns - 1);
 
         //if (objectsTurn.inParty)
         //    inventoryController.DeleteItem(skillIndex);
@@ -854,7 +871,7 @@ public class GameManager : MonoBehaviour
         {
             relationText = npcRelative._name + " is weak against " + skillName + "!";
             // ADD PRESS TURNS
-            pressTurns += 1;
+            UpdatePressTurns(pressTurns + 1);
         }
         else
         {
