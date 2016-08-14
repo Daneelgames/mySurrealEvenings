@@ -64,7 +64,7 @@ public class GameManager : MonoBehaviour
     public bool inventoryActive = false;
     public InventoryController inventoryController;
 
-    public StageRandomController stageRandomController;
+      public StageRandomController stageRandomController;
 
 
     public bool choiceActive = false;
