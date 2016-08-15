@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
             {
                 mob.objectController.GenerateDynamicStats();
             }
+            player.GenerateDynamicStats();
             _levelMapGenerator.GenerateMap(roomsMinimum);
         }
     }
@@ -545,7 +546,15 @@ public class GameManager : MonoBehaviour
             if (activeTeamList.Count > 1)
                 objectsTurn = activeTeamList[objectsTurnIndex];
             else
-                objectsTurn = activeTeamList[0];
+            {
+                if (activeTeamList.Count > 0)
+                    objectsTurn = activeTeamList[0];
+                else
+                {
+                    SetActiveTeamList(allyList);
+                    objectsTurn = activeTeamList[0];
+                }
+            }
         }
 
         yield return new WaitForSeconds(0.1f);

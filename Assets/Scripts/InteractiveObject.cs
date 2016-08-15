@@ -50,40 +50,40 @@ public class InteractiveObject : MonoBehaviour
     public void GenerateDynamicStats() // calls at session start
     {
 
+        List<GameObject> allSkills = new List<GameObject>(GameManager.Instance.skillList.allSkills);
+
+        weakToDynamic.Clear();
+        invToDynamic.Clear();
+
+        foreach (SkillController skill in weakToStatic)
+        {
+            weakToDynamic.Add(skill);
+            allSkills.Remove(skill.gameObject);
+        }
+
+        foreach (SkillController skill in invToStatic)
+        {
+            invToDynamic.Add(skill);
+            allSkills.Remove(skill.gameObject);
+        }
+
+        foreach (GameObject skill in allSkills)
+        {
+            float random = Random.value;
+
+            if (random < 0.5f)
+            {
+                weakToDynamic.Add(skill.GetComponent<SkillController>());
+            }
+            else
+            {
+                invToDynamic.Add(skill.GetComponent<SkillController>());
+            }
+        }
+        allSkills.Clear();
+
         if (!inParty)
         {
-            List<GameObject> allSkills = new List<GameObject>(GameManager.Instance.skillList.allSkills);
-
-            weakToDynamic.Clear();
-            invToDynamic.Clear();
-
-            foreach (SkillController skill in weakToStatic)
-            {
-                weakToDynamic.Add(skill);
-                allSkills.Remove(skill.gameObject);
-            }
-
-            foreach (SkillController skill in invToStatic)
-            {
-                invToDynamic.Add(skill);
-                allSkills.Remove(skill.gameObject);
-            }
-
-            foreach (GameObject skill in allSkills)
-            {
-                float random = Random.value;
-
-                if (random < 0.5f)
-                {
-                    weakToDynamic.Add(skill.GetComponent<SkillController>());
-                }
-                else
-                {
-                    invToDynamic.Add(skill.GetComponent<SkillController>());
-                }
-            }
-            allSkills.Clear();
-
             curMaxHealth = Random.Range(minHealth, maxHealth);
             health = curMaxHealth;
             npcControl.GenerateNpcSkills();
