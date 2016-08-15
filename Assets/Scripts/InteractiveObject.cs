@@ -169,18 +169,15 @@ public class InteractiveObject : MonoBehaviour
                     if (skill == activeSkill)
                     {
                         DMG = baseDmg * 2;
-                        if (!inParty)
+                        if (attacker == this && GameManager.Instance.attackTarget != this)
                         {
-                            if (attacker == this && GameManager.Instance.attackTarget != this)
-                            {
-                            }
-                            else
-                            {
-                                NpcDatabase.CheckSkillRelation(true, this);
-                                sendWeak = true;
-                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
-                                break;
-                            }
+                        }
+                        else
+                        {
+                            NpcDatabase.CheckSkillRelation(true, this);
+                            sendWeak = true;
+                            GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
+                            break;
                         }
                     }
                 }
@@ -190,18 +187,15 @@ public class InteractiveObject : MonoBehaviour
                     if (skill == activeSkill)
                     {
                         DMG = baseDmg / 2;
-                        if (!inParty)
+                        if (attacker == this && GameManager.Instance.attackTarget != this)
                         {
-                            if (attacker == this && GameManager.Instance.attackTarget != this)
-                            {
-                            }
-                            else
-                            {
-                                NpcDatabase.CheckSkillRelation(false, this);
-                                sendWeak = false;
-                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
-                                break;
-                            }
+                        }
+                        else
+                        {
+                            NpcDatabase.CheckSkillRelation(false, this);
+                            sendWeak = false;
+                            GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
+                            break;
                         }
                     }
                 }

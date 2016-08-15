@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public bool allyTurn = true;
     public int pressTurns = 0;
     public Text pressTurnsCounter;
+    public Animator pressTurnsAnim;
     public Image pressTurnsBack;
 
     public List<Transform> npcCells;
@@ -64,7 +65,7 @@ public class GameManager : MonoBehaviour
     public bool inventoryActive = false;
     public InventoryController inventoryController;
 
-      public StageRandomController stageRandomController;
+    public StageRandomController stageRandomController;
 
 
     public bool choiceActive = false;
@@ -199,6 +200,8 @@ public class GameManager : MonoBehaviour
     {
         pressTurns = newAmount;
         pressTurnsCounter.text = "" + pressTurns;
+        pressTurnsAnim.SetTrigger("Update");
+
 
         switch (allyTurn)
         {
@@ -260,7 +263,7 @@ public class GameManager : MonoBehaviour
         objectList = objectList.OrderByDescending(w => w.speed).ToList();
         allyList = allyList.OrderByDescending(w => w.speed).ToList();
         enemyList = enemyList.OrderByDescending(w => w.speed).ToList();
-        activeTeamList = enemyList.OrderByDescending(w => w.speed).ToList();
+        activeTeamList = activeTeamList.OrderByDescending(w => w.speed).ToList();
         //SetTurn();
     }
 
@@ -376,7 +379,6 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
-
 
         //if (objectsTurn.inParty)
         //    inventoryController.DeleteItem(skillIndex);
@@ -499,7 +501,7 @@ public class GameManager : MonoBehaviour
         SortObjects();
         // CHECK PRESS TURNS HERE 
         // IF <=, CHANGE ACTIVE TEAM
-//        UpdatePressTurns(activeTeamList.Count);
+        //        UpdatePressTurns(activeTeamList.Count);
         CheckPressTurns();
 
         if (objectsTurn != null)
@@ -527,7 +529,15 @@ public class GameManager : MonoBehaviour
                 }
             }
             if (!foundNewObj)// if team hasn't objectsTurn member
-                objectsTurn = activeTeamList[0];
+            {
+                if (activeTeamList.Count > 0)
+                    objectsTurn = activeTeamList[0];
+                else
+                {
+                    SetActiveTeamList(allyList);
+                    objectsTurn = activeTeamList[0];
+                }
+            }
         }
         else
         {
@@ -879,12 +889,15 @@ public class GameManager : MonoBehaviour
         if (weak)
         {
             relationText = npcRelative._name + " is weak against " + skillName + "!";
+            UpdatePressTurns(pressTurns);
         }
         else
         {
             relationText = npcRelative._name + " is immune to " + skillName + "!";
+            UpdatePressTurns(pressTurns - 1);
         }
         _skillRelationcontroller.SetFeedback(relationText);
+        CheckPressTurns();
     }
 
     public void AddEscapeChance(float amount)
