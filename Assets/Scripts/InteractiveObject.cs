@@ -15,6 +15,7 @@ public class InteractiveObject : MonoBehaviour
     public float maxHealth = 1;     // static
     public float minHealth = 1;     // static
 
+    public bool gotExtraPress = false;
 
     public List<SkillController> weakToStatic;
     public List<SkillController> invToStatic;
@@ -40,6 +41,11 @@ public class InteractiveObject : MonoBehaviour
     public GameObject deathParticles;
 
     bool sendWeak = false;
+
+    public void SetGotExtraPress(bool got)
+    {
+        gotExtraPress = got;
+    }
 
     public void GenerateDynamicStats() // calls at session start
     {

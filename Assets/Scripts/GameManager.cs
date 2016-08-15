@@ -583,6 +583,10 @@ public class GameManager : MonoBehaviour
                     allyTurn = true;
                     break;
             }
+            foreach (InteractiveObject i in objectList)
+            {
+                i.SetGotExtraPress(false);
+            }
         }
         UpdatePressTurns(pressTurns);
     }
@@ -889,7 +893,14 @@ public class GameManager : MonoBehaviour
         if (weak)
         {
             relationText = npcRelative._name + " is weak against " + skillName + "!";
-            UpdatePressTurns(pressTurns);
+            if (!objectsTurn.gotExtraPress)
+            {
+                UpdatePressTurns(pressTurns);
+                objectsTurn.SetGotExtraPress(true);
+            }
+            else
+                UpdatePressTurns(pressTurns - 1); // character loses pressTurn if he already got it
+
         }
         else
         {
