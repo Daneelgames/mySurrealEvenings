@@ -17,6 +17,9 @@ public class LevelMapGenerator : MonoBehaviour
     public List<GameObject> rooms;
     public LevelMovementController _levelMovementController;
     public int dungeonLevel = 1;
+
+    public GameObject mapBack;
+    public Renderer mapBackMaterial;
     public void GenerateMap(int _rooms)
     {
         rooms = new List<GameObject>();
@@ -32,9 +35,39 @@ public class LevelMapGenerator : MonoBehaviour
 
         _levelMovementController.SetStartRoom(rooms[0]);
 
+        SetMapPosition();
         GameManager.Instance.NewStage();
     }
 
+    void SetMapPosition()
+    {
+        float maxX = 0;
+        float minX = 0;
+        float minY = 0;
+        float maxY = 0;
+
+        foreach (GameObject rm in rooms)
+        {
+            if (rm.transform.localPosition.x > maxX)
+                maxX = rm.transform.localPosition.x;
+            if (rm.transform.localPosition.x < minX)
+                minX = rm.transform.localPosition.x;
+            if (rm.transform.localPosition.y > maxY)
+                maxY = rm.transform.localPosition.y;
+            if (rm.transform.localPosition.y < minY)
+                minY = rm.transform.localPosition.y;
+        }
+
+        print(maxX);
+        print(minX);
+        print(maxY);
+        print(minY);
+        transform.position = new Vector3(-13 - minX, -7.5f - minY, 0);
+        mapBack.transform.localScale = new Vector3(maxX - minX + 3, maxY - minY + 2, 1);
+        Vector3 newPos = new Vector3(minX, maxY, 1) + new Vector3(maxX, maxY, 1) + new Vector3(maxX, minY, 1) + new Vector3(minX, minY, 1);
+        mapBack.transform.localPosition = newPos / 4;
+        mapBackMaterial.material.mainTextureScale = new Vector2(maxX - minX + 3f, maxY - minY + 2);
+    }
 
     void MakeDifficulties()
     {
@@ -288,7 +321,7 @@ public class LevelMapGenerator : MonoBehaviour
                         break;
                     }
                 }
-                print (noDouble);
+                print(noDouble);
                 if (noDouble)
                 {
                     GameObject room = Instantiate(roomImage, pos, Quaternion.identity) as GameObject;
