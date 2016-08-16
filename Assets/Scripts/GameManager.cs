@@ -643,6 +643,7 @@ public class GameManager : MonoBehaviour
                 goFurtherAnim.SetBool("Active", true);
 
                 levelMovementController.ToggleMapTraverseIcons(false);
+                pressTurnsAnim.SetBool("Active", true);
             }
             else
             {
@@ -650,6 +651,7 @@ public class GameManager : MonoBehaviour
                 goFurtherAnim.SetBool("Active", false);
 
                 levelMovementController.ToggleMapTraverseIcons(true);
+                pressTurnsAnim.SetBool("Active", false);
             }
         }
         else
