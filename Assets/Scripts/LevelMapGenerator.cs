@@ -19,6 +19,7 @@ public class LevelMapGenerator : MonoBehaviour
     public int dungeonLevel = 1;
     public void GenerateMap(int _rooms)
     {
+        rooms = new List<GameObject>();
         roomsRemaining = _rooms;
         PickLevelDirection();
         SpawnStartRoom();
@@ -41,7 +42,7 @@ public class LevelMapGenerator : MonoBehaviour
         foreach (GameObject rm in rooms)
         {
             float newDiff = lastDiff + Random.Range(0.05f, 0.25f);
-            MapRoomController rmCntrl = rm.GetComponent<MapRoomController>(); 
+            MapRoomController rmCntrl = rm.GetComponent<MapRoomController>();
             rmCntrl.SetRoomDiffuculty(newDiff);
             lastDiff = newDiff;
 
@@ -65,6 +66,7 @@ public class LevelMapGenerator : MonoBehaviour
         roomController.SetCoreRoom(true);
         roomsPositions.Add(room.transform.position);
         roomsRemaining -= 1;
+        rooms.Add(room);
     }
     void SpawnMainRooms()
     {
@@ -233,6 +235,7 @@ public class LevelMapGenerator : MonoBehaviour
             roomController.SetRoomIndex(i);
             roomController.SetCoreRoom(true);
             roomsPositions.Add(room.transform.position);
+            rooms.Add(room);
 
 
             lastRoomPosition = room.transform.position;
@@ -255,6 +258,7 @@ public class LevelMapGenerator : MonoBehaviour
         SetExtraRoomType(secretRoom, "Secret");
         secretRooms.Add(placesForSecretRooms[secretIndex]);
         placesForSecretRooms.RemoveAt(secretIndex);
+        rooms.Add(secretRoom);
 
         AddRoomsToList(secretRooms, placesForSecretRooms);
 
@@ -265,6 +269,7 @@ public class LevelMapGenerator : MonoBehaviour
         SetExtraRoomType(treasureRoom, "Treasure");
         secretRooms.Add(placesForSecretRooms[treasureIndex]);
         placesForSecretRooms.RemoveAt(treasureIndex);
+        rooms.Add(treasureRoom);
 
         // EXTRA ROOMS
         AddRoomsToList(secretRooms, placesForSecretRooms);
@@ -274,24 +279,38 @@ public class LevelMapGenerator : MonoBehaviour
             float random = Random.value;
             if (random > 0.66)
             {
-                GameObject room = Instantiate(roomImage, pos, Quaternion.identity) as GameObject;
-                room.name = "extraRoom";
-                room.transform.SetParent(transform);
-                extraRoomsCount += 1;
-                float randomChance = Random.value;
-                //print("extra room chance is " + randomChance);
-
-                // SET ROOM TYPE
-                SetExtraRoomType(room, "Default");
-                if (randomChance < 0.75f && npcAmount < 3)
+                bool noDouble = true;
+                foreach (GameObject rm in rooms) // check here if room already there
                 {
-                    SetExtraRoomType(room, "Npc");
-                    npcAmount += 1;
+                    if (rm.transform.position == pos)
+                    {
+                        noDouble = false;
+                        break;
+                    }
                 }
-                if (randomChance < 0.6f)
-                    SetExtraRoomType(room, "Treasure");
-                if (randomChance < 0.3f)
-                    SetExtraRoomType(room, "Secret");
+                print (noDouble);
+                if (noDouble)
+                {
+                    GameObject room = Instantiate(roomImage, pos, Quaternion.identity) as GameObject;
+                    rooms.Add(room);
+                    room.name = "extraRoom";
+                    room.transform.SetParent(transform);
+                    extraRoomsCount += 1;
+                    float randomChance = Random.value;
+                    //print("extra room chance is " + randomChance);
+
+                    // SET ROOM TYPE
+                    SetExtraRoomType(room, "Default");
+                    if (randomChance < 0.75f && npcAmount < 3)
+                    {
+                        SetExtraRoomType(room, "Npc");
+                        npcAmount += 1;
+                    }
+                    if (randomChance < 0.6f)
+                        SetExtraRoomType(room, "Treasure");
+                    if (randomChance < 0.3f)
+                        SetExtraRoomType(room, "Secret");
+                }
             }
             if (extraRoomsCount > GameManager.Instance.roomsMinimum / 2)
                 break;
