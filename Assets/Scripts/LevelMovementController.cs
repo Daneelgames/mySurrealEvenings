@@ -12,6 +12,7 @@ public class LevelMovementController : MonoBehaviour
     public List<Image> buttons; // 0 - left
     public List<Sprite> buttonIcons; // 0 move, 1 punch, 2 key, 3 none
     public float buttonCooldown = 0.5f;
+    public LevelMapGenerator mapGenController;
 
     void Update()
     {
@@ -363,12 +364,13 @@ public class LevelMovementController : MonoBehaviour
 
     public void RunFromBattle()
     {
-        activeRoom.EscapedFromRoom(); // change rooms spawn rate
+        activeRoom.EscapedFromRoom(); //change rooms spawn rate
         EnterRoom(lastRoom.gameObject);
     }
 
     public void ToggleMapTraverseIcons(bool active)
     {
+        mapGenController.mapBack.SetActive(active);
         foreach (Image img in buttons)
         {
             img.gameObject.SetActive(active);
