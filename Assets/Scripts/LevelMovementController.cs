@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class LevelMovementController : MonoBehaviour
 {
     public MapRoomController activeRoom;
+    public GameObject newRoom;
     public MapRoomController lastRoom;
     public List<GameObject> rooms;
     public List<Image> buttons; // 0 - left
@@ -44,7 +45,6 @@ public class LevelMovementController : MonoBehaviour
         roomController.ShowPassages(true);
         GetRoomNeighbours(roomController);
         roomController.UpdateNeighbours();
-
     }
 
     void GetRoomNeighbours(MapRoomController room)
@@ -350,10 +350,15 @@ public class LevelMovementController : MonoBehaviour
         if (buttonCooldown <= 0)
         {
             buttonCooldown = 0.5f;
-            lastRoom = activeRoom;
-            SetActiveRoom(room);
+            newRoom = room;
             GameManager.Instance.ChangeRoom();
         }
+    }
+
+    public void ChangeRoom()
+    {
+        lastRoom = activeRoom;
+        SetActiveRoom(newRoom.gameObject);
     }
 
     public void RunFromBattle()

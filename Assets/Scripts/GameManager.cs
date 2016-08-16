@@ -643,6 +643,7 @@ public class GameManager : MonoBehaviour
                 goFurtherAnim.SetBool("Active", true);
 
                 levelMovementController.ToggleMapTraverseIcons(false);
+                UpdatePressTurns(pressTurns);
                 pressTurnsAnim.SetBool("Active", true);
             }
             else
@@ -677,6 +678,8 @@ public class GameManager : MonoBehaviour
         fader.color = Color.black;
         //        print("Load Night");
         yield return new WaitForSeconds(1F);
+        levelMovementController.ChangeRoom();
+        levelMovementController.ToggleMapTraverseIcons(false);
         //screen is black
         allyList.Clear();
         enemyList.Clear();
