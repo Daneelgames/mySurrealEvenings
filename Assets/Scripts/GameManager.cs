@@ -220,7 +220,7 @@ public class GameManager : MonoBehaviour
     {
         List<GameObject> tempList = new List<GameObject>(skillList.allSkills);
 
-        while (skills.Count < 8)
+        while (skills.Count < 4)
         {
             float random = Random.Range(0f, 1f);
             int randomSkill = Random.Range(0, tempList.Count);

@@ -68,7 +68,6 @@ public static class NpcDatabase
             case "Crowd":
                 return foundSkillsRelationsCrowd;
 
-
             default:
                 return foundSkillsRelationsOneye;
         }
@@ -89,7 +88,6 @@ public static class NpcDatabase
             case "Crowd":
                 return foundWeakRelationsCrowd;
 
-
             default:
                 return foundWeakRelationsOneye;
         }
@@ -108,7 +106,6 @@ public static class NpcDatabase
                 return foundImmuneRelationsBroccoli;
             case "Crowd":
                 return foundImmuneRelationsCrowd;
-
 
             default:
                 return foundImmuneRelationsOneye;
@@ -134,7 +131,6 @@ public static class NpcDatabase
                     break;
                 }
             }
-
             if (!alreadyFound)
             {
                 foundSkillsRelations.Add(GameManager.Instance.activeSkill);
@@ -162,7 +158,6 @@ public static class NpcDatabase
                 foundImmuneRelations.Add(GameManager.Instance.activeSkill);
             }
         }
-
         npc.StartRelationCoroutine();
     }
 }
