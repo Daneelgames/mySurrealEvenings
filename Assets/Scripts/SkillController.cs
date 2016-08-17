@@ -10,7 +10,7 @@ public class SkillController : MonoBehaviour
     public int price = 1;
     public int priceTrash = 1;
 
-    public enum Type { fire, water, stone, wind, electricity, ice, gore, piece}
+    public enum Type { fire, water, stone, wind, electricity, ice, gore, piece }
 
     public Type skillType = Type.fire;
 
@@ -45,8 +45,8 @@ public class SkillController : MonoBehaviour
         caster.Recover(recoverCaster + casterRandom);
 
         // FRENZY DMG
-        if (target == GameManager.Instance.player || caster == GameManager.Instance.player)
-            GameManager.Instance.FrenzyDamage(frenzy);
+        //if (target == GameManager.Instance.player || caster == GameManager.Instance.player)
+        GameManager.Instance.FrenzyDamage(frenzy);
 
         if (target != caster) // start battle bar
         {

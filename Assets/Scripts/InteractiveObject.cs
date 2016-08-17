@@ -17,10 +17,10 @@ public class InteractiveObject : MonoBehaviour
 
     public bool gotExtraPress = false;
 
-    public List<SkillController> weakToStatic;
-    public List<SkillController> invToStatic;
-    public List<SkillController> weakToDynamic;
-    public List<SkillController> invToDynamic;
+    public List<SkillController.Type> weakToStatic;
+    public List<SkillController.Type> invToStatic;
+    public List<SkillController.Type> weakToDynamic;
+    public List<SkillController.Type> invToDynamic;
 
     public bool inParty = false;
     public ActiveObjectCanvasController localCanvas;
@@ -50,34 +50,43 @@ public class InteractiveObject : MonoBehaviour
     public void GenerateDynamicStats() // calls at session start
     {
 
-        List<GameObject> allSkills = new List<GameObject>(GameManager.Instance.skillList.allSkills);
+        List<SkillController.Type> allSkills = new List<SkillController.Type>();
+
+        allSkills.Add(SkillController.Type.electricity);
+        allSkills.Add(SkillController.Type.fire);
+        allSkills.Add(SkillController.Type.gore);
+        allSkills.Add(SkillController.Type.ice);
+        allSkills.Add(SkillController.Type.piece);
+        allSkills.Add(SkillController.Type.stone);
+        allSkills.Add(SkillController.Type.water);
+        allSkills.Add(SkillController.Type.wind);
 
         weakToDynamic.Clear();
         invToDynamic.Clear();
 
-        foreach (SkillController skill in weakToStatic)
+        foreach (SkillController.Type skill in weakToStatic)
         {
             weakToDynamic.Add(skill);
-            allSkills.Remove(skill.gameObject);
+            allSkills.Remove(skill);
         }
 
-        foreach (SkillController skill in invToStatic)
+        foreach (SkillController.Type skill in invToStatic)
         {
             invToDynamic.Add(skill);
-            allSkills.Remove(skill.gameObject);
+            allSkills.Remove(skill);
         }
 
-        foreach (GameObject skill in allSkills)
+        foreach (SkillController.Type skill in allSkills)
         {
             float random = Random.value;
 
             if (random < 0.5f)
             {
-                weakToDynamic.Add(skill.GetComponent<SkillController>());
+                weakToDynamic.Add(skill);
             }
             else
             {
-                invToDynamic.Add(skill.GetComponent<SkillController>());
+                invToDynamic.Add(skill);
             }
         }
         allSkills.Clear();
@@ -170,9 +179,9 @@ public class InteractiveObject : MonoBehaviour
             {
                 activeSkill = GameManager.Instance.activeSkill.GetComponent<SkillController>();
 
-                foreach (SkillController skill in weakToDynamic)
+                foreach (SkillController.Type skill in weakToDynamic)
                 {
-                    if (skill == activeSkill)
+                    if (skill == activeSkill.skillType)
                     {
                         DMG = baseDmg * 2;
                         if (attacker == this && GameManager.Instance.attackTarget != this)
@@ -188,9 +197,9 @@ public class InteractiveObject : MonoBehaviour
                     }
                 }
 
-                foreach (SkillController skill in invToDynamic)
+                foreach (SkillController.Type skill in invToDynamic)
                 {
-                    if (skill == activeSkill)
+                    if (skill == activeSkill.skillType)
                     {
                         DMG = baseDmg / 2;
                         if (attacker == this && GameManager.Instance.attackTarget != this)
