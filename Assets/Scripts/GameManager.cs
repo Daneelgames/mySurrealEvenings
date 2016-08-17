@@ -116,13 +116,15 @@ public class GameManager : MonoBehaviour
 
             // Furthermore we make sure that we don't destroy between scenes (this is optional)
             DontDestroyOnLoad(gameObject);
-
+            
             NpcDatabase.ClearLists();
 
             transform.FindChild("Canvas").gameObject.SetActive(true);
 
-            GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>().inParty = true;
-            player = GameObject.FindGameObjectWithTag("Ally").GetComponent<InteractiveObject>();
+            GameObject playerGO = Instantiate(stageRandomController.player, partyCells[0].transform.position, Quaternion.identity) as GameObject;
+            playerGO.name = "Player";
+            playerGO.tag = "Ally";
+            player = playerGO.GetComponent<InteractiveObject>();
             player.inParty = true;
 
             GetRandomSkills(skills);

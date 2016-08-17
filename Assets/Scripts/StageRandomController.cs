@@ -10,6 +10,8 @@ public class StageRandomController : MonoBehaviour
 
     public float stageDifficulty = 0;
 
+    public GameObject player;
+
     public List<NpcController> npcList;
 
     public List<NpcController> newNpcList = new List<NpcController>();

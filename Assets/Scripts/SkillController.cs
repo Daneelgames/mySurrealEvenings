@@ -27,6 +27,7 @@ public class SkillController : MonoBehaviour
 
     public float damageCaster = 0;
     public float recoverCaster = 0;
+    public int manaCost = 0;
 
     public GameObject AttackParticle;
 

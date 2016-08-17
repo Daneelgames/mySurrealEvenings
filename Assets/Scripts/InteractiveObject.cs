@@ -16,6 +16,7 @@ public class InteractiveObject : MonoBehaviour
     public float minHealth = 1;     // static
 
     public bool gotExtraPress = false;
+    public int mana = 0;
 
     public List<SkillController.Type> weakToStatic;
     public List<SkillController.Type> invToStatic;
@@ -151,8 +152,15 @@ public class InteractiveObject : MonoBehaviour
 
     public void UseSkill(int skill)
     {
-        GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
-        localCanvas.HideIcons();
+        if (GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().manaCost <= GameManager.Instance.objectsTurn.mana)
+        {
+            GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
+            localCanvas.HideIcons();
+        }
+        else
+        {
+            GameManager.Instance.PrintActionFeedback(null, "Not enough mana!", null, false, true);
+        }
     }
 
     public void Damage(float baseDmg, InteractiveObject attacker)

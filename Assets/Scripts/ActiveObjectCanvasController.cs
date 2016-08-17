@@ -47,14 +47,14 @@ public class ActiveObjectCanvasController : MonoBehaviour
 
     void GetFoundedSkills(InteractiveObject selected)
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 4; i++)
         {
             if (i < GameManager.Instance.skillsCurrent.Count)
             {
                 bool found = false;
                 foreach (GameObject skill in NpcDatabase.GetSkillRelationsImmune(selected))
                 {
-                    print("foreach immune");
+                    //    print("foreach immune");
                     if (GameManager.Instance.skillsCurrent[i] == skill)
                     {
                         skillIcons[i].GetComponent<SkillLocalUiController>().SetImmune();
@@ -66,7 +66,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
                 {
                     foreach (GameObject skill in NpcDatabase.GetSkillRelationsWeak(selected))
                     {
-                        print("foreach weak");
+                        //      print("foreach weak");
                         if (GameManager.Instance.skillsCurrent[i] == skill)
                         {
                             skillIcons[i].GetComponent<SkillLocalUiController>().SetWeak();
@@ -89,7 +89,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
 
     public void ShowSkills()
     {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 4; i++)
         {
             skillIcons[i].SetActive(true);
             Image img = skillIcons[i].GetComponent<Image>();
@@ -105,6 +105,12 @@ public class ActiveObjectCanvasController : MonoBehaviour
             {
                 img.enabled = false;
             }
+
+            //set color mana enough feedback
+            if (GameManager.Instance.skillsCurrent[i].GetComponent<SkillController>().manaCost <= GameManager.Instance.objectsTurn.mana)
+                img.color = Color.white;
+            else
+                img.color = Color.gray;
         }
     }
 
