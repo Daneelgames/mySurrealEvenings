@@ -19,9 +19,9 @@ public class ButtonDescriptionFeedback : MonoBehaviour
         {
             GameManager.Instance.mouseOverButton = true;
             if (type == iconType.skipTurn)
-                GameManager.Instance.PrintActionFeedback(null, desctiption, null, false, false, true);
+                GameManager.Instance.PrintActionFeedback(null, desctiption, null, false, true);
             else if (type == iconType.backpack)
-                GameManager.Instance.PrintActionFeedback(null, desctiption, null, false, false, true);
+                GameManager.Instance.PrintActionFeedback(null, desctiption, null, false, true);
             else if (type == iconType.sanity)
             {
                 float curSanity = GameManager.Instance.curSanity;
@@ -40,7 +40,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour
                 else if (curSanity < 10)
                     sanityDescription = "I AM TERRIFIED";
 
-                GameManager.Instance.PrintActionFeedback(null, sanityDescription, null, false, false, true);
+                GameManager.Instance.PrintActionFeedback(null, sanityDescription, null, false, true);
             }
 
             else if (type == iconType.escape)
@@ -55,7 +55,7 @@ public class ButtonDescriptionFeedback : MonoBehaviour
                 else if (curChance <= 25)
                     text = "25% chance to escape";
 
-                GameManager.Instance.PrintActionFeedback(null, text, null, false, false, true);
+                GameManager.Instance.PrintActionFeedback(null, text, null, false, true);
             }
         }
     }

@@ -10,9 +10,9 @@ public class SkillController : MonoBehaviour
     public int price = 1;
     public int priceTrash = 1;
 
-    public enum Type { offensive, recover }
+    public enum Type { fire, water, stone, wind, electricity, ice, gore, piece}
 
-    public Type skillType = Type.offensive;
+    public Type skillType = Type.fire;
 
     public Sprite skillSprite;
 
@@ -123,7 +123,7 @@ public class SkillController : MonoBehaviour
     {
         if (GameManager.Instance.objectsTurn.inParty)
         {
-            GameManager.Instance.PrintActionFeedback(null, description, null, false, false, true);
+            GameManager.Instance.PrintActionFeedback(null, description, null, false, true);
             GameManager.Instance.mouseOverButton = true;
         }
     }
@@ -139,6 +139,6 @@ public class SkillController : MonoBehaviour
 
     void PrintNoSpace()
     {
-        GameManager.Instance.PrintActionFeedback(null, "Inventory is full!", null, false, false, true);
+        GameManager.Instance.PrintActionFeedback(null, "Inventory is full!", null, false, true);
     }
 }

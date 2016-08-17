@@ -89,7 +89,7 @@ public class TradeWindowController : MonoBehaviour
             if (items.Count > 1 && GameManager.Instance.inventoryController.candies >= items[skill].price && GameManager.Instance.inventoryController.emptySlots > 0)
                 slotAnimators[skill].SetBool("ShowIcon", true);
 
-            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
 
         }
         GameManager.Instance.mouseOverButton = true;

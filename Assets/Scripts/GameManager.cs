@@ -309,7 +309,7 @@ public class GameManager : MonoBehaviour
 
     public void UnitSkipsTurn()
     {
-        PrintActionFeedback(objectsTurn._name, null, null, false, false, false);
+        PrintActionFeedback(objectsTurn._name, null, null, false, false);
         UpdatePressTurns(pressTurns - 1);
         SetTurn();
     }
@@ -364,13 +364,10 @@ public class GameManager : MonoBehaviour
         skillInAction = _sc;
 
         bool hitself = false;
-        bool offensive = false;
         if (objectsTurn == target)
             hitself = true;
-        if (skill.GetComponent<SkillController>().skillType == SkillController.Type.offensive)
-            offensive = true;
 
-        PrintActionFeedback(objectsTurn._name, skill.name, target._name, hitself, offensive, false);
+        PrintActionFeedback(objectsTurn._name, skill.name, target._name, hitself, false);
         SetTurn();
         int skillIndex = 0;
 
@@ -387,7 +384,7 @@ public class GameManager : MonoBehaviour
         //    inventoryController.DeleteItem(skillIndex);
     }
 
-    public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf, bool offensive, bool iconDescription)
+    public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf,bool iconDescription)
     {
         string generatedString;
 
@@ -397,25 +394,11 @@ public class GameManager : MonoBehaviour
             {
                 if (!hitSelf)
                 {
-                    if (offensive)
-                    { // CASTER USES OFFENSIVE SKILL ON OTHER
-                        generatedString = caster + " uses " + skill + " against " + target + ". " + caster + " thinks it was clever.";
-                    }
-                    else
-                    { // CASTER USES NON-OFFENSIVE SKILL ON OTHER
-                        generatedString = caster + " uses " + skill + " on " + target + ".";
-                    }
+                    generatedString = caster + " uses " + skill + " on " + target + ".";
                 }
                 else
                 {
-                    if (offensive)
-                    { // CASTER USES OFFENSIVE SKILL ON SELF
-                        generatedString = caster + " uses " + skill + " against self for some reason.";
-                    }
-                    else
-                    { // CASTER USES NON-OFFENSIVE SKILL ON SELF
-                        generatedString = caster + " uses " + skill + " on self. Smart move, " + caster + "!";
-                    }
+                    generatedString = caster + " uses " + skill + " against self for some reason.";
                 }
             }
             else // NPC IS LAZY, SKIP HIS MOVE

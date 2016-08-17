@@ -186,7 +186,7 @@ public class InventoryController : MonoBehaviour
             sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
 
 
-            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
 
         }
         GameManager.Instance.mouseOverButton = true;

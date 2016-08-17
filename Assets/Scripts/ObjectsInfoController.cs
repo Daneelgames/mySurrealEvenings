@@ -132,7 +132,7 @@ public class ObjectsInfoController : MonoBehaviour {
             else
                 name = target._name;
 
-            GameManager.Instance.PrintActionFeedback(null, name + " is aggressive to your crew.", null, false, false, true);
+            GameManager.Instance.PrintActionFeedback(null, name + " is aggressive to your crew.", null, false, true);
             GameManager.Instance.mouseOverButton = true;
         }
     }

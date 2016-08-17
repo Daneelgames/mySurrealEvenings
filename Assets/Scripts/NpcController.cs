@@ -178,36 +178,15 @@ public class NpcController : MonoBehaviour
 
             float randomChance = Random.Range(0f, 1f);
 
-            if (skill.skillType == SkillController.Type.offensive) //OFFENSIVE SKILL
+            if (agressiveTo == Target.everyone)
             {
-                if (agressiveTo == Target.everyone)
+                // target offensive to all
+                if (randomChance > 0.2f)
                 {
-                    // target offensive to all
-                    if (randomChance > 0.2f)
-                    {
-                        GameManager.Instance.UseSkill(skills[actionNumber], GameManager.Instance.player);
-                    }
-                    else
-                    {
-                        InteractiveObject obj = null;
-
-                        while (obj == null)
-                        {
-                            int randomObject = Random.Range(0, GameManager.Instance.objectList.Count);
-
-                            if (!GameManager.Instance.objectList[randomObject].inParty)
-                            {
-                                obj = GameManager.Instance.objectList[randomObject];
-                                break;
-                            }
-                        }
-
-                        GameManager.Instance.UseSkill(skills[actionNumber], obj);
-                    }
+                    GameManager.Instance.UseSkill(skills[actionNumber], GameManager.Instance.player);
                 }
-                else if (agressiveTo == Target.enemies)
+                else
                 {
-                    // target offensive to only enemies
                     InteractiveObject obj = null;
 
                     while (obj == null)
@@ -223,54 +202,28 @@ public class NpcController : MonoBehaviour
 
                     GameManager.Instance.UseSkill(skills[actionNumber], obj);
                 }
-                else if (agressiveTo == Target.self)
-                {
-                    GameManager.Instance.UseSkill(skills[actionNumber], this.objectController);
-                }
             }
-            else // DEFFENSIVE/RECOVER SKILL
+            else if (agressiveTo == Target.enemies)
             {
-                if (agressiveTo == Target.everyone)
+                // target offensive to only enemies
+                InteractiveObject obj = null;
+
+                while (obj == null)
                 {
-                    //target recover more to NPCs
-                    if (randomChance < 0.2f)
-                    {
-                        GameManager.Instance.UseSkill(skills[actionNumber], GameManager.Instance.player);
-                    }
-                    else
-                    {
-                        InteractiveObject obj = null;
-
-                        while (obj == null)
-                        {
-                            int randomObject = Random.Range(0, GameManager.Instance.objectList.Count);
-
-                            if (!GameManager.Instance.objectList[randomObject].inParty)
-                            {
-                                obj = GameManager.Instance.objectList[randomObject];
-                                break;
-                            }
-                        }
-
-                        objectController._anim.SetTrigger("Action");
-                        GameManager.Instance.UseSkill(skills[actionNumber], obj);
-                    }
-                }
-                else if (agressiveTo == Target.enemies)
-                {
-                    // target recover to all equally
-                    InteractiveObject obj = null;
-
                     int randomObject = Random.Range(0, GameManager.Instance.objectList.Count);
-                    obj = GameManager.Instance.objectList[randomObject];
 
-                    objectController._anim.SetTrigger("Action");
-                    GameManager.Instance.UseSkill(skills[actionNumber], obj);
+                    if (!GameManager.Instance.objectList[randomObject].inParty)
+                    {
+                        obj = GameManager.Instance.objectList[randomObject];
+                        break;
+                    }
                 }
-                else if (agressiveTo == Target.self)
-                {
-                    GameManager.Instance.UseSkill(skills[actionNumber], this.objectController);
-                }
+
+                GameManager.Instance.UseSkill(skills[actionNumber], obj);
+            }
+            else if (agressiveTo == Target.self)
+            {
+                GameManager.Instance.UseSkill(skills[actionNumber], this.objectController);
             }
         }
     }

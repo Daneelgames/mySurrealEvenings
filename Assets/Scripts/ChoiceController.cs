@@ -300,7 +300,7 @@ public class ChoiceController : MonoBehaviour
                 break;
         }
 
-        GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, false, true);
+        GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
         GameManager.Instance.mouseOverButton = true;
     }
 
