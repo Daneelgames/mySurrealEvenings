@@ -14,9 +14,10 @@ public class InteractiveObject : MonoBehaviour
 
     public float maxHealth = 1;     // static
     public float minHealth = 1;     // static
+    public int mana = 0;
+    public int maxMana = 0;
 
     public bool gotExtraPress = false;
-    public int mana = 0;
 
     public List<SkillController.Type> weakToStatic;
     public List<SkillController.Type> invToStatic;
@@ -32,7 +33,9 @@ public class InteractiveObject : MonoBehaviour
     public List<ListWrapper> dialogues = new List<ListWrapper>();
     public int activeDialog = 0;
     public int activePhrase = 0;
-    public Animator healthbar;
+    public Image healthbar;
+    public Image manaBar;
+
     [System.Serializable]
     public class ListWrapper
     {
@@ -156,6 +159,8 @@ public class InteractiveObject : MonoBehaviour
         {
             GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
             localCanvas.HideIcons();
+            GameManager.Instance.objectsTurn.mana -= GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().manaCost;
+            UpdateMana();
         }
         else
         {
@@ -163,6 +168,10 @@ public class InteractiveObject : MonoBehaviour
         }
     }
 
+    void UpdateMana()
+    {
+        manaBar.fillAmount = (mana * 1.0f) / (maxMana * 1.0f);
+    }
     public void Damage(float baseDmg, InteractiveObject attacker)
     {
         float DMG = 0;
@@ -301,14 +310,7 @@ public class InteractiveObject : MonoBehaviour
 
     void UpdateHeart()
     {
-        if (GameManager.Instance.player == this && health <= 0)
-        {
-            healthbar.SetFloat("HealthPercentage", 0.2f);
-        }
-        else
-        {
-            healthbar.SetFloat("HealthPercentage", health / maxHealth);
-        }
+        healthbar.fillAmount = health / maxHealth;
     }
 
     public void WalkAway()
@@ -361,13 +363,6 @@ public class InteractiveObject : MonoBehaviour
     {
         yield return new WaitForSeconds(1.35f);
         GameManager.Instance.SkillRelationDiscoverFeedback(GameManager.Instance.activeSkill, this, sendWeak);
-    }
-
-    public void PlayerDay()
-    {
-        _anim.speed = 0;
-        healthbar.gameObject.SetActive(false);
-        turnFeedbackAnim.gameObject.SetActive(false);
     }
 
     public void PlayerNight()
