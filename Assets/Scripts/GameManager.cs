@@ -199,10 +199,12 @@ public class GameManager : MonoBehaviour
 
     public void UpdatePressTurns(int newAmount)
     {
-        pressTurns = newAmount;
+        if (newAmount >= 0)
+            pressTurns = newAmount;
+        else
+            pressTurns = 0;
         pressTurnsCounter.text = "" + pressTurns;
         pressTurnsAnim.SetTrigger("Update");
-
 
         switch (allyTurn)
         {
