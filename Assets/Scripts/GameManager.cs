@@ -899,7 +899,7 @@ public class GameManager : MonoBehaviour
             else
                 UpdatePressTurns(pressTurns - 1); // character loses pressTurn if he already got it
 
-            _skillRelationcontroller.SetFeedback(npcRelative.gameObject);
+            npcRelative.localCanvas.WeakFeedback();
         }
         else
         {

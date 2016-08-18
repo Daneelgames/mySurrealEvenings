@@ -24,6 +24,8 @@ public class ActiveObjectCanvasController : MonoBehaviour
     public Button skillButton_2;
     public Button skillButton_3;
 
+    public SkillRelationController skillRelat;
+
 
     public bool iconsVisible = false;
 
@@ -35,6 +37,11 @@ public class ActiveObjectCanvasController : MonoBehaviour
     void Start()
     {
         HideIcons();
+    }
+
+    public void WeakFeedback()
+    {
+        skillRelat.SetFeedback();
     }
 
     public void ShowMana(bool active)
