@@ -16,6 +16,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
     Animator _animator;
     public Animator turnFeedbackAnim;
 
+    public GameObject manaGO;
     public Image healthbar;
     public Image manaBar;
     public Button skillButton_0;
@@ -36,6 +37,10 @@ public class ActiveObjectCanvasController : MonoBehaviour
         HideIcons();
     }
 
+    public void ShowMana(bool active)
+    {
+        manaGO.SetActive(active);
+    }
     public void ShowIcons(InteractiveObject selected)
     {
         if (!iconsVisible)

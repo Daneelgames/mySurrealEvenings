@@ -70,6 +70,11 @@ public class InteractiveObject : MonoBehaviour
         GameManager.Instance.objectList.Add(this);
         ToggleSelectedFeedback();
     }
+
+    void Start()
+    {
+        localCanvas.ShowMana(inParty);
+    }
     public void GenerateDynamicStats() // calls at session start
     {
 
@@ -173,7 +178,7 @@ public class InteractiveObject : MonoBehaviour
             GameManager.Instance.UseSkill(GameManager.Instance.skillsCurrent[skill], this);
             localCanvas.HideIcons();
             GameManager.Instance.objectsTurn.mana -= GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().manaCost;
-            UpdateMana();
+            GameManager.Instance.objectsTurn.UpdateMana();
         }
         else
         {
@@ -181,7 +186,7 @@ public class InteractiveObject : MonoBehaviour
         }
     }
 
-    void UpdateMana()
+    public void UpdateMana()
     {
         manaBar.fillAmount = (mana * 1.0f) / (maxMana * 1.0f);
     }
