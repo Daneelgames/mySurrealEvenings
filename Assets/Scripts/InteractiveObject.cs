@@ -26,15 +26,18 @@ public class InteractiveObject : MonoBehaviour
 
     public bool inParty = false;
     public ActiveObjectCanvasController localCanvas;
-    [SerializeField]
-    private Animator turnFeedbackAnim;
+    Animator turnFeedbackAnim;
     public NpcController npcControl;
     public Animator _anim;
     public List<ListWrapper> dialogues = new List<ListWrapper>();
     public int activeDialog = 0;
     public int activePhrase = 0;
-    public Image healthbar;
-    public Image manaBar;
+    Image healthbar;
+    Image manaBar;
+    public GameObject deathParticles;
+    bool sendWeak = false;
+
+    public GameObject canvasToInstance;
 
     [System.Serializable]
     public class ListWrapper
@@ -42,15 +45,31 @@ public class InteractiveObject : MonoBehaviour
         public List<string> stringList;
     }
 
-    public GameObject deathParticles;
-
-    bool sendWeak = false;
-
     public void SetGotExtraPress(bool got)
     {
         gotExtraPress = got;
     }
 
+    public void Awake()
+    {
+        GameObject _canvas = Instantiate(canvasToInstance, transform.position, Quaternion.identity) as GameObject;
+        _canvas.name = "ActiveObjectCanvas";
+        _canvas.transform.SetParent(transform);
+
+        localCanvas = _canvas.GetComponent<ActiveObjectCanvasController>();
+        healthbar = localCanvas.healthbar;
+        manaBar = localCanvas.manaBar;
+
+        localCanvas.skillButton_0.onClick.AddListener(delegate { UseSkill(0); });
+        localCanvas.skillButton_1.onClick.AddListener(delegate { UseSkill(1); });
+        localCanvas.skillButton_2.onClick.AddListener(delegate { UseSkill(2); });
+        localCanvas.skillButton_3.onClick.AddListener(delegate { UseSkill(3); });
+
+        turnFeedbackAnim = localCanvas.turnFeedbackAnim;
+
+        GameManager.Instance.objectList.Add(this);
+        ToggleSelectedFeedback();
+    }
     public void GenerateDynamicStats() // calls at session start
     {
 
@@ -103,12 +122,6 @@ public class InteractiveObject : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        GameManager.Instance.objectList.Add(this);
-        ToggleSelectedFeedback();
-    }
-
     void OnMouseUpAsButton()
     {
         // click on object
@@ -124,7 +137,7 @@ public class InteractiveObject : MonoBehaviour
 
     public void ToggleTurnFeedback()
     {
-        if (GameManager.Instance.objectsTurn == this)
+        if (GameManager.Instance.objectsTurn == this && GameManager.Instance.enemyList.Count > 0)
         {
             turnFeedbackAnim.SetBool("Active", true);
             if (!inParty && npcControl != null)

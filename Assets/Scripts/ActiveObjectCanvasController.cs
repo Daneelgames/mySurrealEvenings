@@ -13,10 +13,15 @@ public class ActiveObjectCanvasController : MonoBehaviour
     Canvas _canvas;
 
     [SerializeField]
-    Sprite emptySkill;
-
-    [SerializeField]
     Animator _animator;
+    public Animator turnFeedbackAnim;
+
+    public Image healthbar;
+    public Image manaBar;
+    public Button skillButton_0;
+    public Button skillButton_1;
+    public Button skillButton_2;
+    public Button skillButton_3;
 
 
     public bool iconsVisible = false;
