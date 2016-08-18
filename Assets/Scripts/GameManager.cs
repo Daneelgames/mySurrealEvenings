@@ -941,15 +941,17 @@ public class GameManager : MonoBehaviour
 
     public void HitWall(bool breakWall)
     {
+        float dmg = 0;
         if (!breakWall)
         {
             PrintActionFeedback(null, "You hit the wall and got damaged!", null, false, true);
-            player.health -= player.maxHealth / 10;
+            dmg = player.maxHealth / 8;
         }
         else
         {
             PrintActionFeedback(null, "You found a room behind a false wall!", null, false, true);
         }
+        player.Damage(dmg, player);
     }
     public void ShowRewardWindow(int moneyDrop, bool keyDrop, GameObject treasure)
     {
