@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 
             // Furthermore we make sure that we don't destroy between scenes (this is optional)
             DontDestroyOnLoad(gameObject);
-            
+
             NpcDatabase.ClearLists();
 
             transform.FindChild("Canvas").gameObject.SetActive(true);
@@ -386,7 +386,7 @@ public class GameManager : MonoBehaviour
         //    inventoryController.DeleteItem(skillIndex);
     }
 
-    public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf,bool iconDescription)
+    public void PrintActionFeedback(string caster, string skill, string target, bool hitSelf, bool iconDescription)
     {
         string generatedString;
 
@@ -889,11 +889,8 @@ public class GameManager : MonoBehaviour
 
     public void SkillRelationDiscoverFeedback(GameObject skillFound, InteractiveObject npcRelative, bool weak)
     {
-        string skillName = skillFound.GetComponent<SkillController>().skillName;
-        string relationText = "";
         if (weak)
         {
-            relationText = npcRelative._name + " is weak against " + skillName + "!";
             if (!objectsTurn.gotExtraPress)
             {
                 UpdatePressTurns(pressTurns);
@@ -902,13 +899,12 @@ public class GameManager : MonoBehaviour
             else
                 UpdatePressTurns(pressTurns - 1); // character loses pressTurn if he already got it
 
+            _skillRelationcontroller.SetFeedback(npcRelative.gameObject);
         }
         else
         {
-            relationText = npcRelative._name + " is immune to " + skillName + "!";
             UpdatePressTurns(pressTurns - 1);
         }
-        _skillRelationcontroller.SetFeedback(relationText);
         CheckPressTurns();
     }
 
@@ -947,12 +943,12 @@ public class GameManager : MonoBehaviour
     {
         if (!breakWall)
         {
-            _skillRelationcontroller.SetFeedback("You hit the wall and got damaged!");
+            PrintActionFeedback(null, "You hit the wall and got damaged!", null, false, true);
             player.health -= player.maxHealth / 10;
         }
         else
         {
-            _skillRelationcontroller.SetFeedback("You found a room behind a false wall!");
+            PrintActionFeedback(null, "You found a room behind a false wall!", null, false, true);
         }
     }
     public void ShowRewardWindow(int moneyDrop, bool keyDrop, GameObject treasure)

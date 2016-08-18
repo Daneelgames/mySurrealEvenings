@@ -191,11 +191,11 @@ public class LevelMovementController : MonoBehaviour
                         break;
                 }
                 GameManager.Instance.inventoryController.KeyLose();
-                GameManager.Instance._skillRelationcontroller.SetFeedback("You used the key and opened the door.");
+                GameManager.Instance.PrintActionFeedback(null, "You used the key and opened the door.", null, false, true);
             }
             else
             {
-                GameManager.Instance._skillRelationcontroller.SetFeedback("You have no keys!");
+                GameManager.Instance.PrintActionFeedback(null, "You have no keys!", null, false, true);
             }
             SetButtonsTypes();
         }
