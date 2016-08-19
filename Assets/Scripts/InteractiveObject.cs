@@ -19,6 +19,8 @@ public class InteractiveObject : MonoBehaviour
 
     public bool gotExtraPress = false;
 
+    public InteractiveObject defendAgainst;
+
     public List<SkillController.Type> weakToStatic;
     public List<SkillController.Type> invToStatic;
     public List<SkillController.Type> weakToDynamic;
@@ -65,6 +67,8 @@ public class InteractiveObject : MonoBehaviour
         localCanvas.skillButton_2.onClick.AddListener(delegate { UseSkill(2); });
         localCanvas.skillButton_3.onClick.AddListener(delegate { UseSkill(3); });
 
+        localCanvas.defendButton.onClick.AddListener(delegate { Defend(); });
+
         turnFeedbackAnim = localCanvas.turnFeedbackAnim;
 
         GameManager.Instance.objectList.Add(this);
@@ -74,6 +78,13 @@ public class InteractiveObject : MonoBehaviour
     void Start()
     {
         localCanvas.ShowMana(inParty);
+    }
+
+    public void SetDefend(InteractiveObject npc)
+    {
+        defendAgainst = npc;
+        localCanvas._animator.SetTrigger("Defend");
+        // animation feedback shiled
     }
     public void GenerateDynamicStats() // calls at session start
     {
@@ -186,6 +197,11 @@ public class InteractiveObject : MonoBehaviour
         }
     }
 
+    public void Defend()
+    {
+        GameManager.Instance.Defend(this);
+    }
+
     public void UpdateMana()
     {
         manaBar.fillAmount = (mana * 1.0f) / (maxMana * 1.0f);
@@ -225,7 +241,8 @@ public class InteractiveObject : MonoBehaviour
                         else
                         {
                             NpcDatabase.CheckSkillRelation(true, this);
-                            sendWeak = true;
+                            if (defendAgainst != attacker)
+                                sendWeak = true;
                             GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
                             break;
                         }
@@ -259,6 +276,9 @@ public class InteractiveObject : MonoBehaviour
         {
             StartCoroutine("ActionTriggerDelaySelf", DMG);
         }
+
+        if (defendAgainst == attacker)
+            localCanvas._animator.SetTrigger("Defend");
     }
 
     IEnumerator ActionTriggerDelaySelf(float dmg)
@@ -370,7 +390,6 @@ public class InteractiveObject : MonoBehaviour
         StartCoroutine("SetAnimInactive");
         //gameObject.SetActive(false);
     }
-
 
     public void StartRelationCoroutine()
     {

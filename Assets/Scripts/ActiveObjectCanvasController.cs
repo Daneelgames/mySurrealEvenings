@@ -12,8 +12,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
     [SerializeField]
     Canvas _canvas;
 
-    [SerializeField]
-    Animator _animator;
+    public Animator _animator;
     public Animator turnFeedbackAnim;
 
     public GameObject manaGO;
@@ -23,9 +22,9 @@ public class ActiveObjectCanvasController : MonoBehaviour
     public Button skillButton_1;
     public Button skillButton_2;
     public Button skillButton_3;
+    public Button defendButton;
 
     public SkillRelationController skillRelat;
-
 
     public bool iconsVisible = false;
 
@@ -140,27 +139,16 @@ public class ActiveObjectCanvasController : MonoBehaviour
         }
     }
 
-
     public void PointerEnterButton(int skill)
     {
-        if (skill >= 0)
+        if (skill >= 0 && skill < 5)
         {
             string sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
         }
-        else if (skill == -1) // Trade
+        else if (skill == 5) // block
         {
-            string sendDescription = "Trade with the monster.";
-            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
-        }
-        else if (skill == -2) // talk
-        {
-            string sendDescription = "Talk to the monster.";
-            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
-        }
-        else if (skill == -3) // repel
-        {
-            string sendDescription = "Repel the monster.";
+            string sendDescription = "Defend against monster's attacks.";
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
         }
         GameManager.Instance.mouseOverButton = true;

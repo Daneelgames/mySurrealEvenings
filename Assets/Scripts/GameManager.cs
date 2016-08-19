@@ -330,10 +330,19 @@ public class GameManager : MonoBehaviour
         curSanity += recoverAmount;
         // FRENZY FEEDBACK
         sanityMeterAnim.SetFloat("Sanity", curSanity);
-
         // FRENZY FEEDBACK
     }
 
+    public void Defend(InteractiveObject target)
+    {
+        // objectsTurn defends against target
+        PrintActionFeedback(null, objectsTurn._name + " defends against " + target._name + ".", null, false, true);
+        objectsTurn.SetDefend(target);
+        pressTurns -= 1;
+        //target set broken sword animation
+        turnOver = true;
+        SetTurn();
+    }
     public void UseSkill(GameObject skill, InteractiveObject target)
     {
         if (skill != null)

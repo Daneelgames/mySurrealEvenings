@@ -38,7 +38,10 @@ public class SkillController : MonoBehaviour
     {
         //print(caster.name);
         float targetRandom = Random.Range(0f, 1f);
-        target.Damage(damageTarget + targetRandom, caster);
+        if (target.defendAgainst != caster)
+            target.Damage(damageTarget + targetRandom, caster);
+        else
+            target.Damage((damageTarget + targetRandom) / 5, caster);
         target.Recover(recoverTarget + targetRandom);
 
         float casterRandom = Random.Range(0f, 1f);
@@ -49,12 +52,16 @@ public class SkillController : MonoBehaviour
         //if (target == GameManager.Instance.player || caster == GameManager.Instance.player)
         GameManager.Instance.FrenzyDamage(frenzy);
 
-        if (target != caster) // start battle bar
+        if (target != caster && target.defendAgainst != caster) // start battle bar
         {
             if (target.inParty)
                 GameManager.Instance.battleBar.StartDefence(targets);
             else if (caster.inParty)
                 GameManager.Instance.battleBar.StartAttack(targets);
+        }
+        else if (target.defendAgainst == caster)
+        {
+
         }
     }
 
