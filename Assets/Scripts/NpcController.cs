@@ -21,10 +21,6 @@ public class NpcController : MonoBehaviour
 
     public int levelPreffered = 1;
 
-    public int candyDrop = 3;
-    public int pillDrop = 2;
-
-    public GameObject dropFeedback;
 
     public void GenerateNpcSkills()
     {
@@ -226,30 +222,5 @@ public class NpcController : MonoBehaviour
                 GameManager.Instance.UseSkill(skills[actionNumber], this.objectController);
             }
         }
-    }
-    public void DropOnDead()
-    {
-
-        float candyChance = Random.Range(0f, 1f);
-        float trashChance = Random.Range(0f, 1f);
-        float skillChance = Random.Range(0f, 1f);
-
-        int candyValue = candyDrop + Mathf.RoundToInt(Random.Range(-candyDrop / 2, candyDrop / 2));
-        int trashValue = pillDrop + Mathf.RoundToInt(Random.Range(-pillDrop / 2, pillDrop / 2));
-
-        if (candyChance > 0.25f) // DROP RANDOM
-        {
-            GameManager.Instance.inventoryController.CandyGet(candyValue);
-        }
-        if (skillChance > 0.5f)
-        {
-            if (skills.Count > 0)
-            {
-                GameObject skillDrop = skills[Random.Range(0, skills.Count)];
-                Instantiate(skillDrop, transform.position, transform.rotation);
-            }
-        }
-        GameObject newDropFeedback = Instantiate(dropFeedback.gameObject, transform.position, Quaternion.identity) as GameObject;
-        newDropFeedback.GetComponent<NpcDropFeedbackController>().SetValues(candyValue, trashValue);
     }
 }

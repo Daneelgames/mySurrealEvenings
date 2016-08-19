@@ -295,9 +295,6 @@ public class InteractiveObject : MonoBehaviour
                 StartCoroutine("SetAnimInactive");
                 Instantiate(deathParticles, transform.position, Quaternion.identity);
             }
-
-            if (npcControl != null)
-                npcControl.DropOnDead();
         }
     }
     IEnumerator ActionTriggerDelay(float dmg)
@@ -314,9 +311,6 @@ public class InteractiveObject : MonoBehaviour
                 StartCoroutine("SetAnimInactive");
                 Instantiate(deathParticles, transform.position, Quaternion.identity);
             }
-
-            if (npcControl != null)
-                npcControl.DropOnDead();
         }
     }
 

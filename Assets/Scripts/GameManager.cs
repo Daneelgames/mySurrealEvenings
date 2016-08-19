@@ -367,8 +367,11 @@ public class GameManager : MonoBehaviour
 
         turnOver = true;
         //print(objectsTurn._name + " uses " + skill.GetComponent<SkillController>().name + " on " + target._name);
-        GameObject skillInstance = Instantiate(skill.GetComponent<SkillController>().AttackParticle, target.transform.position, target.transform.rotation) as GameObject;
-        skillInstance.transform.parent = target.transform;
+        if (target.defendAgainst != objectsTurn)
+        {
+            GameObject skillInstance = Instantiate(skill.GetComponent<SkillController>().AttackParticle, target.transform.position, target.transform.rotation) as GameObject;
+            skillInstance.transform.parent = target.transform;
+        }
 
         SkillController _sc = skill.GetComponent<SkillController>(); // SET CURRENT ACTIVE SKILL
         _sc.SetTargets(objectsTurn, target);

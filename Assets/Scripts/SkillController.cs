@@ -59,10 +59,6 @@ public class SkillController : MonoBehaviour
             else if (caster.inParty)
                 GameManager.Instance.battleBar.StartAttack(targets);
         }
-        else if (target.defendAgainst == caster)
-        {
-
-        }
     }
 
     void Start()
