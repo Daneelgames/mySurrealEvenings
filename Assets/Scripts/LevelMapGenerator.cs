@@ -72,10 +72,21 @@ public class LevelMapGenerator : MonoBehaviour
     void MakeDifficulties()
     {
         float lastDiff = dungeonLevel;
+        float maxDiff = 0;
         foreach (GameObject rm in rooms)
         {
-            float newDiff = lastDiff + Random.Range(0.05f, 0.25f);
             MapRoomController rmCntrl = rm.GetComponent<MapRoomController>();
+            float newDiff = 0;
+            if (rmCntrl.coreRoom)
+            {
+                newDiff = lastDiff + Random.Range(0.05f, 0.25f);
+                if (maxDiff < newDiff)
+                    maxDiff = newDiff;
+            }
+            else // nerf extra rooms 
+            {
+                newDiff = Random.Range(dungeonLevel, maxDiff);
+            }
             rmCntrl.SetRoomDiffuculty(newDiff);
             lastDiff = newDiff;
 
