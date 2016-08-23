@@ -52,6 +52,8 @@ public class InteractiveObject : MonoBehaviour
         gotExtraPress = got;
     }
 
+    public GameObject simpleAttack;
+
     public void Awake()
     {
         GameObject _canvas = Instantiate(canvasToInstance, transform.position, Quaternion.identity) as GameObject;
@@ -68,6 +70,7 @@ public class InteractiveObject : MonoBehaviour
         localCanvas.skillButton_3.onClick.AddListener(delegate { UseSkill(3); });
 
         localCanvas.defendButton.onClick.AddListener(delegate { Defend(); });
+        localCanvas.attackButton.onClick.AddListener(delegate { PhysicalAttack(); });
 
         turnFeedbackAnim = localCanvas.turnFeedbackAnim;
 
@@ -202,6 +205,12 @@ public class InteractiveObject : MonoBehaviour
         GameManager.Instance.Defend(this);
     }
 
+    public void PhysicalAttack()
+    {
+        GameManager.Instance.UseSkill(simpleAttack, this);
+        localCanvas.HideIcons();
+    }
+
     public void UpdateMana()
     {
         manaBar.fillAmount = (mana * 1.0f) / (maxMana * 1.0f);
@@ -230,39 +239,47 @@ public class InteractiveObject : MonoBehaviour
             {
                 activeSkill = GameManager.Instance.activeSkill.GetComponent<SkillController>();
 
-                foreach (SkillController.Type skill in weakToDynamic)
+                if (activeSkill.skillType == SkillController.Type.none) // simple attack
                 {
-                    if (skill == activeSkill.skillType)
+                    sendWeak = false;
+                    GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
+                }
+                else
+                {
+                    foreach (SkillController.Type skill in weakToDynamic)
                     {
-                        DMG = baseDmg * 2;
-                        if (attacker == this && GameManager.Instance.attackTarget != this)
+                        if (skill == activeSkill.skillType)
                         {
-                        }
-                        else
-                        {
-                            NpcDatabase.CheckSkillRelation(true, this);
-                            if (defendAgainst != attacker)
-                                sendWeak = true;
-                            GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
-                            break;
+                            DMG = baseDmg * 2;
+                            if (attacker == this && GameManager.Instance.attackTarget != this)
+                            {
+                            }
+                            else
+                            {
+                                NpcDatabase.CheckSkillRelation(true, this);
+                                if (defendAgainst != attacker)
+                                    sendWeak = true;
+                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
+                                break;
+                            }
                         }
                     }
-                }
 
-                foreach (SkillController.Type skill in invToDynamic)
-                {
-                    if (skill == activeSkill.skillType)
+                    foreach (SkillController.Type skill in invToDynamic)
                     {
-                        DMG = baseDmg / 2;
-                        if (attacker == this && GameManager.Instance.attackTarget != this)
+                        if (skill == activeSkill.skillType)
                         {
-                        }
-                        else
-                        {
-                            NpcDatabase.CheckSkillRelation(false, this);
-                            sendWeak = false;
-                            GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
-                            break;
+                            DMG = baseDmg / 2;
+                            if (attacker == this && GameManager.Instance.attackTarget != this)
+                            {
+                            }
+                            else
+                            {
+                                NpcDatabase.CheckSkillRelation(false, this);
+                                sendWeak = false;
+                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
+                                break;
+                            }
                         }
                     }
                 }

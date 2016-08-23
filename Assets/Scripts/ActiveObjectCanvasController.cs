@@ -23,6 +23,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
     public Button skillButton_2;
     public Button skillButton_3;
     public Button defendButton;
+    public Button attackButton;
 
     public SkillRelationController skillRelat;
 
@@ -141,9 +142,14 @@ public class ActiveObjectCanvasController : MonoBehaviour
 
     public void PointerEnterButton(int skill)
     {
-        if (skill >= 0 && skill < 5)
+        if (skill >= 0 && skill < 4)
         {
             string sendDescription = GameManager.Instance.skillsCurrent[skill].GetComponent<SkillController>().description;
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
+        }
+        else if (skill == 4) // standart attack
+        {
+            string sendDescription = "Physical attack.";
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
         }
         else if (skill == 5) // block

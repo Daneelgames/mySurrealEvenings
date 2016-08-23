@@ -10,7 +10,7 @@ public class SkillController : MonoBehaviour
     public int price = 1;
     public int priceTrash = 1;
 
-    public enum Type { fire, water, stone, wind, electricity, ice, gore, piece }
+    public enum Type { fire, water, stone, wind, electricity, ice, gore, piece, none }
 
     public Type skillType = Type.fire;
 
