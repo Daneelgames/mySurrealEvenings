@@ -52,7 +52,7 @@ public class SkillController : MonoBehaviour
         //if (target == GameManager.Instance.player || caster == GameManager.Instance.player)
         GameManager.Instance.FrenzyDamage(frenzy);
 
-        if (target != caster && target.defendAgainst != caster) // start battle bar
+        if (target != caster && target.defendAgainst != caster && skillType != Type.none) // start battle bar
         {
             if (target.inParty)
                 GameManager.Instance.battleBar.StartDefence(targets);

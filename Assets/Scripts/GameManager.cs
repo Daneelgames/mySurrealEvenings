@@ -957,7 +957,7 @@ public class GameManager : MonoBehaviour
         if (!breakWall)
         {
             PrintActionFeedback(null, "You hit the wall and got damaged!", null, false, true);
-            dmg = player.maxHealth / 8;
+            dmg = player.maxHealth / 10;
         }
         else
         {
