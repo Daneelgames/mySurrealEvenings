@@ -686,6 +686,8 @@ public class GameManager : MonoBehaviour
         NewStage(); // generate new stage
 
         fade = false;
+        allyTurn = true;
+        CheckPressTurns();
         yield return new WaitForSeconds(0.75F);
         CheckRemainingMonsters();
         fader.color = Color.clear;
