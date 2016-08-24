@@ -72,6 +72,8 @@ public class InteractiveObject : MonoBehaviour
         localCanvas.defendButton.onClick.AddListener(delegate { Defend(); });
         localCanvas.attackButton.onClick.AddListener(delegate { PhysicalAttack(); });
 
+        localCanvas.interactiveObj = this;
+
         turnFeedbackAnim = localCanvas.turnFeedbackAnim;
 
         GameManager.Instance.objectList.Add(this);
@@ -242,7 +244,7 @@ public class InteractiveObject : MonoBehaviour
                 if (activeSkill.skillType == SkillController.Type.none) // simple attack
                 {
                     sendWeak = false;
-                    GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
+                    //GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
                 }
                 else
                 {
@@ -259,12 +261,11 @@ public class InteractiveObject : MonoBehaviour
                                 NpcDatabase.CheckSkillRelation(true, this);
                                 if (defendAgainst != attacker)
                                     sendWeak = true;
-                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
+                                //GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns);
                                 break;
                             }
                         }
                     }
-
                     foreach (SkillController.Type skill in invToDynamic)
                     {
                         if (skill == activeSkill.skillType)
@@ -277,7 +278,7 @@ public class InteractiveObject : MonoBehaviour
                             {
                                 NpcDatabase.CheckSkillRelation(false, this);
                                 sendWeak = false;
-                                GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
+                                //GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
                                 break;
                             }
                         }

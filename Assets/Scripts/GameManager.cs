@@ -338,7 +338,7 @@ public class GameManager : MonoBehaviour
         // objectsTurn defends against target
         PrintActionFeedback(null, objectsTurn._name + " defends against " + target._name + ".", null, false, true);
         objectsTurn.SetDefend(target);
-        pressTurns -= 1;
+        UpdatePressTurns(pressTurns - 1);
         //target set broken sword animation
         turnOver = true;
         SetTurn();
@@ -541,8 +541,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-
-            if (activeTeamList.Count > 1)
+            if (activeTeamList.Count > 1 && activeTeamList[objectsTurnIndex] != null)
                 objectsTurn = activeTeamList[objectsTurnIndex];
             else
             {
@@ -577,6 +576,7 @@ public class GameManager : MonoBehaviour
 
     void CheckPressTurns()
     {
+        print("CHECK PRESS TURNS");
         if (pressTurns <= 0)
         {
             SortObjects();
@@ -584,6 +584,7 @@ public class GameManager : MonoBehaviour
             {
                 case true:
                     SetActiveTeamList(enemyList);
+                    print("ENEMY COUNT TO PRESS TURNS");
                     allyTurn = false;
                     break;
                 case false:

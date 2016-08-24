@@ -28,6 +28,7 @@ public class ActiveObjectCanvasController : MonoBehaviour
     public SkillRelationController skillRelat;
 
     public bool iconsVisible = false;
+    public InteractiveObject interactiveObj;
 
     void Awake()
     {
@@ -152,7 +153,34 @@ public class ActiveObjectCanvasController : MonoBehaviour
             string sendDescription = "Physical attack.";
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
         }
-        else if (skill == 5) // block
+        else if (skill == 5) // info
+        {
+            string sendDescription = "";
+            if (interactiveObj.npcControl != null && !interactiveObj.inParty)
+            {
+                switch (GameManager.Instance.selectedObject.npcControl.agressiveTo)
+                {
+                    case NpcController.Target.enemies:
+                        sendDescription = GameManager.Instance.selectedObject._name + " is aggressive against other monsters.";
+                        break;
+                    case NpcController.Target.everyone:
+                        sendDescription = GameManager.Instance.selectedObject._name + " is aggressive against everyone.";
+                        break;
+                    case NpcController.Target.none:
+                        sendDescription = GameManager.Instance.selectedObject._name + " is not aggressive.";
+                        break;
+                    case NpcController.Target.self:
+                        sendDescription = GameManager.Instance.selectedObject._name + " want to kill himself.";
+                        break;
+                }
+            }
+            else
+            {
+                sendDescription = GameManager.Instance.selectedObject._name + " is in party.";
+            }
+            GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
+        }
+        else if (skill == 6) // block
         {
             string sendDescription = "Defend against monster's attacks.";
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
