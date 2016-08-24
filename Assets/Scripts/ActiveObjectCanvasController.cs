@@ -158,25 +158,25 @@ public class ActiveObjectCanvasController : MonoBehaviour
             string sendDescription = "";
             if (interactiveObj.npcControl != null && !interactiveObj.inParty)
             {
-                switch (GameManager.Instance.selectedObject.npcControl.agressiveTo)
+                switch (interactiveObj.npcControl.agressiveTo)
                 {
                     case NpcController.Target.enemies:
-                        sendDescription = GameManager.Instance.selectedObject._name + " is aggressive against other monsters.";
+                        sendDescription = interactiveObj._name + " is aggressive against other monsters.";
                         break;
                     case NpcController.Target.everyone:
-                        sendDescription = GameManager.Instance.selectedObject._name + " is aggressive against everyone.";
+                        sendDescription = interactiveObj._name + " is aggressive against everyone.";
                         break;
                     case NpcController.Target.none:
-                        sendDescription = GameManager.Instance.selectedObject._name + " is not aggressive.";
+                        sendDescription = interactiveObj._name + " is not aggressive.";
                         break;
                     case NpcController.Target.self:
-                        sendDescription = GameManager.Instance.selectedObject._name + " want to kill himself.";
+                        sendDescription = interactiveObj._name + " want to kill himself.";
                         break;
                 }
             }
             else
             {
-                sendDescription = GameManager.Instance.selectedObject._name + " is in party.";
+                sendDescription = interactiveObj._name + " is in party.";
             }
             GameManager.Instance.PrintActionFeedback(null, sendDescription, null, false, true);
         }

@@ -30,6 +30,10 @@ public class MapRoomController : MonoBehaviour
     public SpriteRenderer roomSprite;
     public List<SpriteRenderer> passageSprites;
     public GameObject treasureChest;
+    public GameObject chestInRoom;
+    public int moneyReward = 0;
+    public bool key = false;
+    public GameObject treasure = null;
     public void SetRoomDiffuculty(float diff)
     {
         roomDifficulty = diff;
@@ -53,9 +57,6 @@ public class MapRoomController : MonoBehaviour
     }
     public void GiveReward()
     {
-        int moneyReward = 0;
-        bool key = false;
-        GameObject treasure = null;
         print("Give reward");
         switch (roomType)
         {
@@ -101,13 +102,19 @@ public class MapRoomController : MonoBehaviour
                 }
                 break;
         }
+        SpawnChest();
 
+    }
+
+    public void SpawnChest()
+    {
         if (moneyReward != 0 || key || treasure != null)
         {
             // Instantiate treasure chest
             GameObject chest = Instantiate(treasureChest, Vector3.zero, Quaternion.identity) as GameObject;
             TreasureChestController chestController = chest.GetComponent<TreasureChestController>();
-
+            chestInRoom = chest;
+            
             chestController.moneyDrop = moneyReward;
             chestController.keyDrop = key;
             if (treasure != null)

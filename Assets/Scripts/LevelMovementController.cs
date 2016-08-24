@@ -46,6 +46,8 @@ public class LevelMovementController : MonoBehaviour
         roomController.ShowPassages(true);
         GetRoomNeighbours(roomController);
         roomController.UpdateNeighbours();
+
+        activeRoom.SpawnChest();
     }
 
     void GetRoomNeighbours(MapRoomController room)
@@ -358,6 +360,9 @@ public class LevelMovementController : MonoBehaviour
 
     public void ChangeRoom()
     {
+        Destroy(activeRoom.chestInRoom); //remove chest
+        activeRoom.chestInRoom = null;  //remove chest
+
         lastRoom = activeRoom;
         SetActiveRoom(newRoom.gameObject);
     }

@@ -688,6 +688,7 @@ public class GameManager : MonoBehaviour
 
         fade = false;
         allyTurn = true;
+        // check treasure chest
         CheckPressTurns();
         yield return new WaitForSeconds(0.75F);
         CheckRemainingMonsters();

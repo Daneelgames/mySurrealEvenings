@@ -244,6 +244,7 @@ public class InteractiveObject : MonoBehaviour
                 if (activeSkill.skillType == SkillController.Type.none) // simple attack
                 {
                     sendWeak = false;
+                    NpcDatabase.CheckSkillRelation(false, this);
                     //GameManager.Instance.UpdatePressTurns(GameManager.Instance.pressTurns - 1);
                 }
                 else
