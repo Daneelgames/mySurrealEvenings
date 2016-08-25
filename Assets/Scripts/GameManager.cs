@@ -614,8 +614,8 @@ public class GameManager : MonoBehaviour
         }
         if (!monsters && !levelMovementController.activeRoom.roomCleared && !levelMovementController.activeRoom.safeRoom) // REDUCE ROOM DIFF AND SPAWN RATE IF MONSTERS ARE DEAD
         {
-            levelMovementController.activeRoom.SetSpawnRate(0.33f);
-            levelMovementController.activeRoom.SetRoomDiffuculty(levelMovementController.activeRoom.roomDifficulty / 2);
+            levelMovementController.activeRoom.SetSpawnRate(0.25f);
+            levelMovementController.activeRoom.SetRoomDiffuculty(levelMovementController.activeRoom.roomDifficulty / 3);
             levelMovementController.activeRoom.SetRoomCleared(true);
         }
         else if (levelMovementController.activeRoom.safeRoom)
